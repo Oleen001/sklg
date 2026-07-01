@@ -1,6 +1,6 @@
-# Skillogy
+# Sklg*
 
-Skillogy is a React + Vite prototype for a learning and career-skills platform. The app started as a Figma Make export and has been wrapped with a responsive React shell, client-side routing, mock data, and Vercel-ready SPA deployment config.
+Sklg* is a React + Vite prototype for a learning and career-skills platform. The app started as a Figma Make export and has been wrapped with a responsive React shell, client-side routing, mock data, and Vercel-ready SPA deployment config.
 
 Original Figma source: https://www.figma.com/design/G4j2TMMOZHHiJYBidncRcQ/Add-transitions-and-animations
 
