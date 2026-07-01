@@ -19,8 +19,8 @@ export default function HeroMascot({ svg, label, className = "", maxLook = 7 }: 
     const shadow = root.shadowRoot ?? root.attachShadow({ mode: "open" });
     shadow.innerHTML = `
       <style>
-        :host { display: block; width: 100%; height: 100%; }
-        svg { display: block; width: 100%; height: 100%; overflow: visible; }
+        :host { display: block; width: 100%; height: 100%; overflow: hidden; }
+        svg { display: block; width: 100%; height: 100%; overflow: hidden; }
         #pupils,
         .sunny2-pupil,
         .windy3-pupil {

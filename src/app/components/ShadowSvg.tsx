@@ -15,8 +15,8 @@ export default function ShadowSvg({ svg, label, className = "", ...divProps }: S
     const shadow = root.shadowRoot ?? root.attachShadow({ mode: "open" });
     shadow.innerHTML = `
       <style>
-        :host { display: block; width: 100%; height: 100%; }
-        svg { display: block; width: 100%; height: 100%; overflow: visible; }
+        :host { display: block; width: 100%; height: 100%; overflow: hidden; }
+        svg { display: block; width: 100%; height: 100%; overflow: hidden; }
       </style>
       ${svg}
     `;
