@@ -135,6 +135,15 @@
 
   html {
     font-size: var(--font-size);
+    font-family: "Noto Sans Thai", "Noto Sans", sans-serif;
+  }
+
+  body,
+  button,
+  input,
+  textarea,
+  select {
+    font-family: "Noto Sans Thai", "Noto Sans", sans-serif;
   }
 
   h1 {

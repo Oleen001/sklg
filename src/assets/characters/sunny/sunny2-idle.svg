@@ -1,0 +1,31 @@
+<svg width="630" height="550" viewBox="0 0 630 550" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sunny2-title">
+<title id="sunny2-title">Sunny 2 idle mascot</title>
+<style>
+  #sunny2 { transform-box: view-box; transform-origin: 50% 52%; animation: s2-float 5.3s ease-in-out infinite; }
+  #sunny2-rays { transform-box: fill-box; transform-origin: 50% 50%; animation: s2-rays 6.8s ease-in-out infinite; }
+  #sunny2-core { transform-box: fill-box; transform-origin: 50% 55%; animation: s2-core 4.2s ease-in-out infinite; }
+  #sunny2-face { transform-box: fill-box; transform-origin: 50% 50%; animation: s2-face 5.3s ease-in-out infinite; }
+  .sunny2-eye { transform-box: fill-box; transform-origin: 50% 50%; animation: s2-blink 5.8s linear infinite; }
+  .sunny2-pupil { transform-box: fill-box; transform-origin: 50% 50%; animation: s2-look 5.8s ease-in-out infinite; }
+  #sunny2-mouth { transform-box: fill-box; transform-origin: 50% 50%; animation: s2-mouth 4.2s ease-in-out infinite; }
+  @keyframes s2-float { 0%,100%{transform:translate3d(0,0,0) rotate(0deg)} 40%{transform:translate3d(0,-7px,0) rotate(-.5deg)} 76%{transform:translate3d(2px,3px,0) rotate(.5deg)} }
+  @keyframes s2-rays { 0%,100%{transform:rotate(0deg) scale(1)} 50%{transform:rotate(-2deg) scale(1.02)} }
+  @keyframes s2-core { 0%,100%{transform:scale(1)} 48%{transform:scale(1.016,.988)} }
+  @keyframes s2-face { 0%,100%{transform:translate3d(0,0,0)} 40%{transform:translate3d(0,2px,0)} 76%{transform:translate3d(-1px,-1px,0)} }
+  @keyframes s2-blink { 0%,70%,76%,100%{transform:scaleY(1)} 72%,74%{transform:scaleY(.08)} }
+  @keyframes s2-look { 0%,45%,100%{transform:translate3d(0,0,0)} 54%,64%{transform:translate3d(3px,-1px,0)} 84%,90%{transform:translate3d(-2px,1px,0)} }
+  @keyframes s2-mouth { 0%,100%{transform:translate3d(0,0,0) scale(1)} 48%{transform:translate3d(1px,-1px,0) scale(1.06,.95)} }
+  @media (prefers-reduced-motion: reduce) {
+    #sunny2, #sunny2-rays, #sunny2-core, #sunny2-face, .sunny2-eye, .sunny2-pupil, #sunny2-mouth { animation: none; }
+  }
+</style>
+<g id="sunny2">
+<path id="sunny2-rays" d="M500.884 227.807C545.458 237.879 562.692 268.453 562.692 290.604C562.692 312.755 545.458 313.318 500.884 323.39C534.451 354.401 542.36 381.638 531.285 400.822C520.209 420.006 488.601 419.734 444.962 406.169C458.527 449.808 458.798 481.416 439.615 492.492C420.43 503.568 393.193 487.528 362.182 453.959C352.109 498.536 336.541 526.045 314.389 526.045C292.238 526.045 276.669 498.537 266.597 453.964C235.588 487.529 208.351 503.567 189.168 492.492C169.984 481.416 159.345 455.715 172.91 412.076C129.271 425.64 108.574 420.006 97.4981 400.822C86.4223 381.638 94.6844 354.4 128.251 323.39C83.675 313.318 66.8003 312.756 66.8003 290.604C66.8003 268.452 83.675 237.879 128.251 227.807C94.6844 196.797 76.4462 177.24 87.522 158.056C98.5978 138.873 129.271 127.343 172.91 140.907C159.345 97.2683 153.726 74.8128 172.91 63.737C192.093 52.6614 232.29 53.0368 263.299 86.6021C273.371 42.0286 324.392 24.437 345.829 29.0816C369.051 37.6561 352.109 45.9563 362.182 90.5323C393.193 56.9641 442.043 59.8063 461.227 70.8824C480.411 81.9582 468.004 90.8377 454.439 134.477C498.078 120.912 530.894 138.873 541.97 158.056C553.046 177.24 534.451 196.796 500.884 227.807Z" fill="#FFE040"/>
+<path id="sunny2-core" d="M270.486 130.902C219.204 150.155 149.647 222.133 157.218 293.137C164.791 364.138 240.324 435.728 313.03 431.894C385.74 428.059 431.908 395.716 462.374 314.126C500.967 210.779 382.217 88.9578 270.486 130.902Z" fill="#FFEF9A"/>
+<g id="sunny2-face">
+<g id="sunny2-mouth"><ellipse cx="10.6986" cy="12.2835" rx="10.6986" ry="12.2835" transform="matrix(-1 0 0 1 296.596 265.016)" fill="black"/></g>
+<g class="sunny2-eye"><ellipse cx="35.2657" cy="34.8694" rx="35.2657" ry="34.8694" transform="matrix(-1 0 0 1 297.388 187.353)" fill="white"/><g class="sunny2-pupil"><ellipse cx="20.2084" cy="21.0009" rx="20.2084" ry="21.0009" transform="matrix(-1 0 0 1 267.275 199.24)" fill="black"/></g></g>
+<g class="sunny2-eye"><circle cx="34.8694" cy="34.8694" r="34.8694" transform="matrix(-1 0 0 1 357.618 187.352)" fill="white"/><g class="sunny2-pupil"><circle cx="21.0009" cy="21.0009" r="21.0009" transform="matrix(-1 0 0 1 329.088 199.24)" fill="black"/></g></g>
+</g>
+</g>
+</svg>

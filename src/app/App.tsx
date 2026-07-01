@@ -1,22 +1,29 @@
-import { useEffect, useState } from "react";
-import Homepage from "@/imports/Homepage/index";
-import SkillTrendsPage from "./SkillTrendsPage";
-import CareerExplorePage from "./CareerExplorePage";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { Navigate, Route, Routes, useLocation } from "react-router";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import SkillBuilderPage from "./pages/SkillBuilderPage";
+import SkillDashboardPage from "./pages/SkillDashboardPage";
+import SkillOpportunitiesPage from "./pages/SkillOpportunitiesPage";
+import SkillTrendsRoutePage from "./pages/SkillTrendsRoutePage";
+import ResponsiveNavbar from "./ResponsiveNavbar";
+import ResponsiveFooter from "./ResponsiveFooter";
+import { getRouteByPath, isHomeRouteKey, type AppRouteKey } from "./routes";
 
 const DESIGN_WIDTH  = 1180;
 const HOME_HEIGHT   = 3200;
-const TRENDS_HEIGHT = 1850;
-const CAREER_HEIGHT = 1950;
+const TRENDS_HEIGHT = 1498;
+const SKILL_SCAN_HEIGHT = 1220;
+const SKILL_BUILDER_HEIGHT = 3820;
+const MOCK_AUTH_STORAGE_KEY = "skillogy_mock_logged_in";
 
-type Page = "home" | "skill-trends" | "skill-dashboard";
+type Page = AppRouteKey;
 
-/* ─── Nav routing ─── */
-const NAV_ROUTES: Record<string, Page> = {
-  "Skill Trends":        "skill-trends",
-  "Skill Dashboard":     "skill-dashboard",
-  "Skill Builder":       "home",
-  "Skill Opportunities": "home",
-};
+/* Hide the original Figma-embedded Navbar/Footer — routing + chrome now live
+   in the React ResponsiveNavbar/Footer rendered outside the scaled body.
+   The markup stays in place so the animation layer's selectors don't break. */
+const CHROME_HIDE_CSS = `[data-name="Navbar"], [data-name="Footer"] { display: none !important; }`;
 
 /* ═══════════════════════════════════════════════════════════
    STAR ROTATION — scroll-driven + timed auto-spin
@@ -26,20 +33,65 @@ const NAV_ROUTES: Record<string, Page> = {
 ═══════════════════════════════════════════════════════════ */
 const STAR_MULTS = [0.6, 1.0, 1.5, 0.8, 1.3, 0.5, 2.0, 0.9, 1.4, 0.7, 1.8, 1.1, 1.3, 1.6, 0.75];
 const STAR_DIRS: (1 | -1)[] = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1];
+const STAR_SPIN_DEGS = [420, 540, 660, 780, 900, 1020, 1140, 1260];
 const SPIN_DURS  = [1400, 1100, 1700, 1200, 1600, 1000, 1800, 1300, 1500, 1050];
 
-const STAR_SKIP = [
-  "[data-name=\"Navbar\"]",
-  "[data-name=\"Footer\"]",
-  "[data-name=\"General\"]",
-  "[data-name=\"Animated Group Container\"]",
-  "[data-name=\"Icon Group Container\"]",
-  "[data-name=\"Mask Group Container\"]",
-  "[data-name=\"Industry Section\"]",
-  "[data-name=\"Industry Card\"]",
-  "[data-motion-wrapper-for]",
-  ".ce-ellipse2",
-];
+const DECORATIVE_SPIN_VIEWBOXES = new Set([
+  "0 0 12 12",
+  "0 0 13.0331 13",
+  "0 0 14 14",
+  "0 0 20.2044 20.2019",
+  "0 0 21.8067 22.7154",
+  "0 0 29 30",
+  "0 0 30.0765 29",
+  "0 0 36 35",
+  "0 0 38.3138 36.8565",
+  "0 0 39 39",
+  "0 0 39.0534 39.941",
+  "0 0 40.7623 41.0807",
+  "0 0 43.0904 41.5514",
+  "0 0 49.9878 49.1428",
+  "0 0 54.6787 52.7259",
+  "0 0 56.4756 56.4746",
+  "0 0 60.0583 61.4233",
+  "0 0 64.6546 64.6342",
+  "0 0 72 72",
+]);
+
+function isDecorativeSpinTarget(el: HTMLElement) {
+  if (el.closest("[data-spin-decoration=\"false\"]")) return false;
+  if (el.matches("[data-spin-decoration=\"true\"]")) return true;
+  if (el.querySelector("img, p, span, button, input, a")) return false;
+  if (!isInDecorativeSpinRegion(el)) return false;
+
+  const svg = el.querySelector("svg");
+  if (!svg) return false;
+
+  const r = el.getBoundingClientRect();
+  if (r.width < 5 || r.width > 110 || r.height < 5 || r.height > 110) return false;
+
+  const viewBox = svg.getAttribute("viewBox")?.trim() ?? "";
+  return DECORATIVE_SPIN_VIEWBOXES.has(viewBox);
+}
+
+function getDataNameChain(el: HTMLElement) {
+  const names: string[] = [];
+  let node: HTMLElement | null = el;
+  while (node && node !== document.body && names.length < 8) {
+    if (node.dataset.name) names.push(node.dataset.name);
+    node = node.parentElement;
+  }
+  return names;
+}
+
+function isInDecorativeSpinRegion(el: HTMLElement) {
+  const names = getDataNameChain(el);
+  if (names.includes("Industry Section") || names.includes("Industry Card")) return false;
+  if (names.includes("Header Section") || names.includes("Summary Section")) return true;
+  if (names[0] === "Homepage") return true;
+  if (names.includes("Skill Trends")) return true;
+  return false;
+}
 
 /* ─── Homepage animations ─── */
 const HOME_STYLES = `
@@ -67,6 +119,36 @@ const HOME_STYLES = `
   [data-name="C animate"] { animation: sk-float 2.8s ease-in-out infinite 0.35s; }
   [data-name="Summary Section"] [data-name="Sunny-A"] {
     animation: sk-pulse-scale 3s ease-in-out infinite;
+  }
+
+  @media (max-width: 900px) {
+    [data-name="Homepage"] [data-name="Header Section"] {
+      transform: translateY(40px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    [data-name="Homepage"] [data-name="Header Section"] {
+      transform: translateY(180px);
+    }
+  }
+
+  .sk-hero-mascot {
+    z-index: 4;
+    --mascot-look-x: 0px;
+    --mascot-look-y: 0px;
+    animation: sk-float 3.3s ease-in-out infinite;
+  }
+  .sk-hero-mascot[aria-label="Sunny"] {
+    animation-duration: 3s;
+  }
+  .sk-hero-mascot[aria-label="Windy"] {
+    animation-duration: 3.5s;
+    animation-delay: 0.4s;
+  }
+  .sk-hero-mascot[aria-label="Cloudy"] {
+    animation-duration: 3.2s;
+    animation-delay: 0.8s;
   }
 
   /* Hero text letter-by-letter */
@@ -124,7 +206,7 @@ const HOME_STYLES = `
   .sk-up.sk-in, .sk-left.sk-in, .sk-right.sk-in { opacity: 1; transform: none; }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-name="Sunny-A"], [data-name="Icon Group Container"], [data-name="Mask Group Container"],
+    [data-name="Sunny-A"], .sk-hero-mascot, [data-name="Icon Group Container"], [data-name="Mask Group Container"],
     [data-name="R animate"], [data-name="I animate"], [data-name="A animate"],
     [data-name="S animate"], [data-name="E animate"], [data-name="C animate"] { animation: none; }
     .sk-up, .sk-left, .sk-right { transition: none; opacity: 1; transform: none; }
@@ -133,7 +215,6 @@ const HOME_STYLES = `
 `;
 
 const HOME_REVEALS = [
-  { selector: "[data-name=\"Navbar\"]",                       cls: "sk-up",    delay: 0    },
   { selector: "[data-name=\"Header Section\"]",               cls: "sk-up",    delay: 0.1  },
   { selector: "[data-name=\"Discover Background\"]",          cls: "sk-up",    stagger: 0.12 },
   { selector: "[data-name=\"Plan Background\"]",              cls: "sk-up",    delay: 0.12 },
@@ -147,7 +228,6 @@ const HOME_REVEALS = [
   { selector: "[data-name=\"Ads Background\"]",               cls: "sk-up",    delay: 0    },
   { selector: "[data-name=\"Skill Course Container\"]",       cls: "sk-right", delay: 0    },
   { selector: "[data-name=\"Certification Text Container\"]", cls: "sk-up",    delay: 0.1  },
-  { selector: "[data-name=\"Footer\"]",                       cls: "sk-up",    delay: 0    },
 ] as const;
 
 const FLIP_CARD_DATA = [
@@ -156,17 +236,59 @@ const FLIP_CARD_DATA = [
   { left: 778, top: 793, w: 294, h: 342, text: "ลงมือทำ\nเปลี่ยน skill\nเป็นของจริง",        bg: "#db475f", color: "white"   },
 ] as const;
 
+const LEGACY_BACKGROUND_BANDS = {
+  home: [
+    { top: 0, height: 656, color: "#eff4f9" },
+    { top: 1227, height: 470, color: "#c6ebfe" },
+    { top: 2115, height: 566, color: "#1b3476" },
+  ],
+  "skill-trends": [
+    { top: 0, height: 440, color: "#1560b3" },
+    { top: 440, height: 914, color: "#dceeff" },
+  ],
+} satisfies Partial<Record<Page, readonly { top: number; height: number; color: string }[]>>;
+
 /* ─── Helpers ─── */
 const easeOut3 = (t: number) => 1 - Math.pow(1 - t, 3);
 
 export default function App() {
-  const [page, setPage]   = useState<Page>("home");
+  const location = useLocation();
+  const route = useMemo(() => getRouteByPath(location.pathname), [location.pathname]);
+  const page = route.key;
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem(MOCK_AUTH_STORAGE_KEY) === "true";
+  });
   const [scale, setScale] = useState(1);
+  const [isDesktop, setIsDesktop] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return window.matchMedia("(min-width: 1024px)").matches;
+  });
+  const [readyPage, setReadyPage] = useState<Page>(page);
+  const requestedPage = useRef<Page>(page);
+  const reduceMotion = useReducedMotion();
+  requestedPage.current = page;
 
   const designHeight =
-    page === "home"          ? HOME_HEIGHT   :
-    page === "skill-trends"  ? TRENDS_HEIGHT :
-    CAREER_HEIGHT;
+    route.kind === "home"          ? HOME_HEIGHT   :
+    route.kind === "skill-trends"  ? TRENDS_HEIGHT :
+    route.kind === "skill-builder" ? SKILL_BUILDER_HEIGHT :
+    SKILL_SCAN_HEIGHT;
+
+  const pageTransition = reduceMotion
+    ? { duration: 0 }
+    : { duration: 0.35, ease: [0.16, 1, 0.3, 1] as const };
+  const showChrome = route.kind !== "login";
+
+  const handleMockLogin = () => {
+    window.localStorage.setItem(MOCK_AUTH_STORAGE_KEY, "true");
+    setIsLoggedIn(true);
+  };
+
+  const handleMockLogout = () => {
+    window.localStorage.removeItem(MOCK_AUTH_STORAGE_KEY);
+    setIsLoggedIn(false);
+  };
 
   /* ── Responsive scale ── */
   useEffect(() => {
@@ -176,31 +298,33 @@ export default function App() {
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  /* ── Navbar click routing ── */
   useEffect(() => {
-    const tid = setTimeout(() => {
-      document.querySelectorAll<HTMLElement>("[data-name=\"Nav-menu\"]").forEach((el) => {
-        const label = el.textContent?.trim() ?? "";
-        const target = NAV_ROUTES[label];
-        if (!target) return;
-        el.style.cursor = "pointer";
-        el.style.userSelect = "none";
-        el.style.fontWeight = target === page ? "700" : "";
-        el.style.borderBottom = target === page ? "2px solid #0d6ec8" : "";
-        el.addEventListener("click", () => setPage(target));
-      });
-      document.querySelectorAll("[data-name=\"Navbar Content\"] > div > p").forEach((p) => {
-        (p as HTMLElement).style.cursor = "pointer";
-        p.addEventListener("click", () => setPage("home"));
-      });
-    }, 120);
-    return () => clearTimeout(tid);
+    const media = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, [page]);
+
+  /* ── Hide the original embedded Navbar/Footer (routing moved to React) ── */
+  useEffect(() => {
+    const styleEl = document.createElement("style");
+    styleEl.id = "sk-chrome-hide";
+    styleEl.textContent = CHROME_HIDE_CSS;
+    document.head.appendChild(styleEl);
+    return () => styleEl.remove();
+  }, []);
 
   /* ══════════════════════════════════════════════════════════
      SCROLL-DRIVEN STAR ROTATION + 10-s TIMED AUTO-SPIN
   ══════════════════════════════════════════════════════════ */
   useEffect(() => {
+    if (reduceMotion) return;
+
     type Star = {
       el: HTMLElement;
       mult: number;
@@ -210,22 +334,18 @@ export default function App() {
       spinTo: number;     // target of current active spin
       spinT0: number;     // performance.now() when spin began (-1 = idle)
       spinDur: number;
-      phase: number;      // stagger delay (ms)
     };
 
     const stars: Star[] = [];
     const VH = window.innerHeight;
     const BASE = 720 / VH; // deg per CSS pixel → 100 vh = 720°
+    const useScrollRotation = window.innerWidth >= 1024;
 
     /* Collect decorative star elements */
     const collect = () => {
       stars.length = 0;
       document.querySelectorAll<HTMLElement>(".absolute").forEach((el) => {
-        if (!el.querySelector("svg")) return;
-        if (el.querySelector("img, p, span, button, input, a")) return;
-        if (STAR_SKIP.some((s) => el.closest(s))) return;
-        const r = el.getBoundingClientRect();
-        if (r.width < 5 || r.width > 110 || r.height < 5 || r.height > 110) return;
+        if (!isDecorativeSpinTarget(el)) return;
         const i = stars.length;
         stars.push({
           el,
@@ -233,32 +353,45 @@ export default function App() {
           dir: STAR_DIRS[i % STAR_DIRS.length],
           spinBase: 0, spinFrom: 0, spinTo: 0, spinT0: -1,
           spinDur: SPIN_DURS[i % SPIN_DURS.length],
-          phase: Math.random() * 250,
         });
-      });
-    };
-
-    /* Fire a timed spin for every star (staggered) */
-    const triggerSpin = () => {
-      stars.forEach((s) => {
-        setTimeout(() => {
-          s.spinFrom = s.spinBase;
-          s.spinTo   = s.spinBase + 720 * (s.dir as number);
-          s.spinT0   = performance.now();
-        }, s.phase);
       });
     };
 
     let raf = 0;
     let prevSY = -1;
+    const spinTids: ReturnType<typeof setTimeout>[] = [];
+
+    /* Fire a timed spin for every decorative star (staggered) */
+    const triggerSpin = () => {
+      if (stars.length === 0) return;
+
+      stars.forEach((s) => {
+        const phase = Math.random() * 250;
+        const spinDeg = STAR_SPIN_DEGS[Math.floor(Math.random() * STAR_SPIN_DEGS.length)];
+        const tid = setTimeout(() => {
+          s.spinFrom = s.spinBase;
+          s.spinTo   = s.spinBase + spinDeg * (s.dir as number);
+          s.spinT0   = performance.now();
+          wake();
+        }, phase);
+        spinTids.push(tid);
+      });
+    };
+
+    /* Wake the rAF loop if it has idled */
+    const wake = () => {
+      if (raf === 0) raf = requestAnimationFrame(tick);
+    };
 
     const tick = (now: number) => {
       const sy = window.scrollY;
-      const scrollChanged = sy !== prevSY;
+      const scrollChanged = useScrollRotation && sy !== prevSY;
       if (scrollChanged) prevSY = sy;
 
+      let anySpinning = false;
+
       stars.forEach((s) => {
-        const scrollDeg = sy * BASE * s.mult * s.dir;
+        const scrollDeg = useScrollRotation ? sy * BASE * s.mult * s.dir : 0;
 
         // Timed spin
         let spinDeg = s.spinBase;
@@ -272,6 +405,7 @@ export default function App() {
           } else {
             spinDeg  = s.spinFrom + (s.spinTo - s.spinFrom) * easeOut3(elapsed / s.spinDur);
             spinning = true;
+            anySpinning = true;
           }
         }
 
@@ -280,32 +414,48 @@ export default function App() {
         }
       });
 
-      raf = requestAnimationFrame(tick);
+      // Idle-pause: stop rescheduling when nothing is moving. Scroll/spin re-wakes.
+      if (scrollChanged || anySpinning) {
+        raf = requestAnimationFrame(tick);
+      } else {
+        raf = 0;
+      }
     };
 
+    const onScroll = () => wake();
+    if (useScrollRotation) {
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
+
     // Collect + start loop
+    let firstSpinTid: ReturnType<typeof setTimeout> | undefined;
     const initTid = setTimeout(() => {
       collect();
       raf = requestAnimationFrame(tick);
       // First auto-spin after 2 s, then every 10 s
-      setTimeout(triggerSpin, 2000);
+      firstSpinTid = setTimeout(triggerSpin, 2000);
     }, 200);
 
     const spinInterval = setInterval(triggerSpin, 10000);
 
     return () => {
       clearTimeout(initTid);
+      if (firstSpinTid) clearTimeout(firstSpinTid);
+      spinTids.forEach(clearTimeout);
       clearInterval(spinInterval);
-      cancelAnimationFrame(raf);
+      if (useScrollRotation) {
+        window.removeEventListener("scroll", onScroll);
+      }
+      if (raf !== 0) cancelAnimationFrame(raf);
       stars.forEach(({ el }) => { el.style.rotate = ""; });
     };
-  }, [page]);
+  }, [readyPage, reduceMotion]);
 
   /* ══════════════════════════════════════════════════════════
      HOMEPAGE: scroll-reveals + hero text + card flip
   ══════════════════════════════════════════════════════════ */
   useEffect(() => {
-    if (page !== "home") return;
+    if (!isHomeRouteKey(readyPage)) return;
 
     const styleEl = document.createElement("style");
     styleEl.id = "sk-home-anims";
@@ -322,10 +472,13 @@ export default function App() {
 
     /* Hero text + card flip run after paint */
     const tid = setTimeout(() => {
+      const preferStaticScroll = window.innerWidth < 1024 || window.matchMedia("(pointer: coarse)").matches;
+
       /* ── Scroll-reveal ── */
       HOME_REVEALS.forEach(({ selector, cls, stagger = 0, delay = 0 }) => {
         document.querySelectorAll(selector).forEach((el, i) => {
           if (el.classList.contains("sk-up") || el.classList.contains("sk-left") || el.classList.contains("sk-right")) return;
+          if (preferStaticScroll) return;
           el.classList.add(cls);
           (el as HTMLElement).style.transitionDelay = `${delay + i * stagger}s`;
           io.observe(el);
@@ -342,7 +495,7 @@ export default function App() {
         "[data-name=\"Header Section\"] span.leading-\\[69\\.973px\\]"
       ).forEach((span) => {
         const text = span.textContent ?? "";
-        if (!text.trim()) return;
+        if (!text.trim() || span.querySelector(".hero-char")) return;
         const chars = [...seg.segment(text)].map((s) => s.segment);
         span.innerHTML = chars
           .map((ch) => {
@@ -420,19 +573,90 @@ export default function App() {
       styleEl.remove();
       document.querySelectorAll(".sk-flip-overlay").forEach((el) => el.remove());
     };
-  }, [page]);
+  }, [readyPage]);
+
+  const scaledWidth  = DESIGN_WIDTH * scale;
+  const scaledHeight = designHeight * scale;
+  const isLegacyScaledPage = isDesktop && route.kind === "skill-trends";
+  const isNativeResponsivePage = !isLegacyScaledPage;
+  const scaledPageFlex = route.kind === "skill-trends" ? "0 0 auto" : "1 0 auto";
+  const legacyBackgroundBands = isLegacyScaledPage ? LEGACY_BACKGROUND_BANDS[page] ?? [] : [];
+
+  const routedPage = (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={page}
+        data-sk-page={page}
+        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={reduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
+        transition={pageTransition}
+        onAnimationComplete={() => {
+          if (requestedPage.current === page) setReadyPage(page);
+        }}
+      >
+        <Routes location={location}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage onLogin={handleMockLogin} />} />
+          <Route path="/skill-dashboard" element={<SkillDashboardPage />} />
+          <Route path="/skill-trends" element={<SkillTrendsRoutePage />} />
+          <Route path="/skill-builder" element={<SkillBuilderPage />} />
+          <Route path="/skill-opportunities" element={<SkillOpportunitiesPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
+  );
 
   return (
-    <div style={{ width: "100%", height: designHeight * scale, overflowX: "hidden", background: "#fff" }}>
-      <div style={{ width: DESIGN_WIDTH, minHeight: designHeight, transformOrigin: "top left", transform: `scale(${scale})` }}>
-        {page === "home" ? (
-          <Homepage />
-        ) : page === "skill-trends" ? (
-          <SkillTrendsPage />
-        ) : (
-          <CareerExplorePage />
-        )}
-      </div>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100dvh", background: "#fff" }}>
+      {showChrome ? <ResponsiveNavbar isLoggedIn={isLoggedIn} onLogout={handleMockLogout} /> : null}
+
+      {isNativeResponsivePage ? (
+        <div style={{ width: "100%", overflowX: "clip", background: "#eff4f9", flex: "1 0 auto", touchAction: "pan-y" }}>
+          {routedPage}
+        </div>
+      ) : (
+        <>
+          {/* Scaled design body — centered horizontally; the outer box reserves the
+              real (scaled) footprint so the sticky navbar + footer never overlap it. */}
+          <div style={{ width: "100%", overflowX: "clip", background: "#fff", flex: scaledPageFlex, position: "relative", touchAction: "pan-y" }}>
+            <div aria-hidden style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+              {legacyBackgroundBands.map((band) => (
+                <div
+                  key={`${band.top}-${band.height}-${band.color}`}
+                  style={{
+                    position: "absolute",
+                    top: band.top * scale,
+                    left: 0,
+                    width: "100%",
+                    height: band.height * scale,
+                    background: band.color,
+                  }}
+                />
+              ))}
+            </div>
+            <div style={{ width: scaledWidth, height: scaledHeight, margin: "0 auto", position: "relative" }}>
+              <div
+                style={{
+                  width: DESIGN_WIDTH,
+                  minHeight: designHeight,
+                  transformOrigin: "top left",
+                  transform: `scale(${scale})`,
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                }}
+              >
+                {routedPage}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {showChrome ? <ResponsiveFooter /> : null}
     </div>
   );
 }

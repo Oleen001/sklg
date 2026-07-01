@@ -1,0 +1,48 @@
+<svg width="507" height="486" viewBox="0 0 507 486" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="windy3-title">
+<title id="windy3-title">Windy 3 idle mascot</title>
+<style>
+  #windy3-body { transform-box: fill-box; transform-origin: 50% 62%; animation: w3-float 5.4s ease-in-out infinite; }
+  #windy3-gust-top { transform-box: fill-box; transform-origin: 42% 55%; animation: w3-gust-top 6.2s ease-in-out infinite; }
+  #windy3-gust-mid { transform-box: fill-box; transform-origin: 48% 55%; animation: w3-gust-mid 5.6s ease-in-out infinite; }
+  #windy3-gust-low { transform-box: fill-box; transform-origin: 52% 55%; animation: w3-gust-low 5s ease-in-out infinite; }
+  .windy3-eye { transform-box: fill-box; transform-origin: 50% 50%; animation: w3-eye-rest 5.8s ease-in-out infinite; }
+  .windy3-pupil { transform-box: fill-box; transform-origin: 50% 50%; animation: w3-look 5.8s ease-in-out infinite; }
+  @keyframes w3-float { 0%,100%{transform:translate3d(0,0,0) rotate(0deg)} 42%{transform:translate3d(0,-8px,0) rotate(-.6deg)} 74%{transform:translate3d(2px,3px,0) rotate(.4deg)} }
+  @keyframes w3-gust-top { 0%,100%{transform:translate3d(0,0,0) rotate(0deg)} 50%{transform:translate3d(8px,-5px,0) rotate(1.1deg)} }
+  @keyframes w3-gust-mid { 0%,100%{transform:translate3d(0,0,0) rotate(0deg)} 52%{transform:translate3d(9px,-2px,0) rotate(.8deg)} }
+  @keyframes w3-gust-low { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(7px,2px,0)} }
+  @keyframes w3-eye-rest { 0%,100%{transform:translate3d(0,0,0) scaleY(1)} 50%{transform:translate3d(0,-1px,0) scaleY(.94)} }
+  @keyframes w3-look { 0%,48%,100%{transform:translate3d(0,0,0)} 58%,66%{transform:translate3d(3px,-1px,0)} 84%,90%{transform:translate3d(-2px,1px,0)} }
+  @media (prefers-reduced-motion: reduce) {
+    #windy3-body, #windy3-gust-top, #windy3-gust-mid, #windy3-gust-low, .windy3-eye, .windy3-pupil { animation: none; }
+  }
+</style>
+<path id="windy3-body" d="M244.699 72.0638C353.706 72.0637 497.346 189.263 497.346 303.488C497.346 417.713 353.706 485.534 244.699 485.534C135.691 485.534 -4.94092e-06 372.499 -9.93385e-06 258.274C-1.49268e-05 144.049 135.691 72.0638 244.699 72.0638Z" fill="#1B3476"/>
+<mask id="mask0_1754_33725" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="105" y="178" width="110" height="110">
+<circle cx="159.685" cy="232.932" r="54.5453" fill="white"/>
+</mask>
+<g class="windy3-eye" mask="url(#mask0_1754_33725)">
+<rect x="76.6387" y="221.629" width="164.127" height="91.4003" fill="white"/>
+</g>
+<mask id="mask1_1754_33725" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="152" y="200" width="51" height="52">
+<circle cx="177.375" cy="226.052" r="25.0614" fill="white"/>
+</mask>
+<g class="windy3-pupil" mask="url(#mask1_1754_33725)">
+<rect x="139.219" y="220.859" width="75.4099" height="41.9947" fill="black"/>
+</g>
+<mask id="mask2_1754_33725" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="229" y="178" width="111" height="110">
+<circle cx="284.501" cy="232.932" r="54.5453" fill="white"/>
+</mask>
+<g class="windy3-eye" mask="url(#mask2_1754_33725)">
+<rect x="201.455" y="221.629" width="164.127" height="91.4003" fill="white"/>
+</g>
+<mask id="mask3_1754_33725" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="277" y="200" width="51" height="52">
+<circle cx="302.191" cy="226.052" r="25.0614" fill="white"/>
+</mask>
+<g class="windy3-pupil" mask="url(#mask3_1754_33725)">
+<rect x="264.035" y="220.859" width="75.4099" height="41.9947" fill="black"/>
+</g>
+<path id="windy3-gust-top" d="M404.02 50.7997C217.233 0.355714 75.3815 114.941 26.2666 178.651L163.245 197.112C208.346 174.979 312.991 125.269 370.759 103.492C428.526 81.715 417.605 54.4686 404.02 50.7997Z" fill="#1B3476"/>
+<path id="windy3-gust-mid" d="M475.651 102.779C331.824 68.644 223.845 159.724 187.834 209.53L292.874 220.411C326.796 202.45 405.541 162.03 449.145 144.043C492.749 126.056 486.714 106.323 475.651 102.779Z" fill="#1B3476"/>
+<path id="windy3-gust-low" d="M499.54 167.648C385.866 121.473 291.625 149.01 258.714 168.55L342.804 194.784C371.598 191.811 438.342 185.588 474.965 184.484C511.588 183.38 506.797 171.297 499.54 167.648Z" fill="#1B3476"/>
+</svg>

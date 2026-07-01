@@ -1,0 +1,41 @@
+<svg width="630" height="550" viewBox="0 0 630 550" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sunny1-title">
+<title id="sunny1-title">Sunny 1 idle mascot</title>
+<style>
+  #sunny1 { transform-box: view-box; transform-origin: 50% 50%; animation: s1-float 5s ease-in-out infinite; }
+  #sunny1-rays { transform-box: fill-box; transform-origin: 50% 50%; animation: s1-rays 7.2s ease-in-out infinite; }
+  #sunny1-core { transform-box: fill-box; transform-origin: 50% 55%; animation: s1-core 4s ease-in-out infinite; }
+  #sunny1-hand { transform-box: fill-box; transform-origin: 60% 20%; animation: s1-wave 3.2s ease-in-out infinite; }
+  #sunny1-face { transform-box: fill-box; transform-origin: 50% 50%; animation: s1-face 5s ease-in-out infinite; }
+  .sunny1-eye { transform-box: fill-box; transform-origin: 50% 50%; animation: s1-blink 5.5s linear infinite; }
+  .sunny1-pupil { transform-box: fill-box; transform-origin: 50% 50%; animation: s1-look 5.5s ease-in-out infinite; }
+  #sunny1-smile { transform-box: fill-box; transform-origin: 50% 50%; animation: s1-smile 4s ease-in-out infinite; }
+  #sunny1-spark { stroke-dasharray: 32 14; animation: s1-spark 2.6s ease-in-out infinite; }
+  @keyframes s1-float { 0%,100%{transform:translate3d(0,0,0)} 42%{transform:translate3d(0,-8px,0)} 74%{transform:translate3d(2px,3px,0)} }
+  @keyframes s1-rays { 0%,100%{transform:rotate(0deg) scale(1)} 50%{transform:rotate(2deg) scale(1.018)} }
+  @keyframes s1-core { 0%,100%{transform:scale(1)} 48%{transform:scale(1.018,.986)} }
+  @keyframes s1-wave { 0%,100%{transform:rotate(0deg)} 45%{transform:rotate(-7deg) translate3d(-2px,-3px,0)} 72%{transform:rotate(4deg) translate3d(2px,1px,0)} }
+  @keyframes s1-face { 0%,100%{transform:translate3d(0,0,0)} 42%{transform:translate3d(0,2px,0)} 74%{transform:translate3d(-1px,-1px,0)} }
+  @keyframes s1-blink { 0%,69%,75%,100%{transform:scaleY(1)} 71%,73%{transform:scaleY(.08)} }
+  @keyframes s1-look { 0%,46%,100%{transform:translate3d(0,0,0)} 55%,64%{transform:translate3d(2px,-1px,0)} 82%,88%{transform:translate3d(-2px,1px,0)} }
+  @keyframes s1-smile { 0%,100%{transform:translate3d(0,0,0) scale(1)} 48%{transform:translate3d(1px,-2px,0) scale(1.05,.96)} }
+  @keyframes s1-spark { 0%,100%{stroke-dashoffset:0; opacity:.75} 50%{stroke-dashoffset:-18; opacity:1} }
+  @media (prefers-reduced-motion: reduce) {
+    #sunny1, #sunny1-rays, #sunny1-core, #sunny1-hand, #sunny1-face, .sunny1-eye, .sunny1-pupil, #sunny1-smile, #sunny1-spark { animation: none; }
+  }
+</style>
+<g id="sunny1">
+<path id="sunny1-rays" d="M305.542 24.7154C308.501 18.4384 321.258 18.4384 324.217 24.7154C352.555 84.8292 423.022 114.018 485.568 91.5491C492.098 89.203 501.119 98.2235 498.773 104.754C476.304 167.3 505.493 237.767 565.607 266.105C571.884 269.064 571.884 281.821 565.607 284.78C505.493 313.119 476.304 383.586 498.773 446.131C501.119 452.662 492.098 461.683 485.568 459.337C423.022 436.868 352.555 466.056 324.217 526.17C321.258 532.447 308.501 532.447 305.542 526.17C277.203 466.056 206.736 436.868 144.191 459.337C137.66 461.683 128.639 452.662 130.985 446.131C153.454 383.586 124.266 313.119 64.1517 284.78C57.8747 281.821 57.8747 269.064 64.1517 266.105C124.266 237.767 153.454 167.3 130.985 104.754C128.639 98.2235 137.66 89.203 144.191 91.5491C206.736 114.018 277.203 84.8292 305.542 24.7154Z" fill="#FFE040"/>
+<path id="sunny1-core" d="M272.077 129.129C220.795 148.382 151.238 220.36 158.809 291.364C166.383 362.365 241.915 433.955 314.621 430.121C387.331 426.286 433.499 393.943 463.965 312.353C502.558 209.006 383.809 87.1849 272.077 129.129Z" fill="#FFEF9A"/>
+<g id="sunny1-face">
+<g id="sunny1-smile"><path d="M318.008 272.105C325.816 270.261 330.651 262.437 328.808 254.629M300.533 261.305C302.377 269.113 310.201 273.948 318.008 272.105" stroke="black" stroke-width="5.09116" stroke-linecap="round"/></g>
+<g class="sunny1-eye"><circle cx="28.2033" cy="28.2033" r="28.2033" transform="matrix(-1 0 0 1 315.551 188.27)" fill="white"/><g class="sunny1-pupil"><circle cx="16.9861" cy="16.9861" r="16.9861" transform="matrix(-1 0 0 1 304.642 199.33)" fill="black"/></g></g>
+<g class="sunny1-eye"><circle cx="28.2033" cy="28.2033" r="28.2033" transform="matrix(-1 0 0 1 371.317 188.27)" fill="white"/><g class="sunny1-pupil"><circle cx="16.9861" cy="16.9861" r="16.9861" transform="matrix(-1 0 0 1 360.408 199.33)" fill="black"/></g></g>
+</g>
+<g id="sunny1-hand">
+<ellipse cx="55.8578" cy="389.412" rx="47.517" ry="41.8007" fill="#FFE040"/>
+<ellipse cx="48.7117" cy="357.615" rx="13.219" ry="35.0125" transform="rotate(-22.1078 48.7117 357.615)" fill="#FFE040"/>
+<ellipse cx="72.2116" cy="347.682" rx="13.219" ry="35.0125" transform="rotate(14.7786 72.2116 347.682)" fill="#FFE040"/>
+<path id="sunny1-spark" d="M32.6353 370.477C46.1155 373.874 64.9878 382.489 32.6353 389.77" stroke="white" stroke-width="3.57271" stroke-linecap="round"/>
+</g>
+</g>
+</svg>

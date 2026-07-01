@@ -1,0 +1,137 @@
+<svg width="656" height="475" viewBox="0 -80 656 475" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+  /* ===== Idle animation for Cloudy2 mascot =====
+     personality: calm, friendly, floating cloud
+     each motion runs on its own period + phase so it never looks robotic */
+
+  /* whole character floats up/down slowly (cloud drift) — 4.3s */
+  #character {
+    animation: float 4.3s ease-in-out infinite;
+  }
+  /* body breathing — gentle scale, anchored near base so it looks like it inflates upward — 3.7s (different period from float) */
+  #body {
+    transform-box: fill-box;
+    transform-origin: 50% 95%;
+    animation: breathe 3.7s ease-in-out infinite;
+  }
+  /* glasses gently slide down then nudge back up the "nose" occasionally — 6.1s */
+  #glasses {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: glasses 6.1s ease-in-out infinite;
+  }
+  /* pupils look left–right with holds, then look UP to follow the puff.
+     period = 16s, LOCKED to the same clock as #puff so the eye-follow lands
+     exactly when the puff is rising (see @keyframes gaze vs @keyframes puff) */
+  #pupils {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: gaze 16s ease-in-out infinite;
+  }
+  /* rare puff: a small cloud breaks off the top of the body and drifts up,
+     fading + scaling as it goes. period = 16s (same master clock as gaze).
+     invisible (opacity 0) for the whole cycle except the short birth window. */
+  #puff {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    opacity: 0;
+    animation: puff 16s ease-in-out infinite;
+  }
+  /* each pupil blinks (scaleY squash). blink is a short event inside a ~4.9s cycle.
+     transform-origin set per-eye in absolute user units so scaleY collapses around the pupil centre */
+  #pupilR { transform-origin: 291.17px 147.71px; animation: blink 4.9s ease-in-out infinite; }
+  #pupilL { transform-origin: 153.27px 147.71px; animation: blink 4.9s ease-in-out infinite; }
+
+  @keyframes float {
+    0%   { transform: translateY(0); }
+    50%  { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+  }
+  @keyframes breathe {
+    0%   { transform: scale(1, 1); }
+    50%  { transform: scale(1.02, 1.03); }
+    100% { transform: scale(1, 1); }
+  }
+  @keyframes glasses {
+    0%   { transform: translateY(0); }
+    40%  { transform: translateY(0); }
+    55%  { transform: translateY(3px); }   /* slips down */
+    70%  { transform: translateY(-1px); }  /* nudge back up */
+    85%  { transform: translateY(0); }
+    100% { transform: translateY(0); }
+  }
+  /* gaze on the 16s master clock:
+     look RIGHT (hold), back centre, look LEFT (hold), back centre,
+     then at ~68% the puff is born → eyes look UP to follow it (translateY),
+     then settle back to centre for a seamless loop.
+     amplitude ±9px stays inside the eye whites (pupil r18.4 in socket r30.6). */
+  @keyframes gaze {
+    0%   { transform: translate(0, 0); }
+    6%   { transform: translate(0, 0); }
+    18%  { transform: translate(9px, 0); }    /* look right */
+    28%  { transform: translate(9px, 0); }    /* hold right */
+    36%  { transform: translate(0, 0); }      /* back centre */
+    46%  { transform: translate(-9px, 0); }   /* look left */
+    56%  { transform: translate(-9px, 0); }   /* hold left */
+    64%  { transform: translate(0, 0); }      /* back centre, ready for puff */
+    71%  { transform: translate(-2px, -11px); } /* PUFF born: eyes snap up to follow it */
+    80%  { transform: translate(-4px, -11px); } /* hold gaze up, tracking the rising puff */
+    88%  { transform: translate(-2px, -3px); }  /* puff dissolved, easing back down */
+    100% { transform: translate(0, 0); }      /* settle to centre = frame 0 */
+  }
+  /* puff birth window ~68%→86% of the 16s cycle (≈ t11s→t13.8s).
+     rises up (translateY), grows a touch (scale), fades out. */
+  @keyframes puff {
+    0%,  68% { opacity: 0; transform: translate(0, 4px) scale(0.55); }
+    70.5%    { opacity: 1; transform: translate(0, -10px) scale(0.8); }   /* breaks off body top, pops in */
+    74%      { opacity: 1; transform: translate(-4px, -38px) scale(0.95); }
+    78%      { opacity: 0.9; transform: translate(-8px, -68px) scale(1.05); }
+    82%      { opacity: 0.55; transform: translate(-12px, -95px) scale(1.15); }
+    86%      { opacity: 0; transform: translate(-15px, -122px) scale(1.28); } /* dissolved */
+    86.01%, 100% { opacity: 0; transform: translate(0, 4px) scale(0.55); }
+  }
+  @keyframes blink {
+    0%, 88%, 100% { transform: scaleY(1); }
+    92%  { transform: scaleY(0.08); }  /* quick close */
+    96%  { transform: scaleY(1); }     /* pop back open */
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #character, #body, #glasses, #pupils, #pupilR, #pupilL { animation: none; }
+    #puff { animation: none; opacity: 0; }   /* keep puff hidden, no motion */
+  }
+</style>
+
+<g id="character">
+  <!-- cloud body -->
+  <path id="body" d="M454.621 84.599C420.324 22.2635 331.501 -12.6204 236.069 4.22593C126.125 23.6344 47.9303 104.551 57.6182 187.005C23.2903 205.731 0 242.148 0 284.005C1.23699e-05 344.989 49.437 394.426 110.421 394.426H545.116C606.1 394.426 655.537 344.989 655.537 284.005C655.537 246.753 637.089 213.809 608.831 193.811C610.128 187.269 610.81 180.505 610.81 173.582C610.809 116.458 564.502 70.1499 507.378 70.1498C488.107 70.1498 470.067 75.4214 454.621 84.599Z" fill="#B8DCFF"/>
+
+  <!-- eye whites -->
+  <circle cx="30.6059" cy="30.6059" r="30.6059" transform="matrix(-1 0 0 1 334.642 118.838)" fill="white"/>
+  <circle cx="30.6059" cy="30.6059" r="30.6059" transform="matrix(-1 0 0 1 196.75 118.838)" fill="white"/>
+
+  <!-- pupils (blink per-eye + gaze on group) -->
+  <g id="pupils">
+    <circle id="pupilR" cx="291.17" cy="147.71" r="18.4331" fill="black"/>
+    <circle id="pupilL" cx="153.27" cy="147.71" r="18.4331" fill="black"/>
+  </g>
+
+  <!-- glasses -->
+  <g id="glasses">
+    <circle cx="315.979" cy="148.267" r="51.8042" stroke="#1B3476" stroke-width="14.2908"/>
+    <circle cx="172.356" cy="148.267" r="51.8042" stroke="#1B3476" stroke-width="14.2908"/>
+    <path d="M227.018 147.909H259.173" stroke="#1B3476" stroke-width="14.2908" stroke-linecap="round"/>
+    <path d="M249.277 231.789C261.852 228.82 269.639 216.219 266.67 203.644M221.131 214.396C224.1 226.971 236.701 234.758 249.277 231.789" stroke="#1B3476" stroke-width="14.2908" stroke-linecap="round"/>
+  </g>
+
+  <!-- small puff cloud: breaks off the top of the body and drifts up.
+       same fill as the body (#B8DCFF), built from overlapping circles.
+       centred near x300 on the upper edge of the character. -->
+  <g id="puff">
+    <circle cx="283" cy="78" r="19" fill="#9FCEFF" stroke="#fff" stroke-width="3.5"/>
+    <circle cx="307" cy="70" r="24" fill="#9FCEFF" stroke="#fff" stroke-width="3.5"/>
+    <circle cx="331" cy="80" r="18" fill="#9FCEFF" stroke="#fff" stroke-width="3.5"/>
+    <ellipse cx="307" cy="87" rx="40" ry="16" fill="#9FCEFF"/>
+  </g>
+</g>
+</svg>

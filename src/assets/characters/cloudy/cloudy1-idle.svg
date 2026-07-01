@@ -1,0 +1,39 @@
+<svg width="643" height="550" viewBox="0 0 643 550" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cloudy1-title">
+<title id="cloudy1-title">Cloudy 1 idle mascot</title>
+<style>
+  #cloudy1 { transform-box: view-box; transform-origin: 50% 55%; animation: c1-float 5.6s ease-in-out infinite; }
+  #cloudy1-body { transform-box: fill-box; transform-origin: 50% 80%; animation: c1-puff 4.4s ease-in-out infinite; }
+  #cloudy1-hand { transform-box: fill-box; transform-origin: 58% 24%; animation: c1-wave 3.8s ease-in-out infinite; }
+  #cloudy1-face { transform-box: fill-box; transform-origin: 50% 50%; animation: c1-face 5.6s ease-in-out infinite; }
+  .cloudy1-eye { transform-box: fill-box; transform-origin: 50% 50%; animation: c1-blink 5.9s linear infinite; }
+  .cloudy1-pupil { transform-box: fill-box; transform-origin: 50% 50%; animation: c1-look 5.9s ease-in-out infinite; }
+  #cloudy1-mouth { transform-box: fill-box; transform-origin: 50% 50%; animation: c1-mouth 4.4s ease-in-out infinite; }
+  .cloudy1-breeze { stroke-dasharray: 36 18; animation: c1-breeze 2.8s ease-in-out infinite; }
+  #cloudy1-breeze-2 { animation-delay: .35s; }
+  @keyframes c1-float { 0%,100%{transform:translate3d(0,0,0) rotate(0deg)} 38%{transform:translate3d(0,-9px,0) rotate(-.6deg)} 72%{transform:translate3d(2px,3px,0) rotate(.4deg)} }
+  @keyframes c1-puff { 0%,100%{transform:scale(1)} 48%{transform:scale(1.012,.99)} 72%{transform:scale(.996,1.006)} }
+  @keyframes c1-wave { 0%,100%{transform:rotate(0deg) translate3d(0,0,0)} 45%{transform:rotate(-5deg) translate3d(-1px,-3px,0)} 70%{transform:rotate(3deg) translate3d(2px,1px,0)} }
+  @keyframes c1-face { 0%,100%{transform:translate3d(0,0,0)} 38%{transform:translate3d(0,3px,0)} 72%{transform:translate3d(-1px,-1px,0)} }
+  @keyframes c1-blink { 0%,70%,76%,100%{transform:scaleY(1)} 72%,74%{transform:scaleY(.08)} }
+  @keyframes c1-look { 0%,45%,100%{transform:translate3d(0,0,0)} 54%,64%{transform:translate3d(3px,-1px,0)} 84%,90%{transform:translate3d(-2px,1px,0)} }
+  @keyframes c1-mouth { 0%,100%{transform:translate3d(0,0,0) scale(1)} 48%{transform:translate3d(1px,-2px,0) scale(1.04,.96)} }
+  @keyframes c1-breeze { 0%,100%{stroke-dashoffset:0; opacity:.72} 50%{stroke-dashoffset:-18; opacity:1} }
+  @media (prefers-reduced-motion: reduce) {
+    #cloudy1, #cloudy1-body, #cloudy1-hand, #cloudy1-face, .cloudy1-eye, .cloudy1-pupil, #cloudy1-mouth, .cloudy1-breeze { animation: none; }
+  }
+</style>
+<g id="cloudy1">
+<g id="cloudy1-hand">
+<ellipse cx="40.7289" cy="389.412" rx="40.7289" ry="41.8007" fill="#B8DCFF"/>
+<ellipse cx="68.4576" cy="373.156" rx="13.219" ry="36.7989" transform="rotate(0.787456 68.4576 373.156)" fill="#B8DCFF"/>
+<path id="cloudy1-breeze-1" class="cloudy1-breeze" d="M22.1509 369.762C35.6311 373.16 54.5035 381.775 22.1509 389.055" stroke="white" stroke-width="3.57271" stroke-linecap="round"/>
+<path id="cloudy1-breeze-2" class="cloudy1-breeze" d="M22.1509 389.77C32.3959 392.412 46.7388 399.112 22.1509 404.775" stroke="white" stroke-width="3.57271" stroke-linecap="round"/>
+</g>
+<path id="cloudy1-body" d="M329.234 84.6602C385.752 84.6602 436.367 105.377 470.408 138.053C476.967 136.305 483.742 134.94 490.697 133.995C565.52 123.832 633.036 166.095 641.497 228.391C649.322 285.999 603.905 340.564 537.855 356.487C538.985 362.229 539.577 368.146 539.577 374.191C539.577 428.176 492.491 471.938 434.406 471.938C402.961 471.938 374.741 459.112 355.468 438.782C332.306 451.054 303.517 458.328 272.318 458.328C195.783 458.328 133.74 414.565 133.739 360.581C133.739 356.804 134.043 353.077 134.634 349.412C128.222 347.961 121.816 346.033 115.466 343.604C50.3889 318.719 15.8364 250.943 38.2911 192.222C60.6784 133.677 131.278 106.238 196.194 130.735C229.913 102.315 277.06 84.6602 329.234 84.6602Z" fill="#B8DCFF"/>
+<g id="cloudy1-face">
+<g id="cloudy1-mouth"><ellipse cx="13.855" cy="15.9076" rx="13.855" ry="15.9076" transform="matrix(-1 0 0 1 320.564 269.374)" fill="black"/></g>
+<g class="cloudy1-eye"><ellipse cx="45.6703" cy="45.1571" rx="45.6703" ry="45.1571" transform="matrix(-1 0 0 1 321.59 168.797)" fill="white"/><g class="cloudy1-pupil"><ellipse cx="26.1706" cy="27.1969" rx="26.1706" ry="27.1969" transform="matrix(-1 0 0 1 282.592 184.192)" fill="black"/></g></g>
+<g class="cloudy1-eye"><circle cx="45.1571" cy="45.1571" r="45.1571" transform="matrix(-1 0 0 1 399.589 168.797)" fill="white"/><g class="cloudy1-pupil"><circle cx="27.1969" cy="27.1969" r="27.1969" transform="matrix(-1 0 0 1 362.642 184.192)" fill="black"/></g></g>
+</g>
+</g>
+</svg>

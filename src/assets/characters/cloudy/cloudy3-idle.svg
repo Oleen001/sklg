@@ -1,0 +1,28 @@
+<svg width="668" height="510" viewBox="0 0 668 510" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cloudy3-title">
+<title id="cloudy3-title">Cloudy 3 idle mascot</title>
+<style>
+  #cloudy3 { transform-box: view-box; transform-origin: 50% 55%; animation: c3-float 5.2s ease-in-out infinite; }
+  #cloudy3-body { transform-box: fill-box; transform-origin: 50% 78%; animation: c3-puff 4.6s ease-in-out infinite; }
+  #cloudy3-face { transform-box: fill-box; transform-origin: 50% 50%; animation: c3-face 5.2s ease-in-out infinite; }
+  .cloudy3-eye { transform-box: fill-box; transform-origin: 50% 50%; animation: c3-blink 6.1s linear infinite; }
+  .cloudy3-pupil { transform-box: fill-box; transform-origin: 50% 50%; animation: c3-look 6.1s ease-in-out infinite; }
+  #cloudy3-smile { transform-box: fill-box; transform-origin: 50% 50%; animation: c3-smile 4.6s ease-in-out infinite; }
+  @keyframes c3-float { 0%,100%{transform:translate3d(0,0,0) rotate(0deg)} 42%{transform:translate3d(0,-8px,0) rotate(.5deg)} 75%{transform:translate3d(-2px,3px,0) rotate(-.4deg)} }
+  @keyframes c3-puff { 0%,100%{transform:scale(1)} 44%{transform:scale(1.01,.992)} 72%{transform:scale(.996,1.005)} }
+  @keyframes c3-face { 0%,100%{transform:translate3d(0,0,0)} 42%{transform:translate3d(0,2px,0)} 75%{transform:translate3d(1px,-1px,0)} }
+  @keyframes c3-blink { 0%,68%,74%,100%{transform:scaleY(1)} 70%,72%{transform:scaleY(.08)} }
+  @keyframes c3-look { 0%,48%,100%{transform:translate3d(0,0,0)} 58%,66%{transform:translate3d(3px,1px,0)} 84%,90%{transform:translate3d(-2px,-1px,0)} }
+  @keyframes c3-smile { 0%,100%{transform:translate3d(0,0,0) scale(1)} 46%{transform:translate3d(1px,-1px,0) scale(1.04,.97)} }
+  @media (prefers-reduced-motion: reduce) {
+    #cloudy3, #cloudy3-body, #cloudy3-face, .cloudy3-eye, .cloudy3-pupil, #cloudy3-smile { animation: none; }
+  }
+</style>
+<g id="cloudy3">
+<path id="cloudy3-body" d="M253.846 0C326.063 3.05821e-05 388.14 43.4101 415.409 105.56C439.988 83.2108 472.644 69.5899 508.481 69.5898C584.912 69.5898 646.871 131.548 646.871 207.979C646.871 225.81 643.496 242.853 637.354 258.506C650.103 271.431 659.513 287.48 664.11 305.872C679.044 365.615 637.566 427.44 571.468 443.962C549.416 449.474 527.41 449.245 507.319 444.277C471.007 483.635 411.712 509.271 344.725 509.271C261.33 509.271 189.856 469.541 159.81 413.063C147.845 416.993 135.062 419.12 121.782 419.12C54.5238 419.12 0 364.596 0 297.338C0.000117289 245.643 32.2103 201.473 77.6553 183.798C77.5526 181.327 77.498 178.843 77.498 176.347C77.4982 78.953 156.452 0 253.846 0Z" fill="#B8DCFF"/>
+<g id="cloudy3-face">
+<g id="cloudy3-smile"><path d="M262.857 265.987C275.26 263.059 282.941 250.63 280.012 238.226M235.096 248.831C238.024 261.235 250.453 268.916 262.857 265.987" stroke="#1B3476" stroke-width="9.92391" stroke-linecap="round"/></g>
+<g class="cloudy3-eye"><circle cx="44.8034" cy="44.8034" r="44.8034" transform="matrix(-1 0 0 1 258.953 132.807)" fill="white"/><g class="cloudy3-pupil"><circle cx="26.9839" cy="26.9839" r="26.9839" transform="matrix(-1 0 0 1 241.624 150.377)" fill="black"/></g></g>
+<g class="cloudy3-eye"><circle cx="44.8034" cy="44.8034" r="44.8034" transform="matrix(-1 0 0 1 347.542 132.807)" fill="white"/><g class="cloudy3-pupil"><circle cx="26.9839" cy="26.9839" r="26.9839" transform="matrix(-1 0 0 1 330.213 150.377)" fill="black"/></g></g>
+</g>
+</g>
+</svg>

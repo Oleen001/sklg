@@ -1,26 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import SkillTrends from "@/imports/SkillTrends/index";
+import svgPaths from "@/imports/SkillTrends/svg-79qsf1o8t9";
+import SkillTrendsMobilePage from "./pages/SkillTrendsMobilePage";
+
+const DESKTOP_QUERY = "(min-width: 1024px)";
+
+function getIsDesktop() {
+  if (typeof window === "undefined") return true;
+  return window.matchMedia(DESKTOP_QUERY).matches;
+}
 
 /* ─────────────────────────────────────────────────────────────
    Animations for the Skill Trends page
 
-   Figma motion context node 7:650 (Group 1000002698):
-   - scaleX: 1.2 → 1, 2 s, ease-in-out, repeat Infinity
-   - scaleY: 1.2 → 1, 2 s, ease-in-out, repeat Infinity
-   - transformOrigin: 50% 50%
-   Applied to the inner content of the motion.div wrapper so the
-   Tailwind translate-x/y positioning on the wrapper is preserved.
-
    Additional animations: float for both mascot characters,
-   staggered card reveals on scroll.
+   staggered card reveals on scroll, and a slow 2D physics
+   background magnifier that follows the pointer.
 ───────────────────────────────────────────────────────────── */
 const STYLES = `
-  /* Figma node 7:650 — breathing scale pop */
-  @keyframes st-mascot-scale {
-    from { transform: scale(1.2); }
-    to   { transform: scale(1);   }
-  }
-
   /* Gentle vertical float for both mascot groups */
   @keyframes st-float {
     0%, 100% { transform: translateY(0px);  }
@@ -31,20 +28,53 @@ const STYLES = `
     50%       { transform: translateY(-8px); }
   }
 
-  /* Figma-specified character: scale breathe */
-  .st-mascot-breathe {
-    animation: st-mascot-scale 2s ease-in-out infinite;
-    transform-origin: center center;
+  #st-root {
+    isolation: isolate;
+    position: relative;
+  }
+
+  #st-root [data-motion-wrapper-for="7:650"] {
+    display: none !important;
+  }
+
+  .st-bg-magnifier {
+    height: clamp(180px, 24vw, 320px);
+    left: 0;
+    opacity: 0.2;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    transform: translate3d(72vw, 12vh, 0) rotate(-10deg);
+    transform-origin: 50% 50%;
+    width: clamp(180px, 24vw, 320px);
+    will-change: transform;
+    z-index: 1;
+  }
+
+  .st-bg-magnifier svg {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  #st-root [data-name="Navbar"],
+  #st-root [data-name="Section Description"],
+  #st-root [data-name="Industry Section Description"],
+  #st-root [data-name="Industry Card"],
+  #st-root [data-name="Footer"] {
+    z-index: 2;
   }
 
   /* Large goggles mascot (Group2, header right side) */
   .st-float-large {
     animation: st-float 3.5s ease-in-out infinite 0.3s;
+    z-index: 2;
   }
 
   /* Small goggles mascot (Group3, bottom of industry section) */
   .st-float-small {
     animation: st-float-sm 3.2s ease-in-out infinite 0.7s;
+    z-index: 2;
   }
 
   /* ── Scroll-reveal states ── */
@@ -57,7 +87,7 @@ const STYLES = `
   }
   .st-left {
     opacity: 0;
-    transform: translateX(-56px);
+    transform: translateX(-56px) translateY(var(--st-safe-offset-y, 0px));
     transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
                 transform  0.85s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: opacity, transform;
@@ -70,20 +100,41 @@ const STYLES = `
     will-change: opacity, transform;
   }
   .st-up.st-in,
-  .st-left.st-in,
   .st-right.st-in {
     opacity: 1;
     transform: none;
   }
+  .st-left.st-in {
+    opacity: 1;
+    transform: translateY(var(--st-safe-offset-y, 0px));
+  }
+
+  #st-root [data-name="Section Description"] {
+    --st-safe-offset-y: 0px;
+  }
+
+  @media (max-width: 900px) {
+    #st-root [data-name="Section Description"] {
+      --st-safe-offset-y: 56px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    #st-root [data-name="Section Description"] {
+      --st-safe-offset-y: 160px;
+    }
+  }
 
   @media (prefers-reduced-motion: reduce) {
-    .st-mascot-breathe,
     .st-float-large,
     .st-float-small { animation: none; }
+    .st-bg-magnifier {
+      transform: translate3d(66vw, 14vh, 0) rotate(-10deg);
+    }
     .st-up, .st-left, .st-right {
       transition: none;
       opacity: 1;
-      transform: none;
+      transform: translateY(var(--st-safe-offset-y, 0px));
     }
   }
 `;
@@ -93,7 +144,115 @@ const STYLES = `
    different rates as the user scrolls. Each card gets
    a unique factor (slower = deeper parallax feel).
 ══════════════════════════════════════════════════ */
-const PARALLAX_FACTORS = [0.10, 0.16, 0.08, 0.13, 0.19, 0.07, 0.14, 0.18, 0.11, 0.09, 0.15];
+const PARALLAX_FACTORS = [0.04, 0.06, 0.03, 0.05, 0.07, 0.03, 0.05, 0.07, 0.04, 0.03, 0.06];
+
+function BackgroundMagnifier() {
+  const ref = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reduceMotion.matches) return;
+
+    const pointer = {
+      x: window.innerWidth * 0.78,
+      y: window.innerHeight * 0.28,
+    };
+    const body = {
+      x: window.innerWidth * 0.72,
+      y: window.innerHeight * 0.12,
+      vx: 0.18,
+      vy: 0.1,
+      angle: -10,
+      spin: 0.012,
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+    };
+
+    let raf = 0;
+    let last = performance.now();
+
+    const tick = (now: number) => {
+      const dt = Math.min((now - last) / 16.667, 2);
+      last = now;
+
+      const rect = el.getBoundingClientRect();
+      const width = rect.width || 240;
+      const height = rect.height || width;
+      const maxX = Math.max(0, window.innerWidth - width);
+      const maxY = Math.max(0, window.innerHeight - height);
+      const centerX = body.x + width / 2;
+      const centerY = body.y + height / 2;
+      const dx = pointer.x - centerX;
+      const dy = pointer.y - centerY;
+
+      body.vx += dx * 0.00055 * dt;
+      body.vy += dy * 0.00055 * dt;
+      body.vx *= Math.pow(0.992, dt);
+      body.vy *= Math.pow(0.992, dt);
+
+      const speed = Math.hypot(body.vx, body.vy);
+      const maxSpeed = 1.35;
+      if (speed > maxSpeed) {
+        body.vx = (body.vx / speed) * maxSpeed;
+        body.vy = (body.vy / speed) * maxSpeed;
+      }
+
+      body.x += body.vx * dt;
+      body.y += body.vy * dt;
+
+      if (body.x <= 0) {
+        body.x = 0;
+        body.vx = Math.abs(body.vx) * 0.72;
+        body.spin += 0.002;
+      } else if (body.x >= maxX) {
+        body.x = maxX;
+        body.vx = -Math.abs(body.vx) * 0.72;
+        body.spin -= 0.002;
+      }
+
+      if (body.y <= 0) {
+        body.y = 0;
+        body.vy = Math.abs(body.vy) * 0.72;
+        body.spin += 0.0015;
+      } else if (body.y >= maxY) {
+        body.y = maxY;
+        body.vy = -Math.abs(body.vy) * 0.72;
+        body.spin -= 0.0015;
+      }
+
+      body.angle += body.spin * dt;
+      body.spin *= Math.pow(0.9995, dt);
+      el.style.transform = `translate3d(${body.x}px, ${body.y}px, 0) rotate(${body.angle}deg)`;
+      raf = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      if (raf !== 0) cancelAnimationFrame(raf);
+      el.style.transform = "";
+    };
+  }, []);
+
+  return (
+    <div ref={ref} aria-hidden className="st-bg-magnifier">
+      <svg fill="none" preserveAspectRatio="none" viewBox="0 0 189.454 189.454">
+        <g id="skill-trends-background-magnifier">
+          <circle cx="67.149" cy="67.148" fill="#A8CEFC" fillOpacity="0.5" r="62.3524" />
+          <path clipRule="evenodd" d={svgPaths.p26efe100} fill="#EF5F5E" fillRule="evenodd" />
+        </g>
+      </svg>
+    </div>
+  );
+}
 
 function useIndustryParallax() {
   useEffect(() => {
@@ -113,10 +272,13 @@ function useIndustryParallax() {
 
     let raf = 0;
     let prevSY = -1;
+    let cancelled = false;
 
     const tick = () => {
+      if (cancelled) { raf = 0; return; }
       const sy = window.scrollY;
-      if (sy !== prevSY) {
+      const scrollChanged = sy !== prevSY;
+      if (scrollChanged) {
         prevSY = sy;
         const vh2 = window.innerHeight / 2;
         items.forEach(({ img, factor, flip }) => {
@@ -129,21 +291,44 @@ function useIndustryParallax() {
           img.style.translate = `0px ${offset}px`;
         });
       }
-      raf = requestAnimationFrame(tick);
+      // Idle-pause: only keep rescheduling while scroll position keeps changing.
+      raf = scrollChanged ? requestAnimationFrame(tick) : 0;
     };
 
-    const tid = setTimeout(() => { collect(); raf = requestAnimationFrame(tick); }, 150);
+    const wake = () => {
+      if (!cancelled && raf === 0) raf = requestAnimationFrame(tick);
+    };
+    const onScroll = () => wake();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const tid = setTimeout(() => {
+      if (cancelled) return;
+      collect();
+      raf = requestAnimationFrame(tick);
+    }, 150);
 
     return () => {
+      cancelled = true;
       clearTimeout(tid);
-      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      if (raf !== 0) cancelAnimationFrame(raf);
       items.forEach(({ img }) => { img.style.translate = ""; });
     };
   }, []);
 }
 
 export default function SkillTrendsPage() {
+  const [isDesktop, setIsDesktop] = useState(getIsDesktop);
+
   useIndustryParallax();
+
+  useEffect(() => {
+    const media = window.matchMedia(DESKTOP_QUERY);
+    const update = () => setIsDesktop(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     const styleEl = document.createElement("style");
@@ -166,15 +351,6 @@ export default function SkillTrendsPage() {
     const tid = setTimeout(() => {
       const root = document.getElementById("st-root");
       if (!root) return;
-
-      /* ── Figma motion node 7:650 ──
-         The imported motion.div has translate -50%/-50% on it for positioning.
-         We target the inner layout div (child of .flex-none) so the translate
-         is untouched; scale applies to the content only. */
-      const mascotContent = root.querySelector(
-        '[data-motion-wrapper-for="7:650"] .flex-none > div'
-      );
-      mascotContent?.classList.add("st-mascot-breathe");
 
       /* ── Float: find mascot elements by their specific Tailwind height classes ──
          Checking classList directly avoids the need to escape bracket notation. */
@@ -213,8 +389,11 @@ export default function SkillTrendsPage() {
     };
   }, []);
 
+  if (!isDesktop) return <SkillTrendsMobilePage />;
+
   return (
     <div id="st-root" style={{ width: "100%" }}>
+      <BackgroundMagnifier />
       <SkillTrends />
     </div>
   );

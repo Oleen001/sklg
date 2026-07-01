@@ -1,0 +1,156 @@
+<svg width="681" height="617" viewBox="0 0 681 617" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="windy2-title">
+<title id="windy2-title">Windy idle mascot</title>
+<style>
+  /* ===== Idle animation for Windy2 mascot =====
+     personality: airy, curious, gentle
+     the body floats as one character while each wind lobe drifts on a slightly different rhythm */
+
+  #windy2 {
+    transform-box: view-box;
+    transform-origin: 50% 55%;
+    animation: windy-float 5.4s ease-in-out infinite;
+  }
+
+  #wind-lobes {
+    transform-box: fill-box;
+    transform-origin: 47% 50%;
+    animation: windy-breathe 4.8s ease-in-out infinite;
+  }
+
+  #top-gust {
+    transform-box: fill-box;
+    transform-origin: 58% 48%;
+    animation: top-gust-drift 6.2s ease-in-out infinite;
+  }
+
+  #back-gust {
+    transform-box: fill-box;
+    transform-origin: 45% 52%;
+    animation: back-gust-drift 5.7s ease-in-out infinite;
+  }
+
+  #tail-gust {
+    transform-box: fill-box;
+    transform-origin: 42% 58%;
+    animation: tail-gust-sway 4.9s ease-in-out infinite;
+  }
+
+  #face {
+    transform-box: fill-box;
+    transform-origin: 50% 52%;
+    animation: face-counter-float 5.4s ease-in-out infinite;
+  }
+
+  .eye {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: blink 5.6s linear infinite;
+  }
+
+  #left-pupil,
+  #right-pupil {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: curious-look 5.6s ease-in-out infinite;
+  }
+
+  #smile {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+    animation: smile-bob 4.8s ease-in-out infinite;
+  }
+
+  @keyframes windy-float {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    34% { transform: translate3d(0, -10px, 0) rotate(-1.1deg); }
+    68% { transform: translate3d(2px, 4px, 0) rotate(0.8deg); }
+  }
+
+  @keyframes windy-breathe {
+    0%, 100% { transform: scale(1); }
+    45% { transform: scale(1.012, 0.988); }
+    70% { transform: scale(0.994, 1.006); }
+  }
+
+  @keyframes top-gust-drift {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    45% { transform: translate3d(7px, -5px, 0) rotate(1.2deg); }
+    72% { transform: translate3d(-2px, 2px, 0) rotate(-0.5deg); }
+  }
+
+  @keyframes back-gust-drift {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    38% { transform: translate3d(-5px, -3px, 0) rotate(-0.8deg); }
+    75% { transform: translate3d(3px, 2px, 0) rotate(0.5deg); }
+  }
+
+  @keyframes tail-gust-sway {
+    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+    42% { transform: translate3d(6px, -2px, 0) rotate(1.5deg) scale(1.015, 0.99); }
+    74% { transform: translate3d(-4px, 3px, 0) rotate(-0.7deg) scale(0.995, 1.008); }
+  }
+
+  @keyframes face-counter-float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    34% { transform: translate3d(0, 3px, 0); }
+    68% { transform: translate3d(-1px, -1px, 0); }
+  }
+
+  @keyframes blink {
+    0%, 70%, 76%, 100% { transform: scaleY(1); }
+    72%, 74% { transform: scaleY(0.08); }
+  }
+
+  @keyframes curious-look {
+    0%, 48%, 100% { transform: translate3d(0, 0, 0); }
+    56%, 64% { transform: translate3d(4px, -1px, 0); }
+    82%, 88% { transform: translate3d(-2px, 1px, 0); }
+  }
+
+  @keyframes smile-bob {
+    0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+    46% { transform: translate3d(1px, -2px, 0) scale(1.05, 0.96); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #windy2,
+    #wind-lobes,
+    #top-gust,
+    #back-gust,
+    #tail-gust,
+    #face,
+    .eye,
+    #left-pupil,
+    #right-pupil,
+    #smile {
+      animation: none;
+    }
+  }
+</style>
+<g id="windy2">
+  <g id="wind-lobes">
+    <path id="back-gust" d="M565.578 445.502C493.557 519.741 301.799 522.476 194.422 418.308C87.0459 314.139 58.3844 169.511 130.405 95.2725C202.426 21.0337 305.778 86.8284 413.155 190.997C520.531 295.166 637.599 371.263 565.578 445.502Z" fill="#1B3476"/>
+    <path id="top-gust" d="M663.651 235.736C637.065 302.805 498.735 365.104 359.661 309.975C220.587 254.845 129.398 155.784 155.984 88.7152C182.571 21.6466 319.975 60.8383 459.049 115.968C598.123 171.098 690.238 168.668 663.651 235.736Z" fill="#1B3476"/>
+    <g id="tail-gust">
+      <ellipse cx="265.858" cy="398.784" rx="228.154" ry="71.4841" transform="rotate(47.5178 265.858 398.784)" fill="#1B3476"/>
+    </g>
+  </g>
+  <g id="face">
+    <g id="smile">
+      <ellipse cx="13.1636" cy="15.1138" rx="13.1636" ry="15.1138" transform="matrix(-1 0 0 1 174.834 203.758)" fill="black"/>
+    </g>
+    <g id="right-eye" class="eye">
+      <ellipse cx="43.3912" cy="42.9037" rx="43.3912" ry="42.9037" transform="matrix(-1 0 0 1 175.81 108.2)" fill="white"/>
+      <g id="right-pupil">
+        <ellipse cx="24.8646" cy="25.8397" rx="24.8646" ry="25.8397" transform="matrix(-1 0 0 1 138.757 122.826)" fill="black"/>
+      </g>
+    </g>
+    <g id="left-eye" class="eye">
+      <circle cx="42.9037" cy="42.9037" r="42.9037" transform="matrix(-1 0 0 1 249.917 108.2)" fill="white"/>
+      <g id="left-pupil">
+        <circle cx="25.8397" cy="25.8397" r="25.8397" transform="matrix(-1 0 0 1 214.813 122.826)" fill="black"/>
+      </g>
+    </g>
+  </g>
+</g>
+</svg>

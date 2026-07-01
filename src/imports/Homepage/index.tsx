@@ -4,6 +4,17 @@ import imgScreenshot25690625At916213 from "./fbc8677ca9dc2198c7e3452c8145ab7de9d
 import imgRectangle from "./fb00664fb29d5df01ed6086676d13d0df96965c5.png";
 import imgAdsBackground from "./12be04912d27d801c5eed4d993dfd2bc03db445d.png";
 import imgMainImage from "./33fbdc33ffd551e1b3c4d0b4c11618dad9f622fe.png";
+import HeroMascot from "@/app/components/HeroMascot";
+import ShadowSvg from "@/app/components/ShadowSvg";
+import cloudy2IdleSvg from "@/assets/characters/cloudy/cloudy2-idle.svg?raw";
+import sunny2IdleSvg from "@/assets/characters/sunny/sunny2-idle.svg?raw";
+import windy3IdleSvg from "@/assets/characters/windy/windy3-idle.svg?raw";
+import riasecASvg from "@/assets/riasec/a-lottie-v2.svg?raw";
+import riasecCSvg from "@/assets/riasec/c-lottie-v2.svg?raw";
+import riasecESvg from "@/assets/riasec/e-lottie-v2.svg?raw";
+import riasecISvg from "@/assets/riasec/i-lottie-v2.svg?raw";
+import riasecRSvg from "@/assets/riasec/r-lottie-v2.svg?raw";
+import riasecSSvg from "@/assets/riasec/s-lottie-v2.svg?raw";
 
 function Group4() {
   return (
@@ -348,14 +359,29 @@ function HeaderSection() {
           <path d={svgPaths.p1508a900} fill="var(--fill-0, #FFE040)" id="Union" />
         </svg>
       </div>
-      <SunnyA />
+      <HeroMascot
+        className="left-[704px] top-[326px] h-[260px] w-[432px]"
+        label="Sunny"
+        maxLook={8}
+        svg={sunny2IdleSvg}
+      />
       <div className="-translate-x-1/2 absolute bg-[#0d6ec8] content-stretch flex gap-[3.998px] h-[47.981px] items-center justify-center left-[calc(50%-0.01px)] min-w-[79.96864318847656px] px-[15.994px] rounded-[100px] top-[332px] w-[242.987px]" data-name="Solid button">
         <p className="[word-break:break-word] flex-[1_0_0] font-['noto_sans_thai:semiBold','Noto_Sans:SemiBold',sans-serif] leading-[26.989px] min-w-px relative text-[17.99px] text-center text-white" style={{ fontVariationSettings: '"CTGR" 0, "wdth" 100, "wght" 600' }}>
           เข้าสู่ระบบ แล้วไปเริ่มกันเลย!
         </p>
       </div>
-      <AnimatedGroupContainer />
-      <IconGroupContainer />
+      <HeroMascot
+        className="left-[52px] top-[315px] h-[300px] w-[354px]"
+        label="Windy"
+        maxLook={9}
+        svg={windy3IdleSvg}
+      />
+      <HeroMascot
+        className="left-[396px] top-[416px] h-[238px] w-[398px]"
+        label="Cloudy"
+        maxLook={7}
+        svg={cloudy2IdleSvg}
+      />
     </div>
   );
 }
@@ -999,207 +1025,45 @@ function Group10() {
 function VectorContainerInner2() {
   return (
     <div className="absolute contents left-[597.98px] top-[1266px]" data-name="Vector Container Inner">
-      <div className="absolute h-[166.037px] left-[597.98px] top-[1298.68px] w-[149.433px]" data-name="R animate">
-        <div className="absolute inset-[9.38%_7.82%_9.1%_7.64%]" data-name="Union">
-          <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 126.328 135.367">
-            <path d={svgPaths.p16b5af00} fill="var(--fill-0, #FFE040)" id="Union" />
-          </svg>
-        </div>
-        <Group11 />
-        <Group12 />
-        <div className="absolute flex inset-[19.32%_64%_72.57%_23.43%] items-center justify-center" style={{ containerType: "size" }}>
-          <div className="flex-none h-[hypot(7.37941cqw,15.7768cqh)] rotate-[-33.11deg] w-[hypot(92.6206cqw,-84.2232cqh)]">
-            <div className="relative size-full">
-              <div className="absolute inset-[-104.03%_-12.71%_-104%_-12.71%]">
-                <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 26.0489 7.81575">
-                  <path d={svgPaths.p1c94a180} id="Line 1" stroke="var(--stroke-0, #0E2440)" strokeLinecap="round" strokeWidth="5.27768" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="absolute flex inset-[19.32%_34.14%_72.57%_53.29%] items-center justify-center" style={{ containerType: "size" }}>
-          <div className="-scale-x-100 flex-none h-[hypot(-7.37941cqw,15.7768cqh)] rotate-[33.11deg] w-[hypot(-92.6206cqw,-84.2232cqh)]">
-            <div className="relative size-full">
-              <div className="absolute inset-[-104.03%_-12.71%_-104%_-12.71%]">
-                <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 26.0489 7.81575">
-                  <path d={svgPaths.p1c94a180} id="Line 2" stroke="var(--stroke-0, #0E2440)" strokeLinecap="round" strokeWidth="5.27768" />
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="absolute inset-[42.45%_48.39%_47.55%_43.57%]">
-          <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 12.0162 16.6037">
-            <path d={svgPaths.p1a9f100} fill="var(--fill-0, #1B3A5C)" id="Ellipse 1" />
-          </svg>
-        </div>
-        <Group13 />
-        <div className="absolute inset-[56.25%_3.18%_13.69%_62.5%]" data-name="Union">
-          <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 51.2785 49.9088">
-            <path d={svgPaths.p945b800} fill="url(#paint0_linear_1_2386)" id="Union" />
-            <defs>
-              <linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_1_2386" x1="25.9428" x2="25.6393" y1="5.70747" y2="49.9087">
-                <stop stopColor="#4DA8EE" />
-                <stop offset="1" stopColor="#507DA4" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-      </div>
-      <div className="absolute flex h-[176.881px] items-center justify-center left-[710.36px] top-[1266px] w-[161.656px]">
-        <div className="flex-none rotate-[4.49deg]">
-          <div className="h-[165.72px] relative w-[149.148px]" data-name="I animate">
-            <div className="absolute inset-[9.38%_29.73%_9.38%_27.22%]" data-name="Union">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 64.2165 134.647">
-                <path d={svgPaths.p21056100} fill="var(--fill-0, #F4677D)" id="Union" />
-              </svg>
-            </div>
-            <div className="absolute flex inset-[55.55%_40.97%_33.34%_41.21%] items-center justify-center" style={{ containerType: "size" }}>
-              <div className="-scale-x-100 flex-none h-[hypot(-9.77399cqw,-75.7698cqh)] rotate-[169.46deg] w-[hypot(90.226cqw,-24.2302cqh)]">
-                <div className="relative size-full">
-                  <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 24.3889 14.1949">
-                    <path d={svgPaths.p37135600} fill="var(--fill-0, #0E2440)" id="Ellipse 12" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <div className="absolute inset-[57.81%_47.09%_40%_44.23%]" data-name="Intersect">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 12.9469 3.62512">
-                <path d={svgPaths.p270a6c00} fill="var(--fill-0, white)" id="Intersect" />
-              </svg>
-            </div>
-            <Group14 />
-            <Group15 />
-            <div className="absolute inset-[1.88%_42.57%_76.56%_36.94%]" data-name="Vector 567 (Stroke)">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 30.5546 35.7333">
-                <path d={svgPaths.p27627a00} fill="var(--fill-0, #05101F)" id="Vector 567 (Stroke)" />
-              </svg>
-            </div>
-            <div className="absolute flex inset-[42.5%_49.17%_47.81%_44.23%] items-center justify-center" style={{ containerType: "size" }}>
-              <div className="-scale-x-100 flex-none h-[100cqh] w-[100cqw]">
-                <div className="relative size-full">
-                  <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 9.83963 16.0541">
-                    <path d={svgPaths.p2aee8600} fill="var(--fill-0, #1B3A5C)" id="Ellipse 2" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-            <Group25 />
-          </div>
-        </div>
-      </div>
-      <div className="absolute flex h-[177.487px] items-center justify-center left-[808.75px] top-[1314.68px] w-[162.342px]">
-        <div className="flex-none rotate-[-4.74deg]">
-          <div className="h-[165.72px] relative w-[149.148px]" data-name="A animate">
-            <div className="absolute inset-[9.38%_3.68%_9.38%_6.38%]" data-name="Union">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 134.129 134.647">
-                <path d={svgPaths.pe999170} fill="var(--fill-0, #4DA8EE)" id="Union" />
-              </svg>
-            </div>
-            <Group17 />
-            <Group16 />
-            <Group26 />
-            <Group22 />
-          </div>
-        </div>
-      </div>
-      <div className="absolute flex h-[173.148px] items-center justify-center left-[653.94px] top-[1465.76px] w-[157.447px]">
-        <div className="flex-none rotate-[2.94deg]">
-          <div className="h-[165.72px] relative w-[149.148px]" data-name="S animate">
-            <div className="absolute inset-[9.38%_15.14%_9.38%_13.68%]" data-name="Union">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 106.164 134.647">
-                <path clipRule="evenodd" d={svgPaths.p88b8c00} fill="var(--fill-0, #647182)" fillRule="evenodd" id="Union" />
-              </svg>
-            </div>
-            <Group28 />
-            <Group27 />
-            <Group29 />
-            <div className="absolute inset-[5.63%_0.91%_71.88%_69.93%]" data-name="Union">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 43.5015 37.287">
-                <g id="Union">
-                  <path d={svgPaths.p1627100} fill="url(#paint0_linear_1_2300)" />
-                  <path d={svgPaths.p1ec82200} fill="url(#paint1_linear_1_2300)" />
-                  <path d={svgPaths.p28682200} fill="url(#paint2_linear_1_2300)" />
-                  <path d={svgPaths.p20a6d500} fill="url(#paint3_linear_1_2300)" />
-                </g>
-                <defs>
-                  <linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_1_2300" x1="48.9359" x2="2.69489" y1="2.76184" y2="32.3702">
-                    <stop stopColor="#507DA4" />
-                    <stop offset="1" stopColor="#0E2440" />
-                  </linearGradient>
-                  <linearGradient gradientUnits="userSpaceOnUse" id="paint1_linear_1_2300" x1="48.9359" x2="2.69489" y1="2.76184" y2="32.3702">
-                    <stop stopColor="#507DA4" />
-                    <stop offset="1" stopColor="#0E2440" />
-                  </linearGradient>
-                  <linearGradient gradientUnits="userSpaceOnUse" id="paint2_linear_1_2300" x1="48.9359" x2="2.69489" y1="2.76184" y2="32.3702">
-                    <stop stopColor="#507DA4" />
-                    <stop offset="1" stopColor="#0E2440" />
-                  </linearGradient>
-                  <linearGradient gradientUnits="userSpaceOnUse" id="paint3_linear_1_2300" x1="48.9359" x2="2.69489" y1="2.76184" y2="32.3702">
-                    <stop stopColor="#507DA4" />
-                    <stop offset="1" stopColor="#0E2440" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="absolute flex h-[186.726px] items-center justify-center left-[777.71px] top-[1487.51px] w-[172.905px]">
-        <div className="flex-none rotate-[-8.87deg]">
-          <div className="h-[165.72px] relative w-[149.148px]" data-name="E animate">
-            <div className="absolute inset-[9.38%_10.63%_9.38%_8.82%]" data-name="Union">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 120.147 134.647">
-                <path d={svgPaths.p22403c00} fill="var(--fill-0, #45D581)" id="Union" />
-              </svg>
-            </div>
-            <Group18 />
-            <Group19 />
-            <div className="absolute inset-[9.38%_27.64%_76.56%_39.37%]" data-name="Intersect">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 49.1981 23.3044">
-                <g id="Intersect">
-                  <path d={svgPaths.p16e0fd40} fill="var(--fill-0, #05101F)" />
-                  <path d={svgPaths.p155e7bc0} fill="var(--fill-0, #05101F)" />
-                  <path d={svgPaths.p3670f280} fill="var(--fill-0, #05101F)" />
-                  <path d={svgPaths.p7ed9f00} fill="var(--fill-0, #05101F)" />
-                  <path d={svgPaths.p1175d480} fill="var(--fill-0, #05101F)" />
-                </g>
-              </svg>
-            </div>
-            <div className="absolute inset-[36.56%_65.14%_61.56%_23.75%]" data-name="Union">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16.572 3.10725">
-                <path d={svgPaths.p3654b300} fill="var(--fill-0, #0E2440)" id="Union" />
-              </svg>
-            </div>
-            <div className="absolute inset-[40.94%_39.1%_56.56%_45.27%]" data-name="Union">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 23.3044 4.143">
-                <path d={svgPaths.pf822000} fill="var(--fill-0, #0E2440)" id="Union" />
-              </svg>
-            </div>
-            <Group23 />
-          </div>
-        </div>
-      </div>
-      <div className="absolute flex h-[187.783px] items-center justify-center left-[902.52px] top-[1454.36px] w-[174.128px]">
-        <div className="flex-none rotate-[9.37deg]">
-          <div className="h-[165.72px] relative w-[149.148px]" data-name="C animate">
-            <div className="absolute inset-[9.38%_8.2%_9.38%_8.47%]" data-name="Union">
-              <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 124.29 134.647">
-                <path d={svgPaths.p1a81b900} fill="var(--fill-0, #4A9ED6)" id="Union" />
-              </svg>
-            </div>
-            <Group24 />
-            <Group20 />
-            <Group21 />
-            <Group10 />
-          </div>
-        </div>
-      </div>
+      <ShadowSvg
+        className="absolute h-[166.037px] left-[597.98px] top-[1298.68px] w-[149.433px]"
+        label="RIASEC R"
+        svg={riasecRSvg}
+        data-name="R animate"
+      />
+      <ShadowSvg
+        className="absolute h-[176.881px] left-[710.36px] top-[1266px] w-[161.656px]"
+        label="RIASEC I"
+        svg={riasecISvg}
+        data-name="I animate"
+      />
+      <ShadowSvg
+        className="absolute h-[177.487px] left-[808.75px] top-[1314.68px] w-[162.342px]"
+        label="RIASEC A"
+        svg={riasecASvg}
+        data-name="A animate"
+      />
+      <ShadowSvg
+        className="absolute h-[173.148px] left-[653.94px] top-[1465.76px] w-[157.447px]"
+        label="RIASEC S"
+        svg={riasecSSvg}
+        data-name="S animate"
+      />
+      <ShadowSvg
+        className="absolute h-[186.726px] left-[777.71px] top-[1487.51px] w-[172.905px]"
+        label="RIASEC E"
+        svg={riasecESvg}
+        data-name="E animate"
+      />
+      <ShadowSvg
+        className="absolute h-[187.783px] left-[902.52px] top-[1454.36px] w-[174.128px]"
+        label="RIASEC C"
+        svg={riasecCSvg}
+        data-name="C animate"
+      />
     </div>
   );
 }
-
 function VectorContainerInner1() {
   return (
     <div className="absolute contents left-[597.98px] top-[1266px]" data-name="Vector Container Inner">

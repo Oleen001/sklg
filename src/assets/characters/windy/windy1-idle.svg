@@ -1,0 +1,46 @@
+<svg width="600" height="476" viewBox="0 0 600 476" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="windy1-title">
+<title id="windy1-title">Windy 1 idle mascot</title>
+<style>
+  #windy1 { transform-box: view-box; transform-origin: 52% 55%; animation: w1-float 5.2s ease-in-out infinite; }
+  #windy1-body { transform-box: fill-box; transform-origin: 48% 62%; animation: w1-breathe 4.6s ease-in-out infinite; }
+  #windy1-gust-top { transform-box: fill-box; transform-origin: 45% 55%; animation: w1-gust-top 5.8s ease-in-out infinite; }
+  #windy1-gust-mid { transform-box: fill-box; transform-origin: 50% 55%; animation: w1-gust-mid 5.2s ease-in-out infinite; }
+  #windy1-gust-low { transform-box: fill-box; transform-origin: 50% 55%; animation: w1-gust-low 4.7s ease-in-out infinite; }
+  #windy1-hand { transform-box: fill-box; transform-origin: 70% 20%; animation: w1-hand 4s ease-in-out infinite; }
+  #windy1-face { transform-box: fill-box; transform-origin: 50% 50%; animation: w1-face 5.2s ease-in-out infinite; }
+  .windy1-eye { transform-box: fill-box; transform-origin: 50% 50%; animation: w1-blink 5.7s linear infinite; }
+  .windy1-pupil { transform-box: fill-box; transform-origin: 50% 50%; animation: w1-look 5.7s ease-in-out infinite; }
+  #windy1-smile { transform-box: fill-box; transform-origin: 50% 50%; animation: w1-smile 4.6s ease-in-out infinite; }
+  @keyframes w1-float { 0%,100%{transform:translate3d(0,0,0) rotate(0deg)} 40%{transform:translate3d(0,-8px,0) rotate(-.7deg)} 72%{transform:translate3d(2px,3px,0) rotate(.5deg)} }
+  @keyframes w1-breathe { 0%,100%{transform:scale(1)} 48%{transform:scale(1.012,.99)} }
+  @keyframes w1-gust-top { 0%,100%{transform:translate3d(0,0,0) rotate(0deg)} 50%{transform:translate3d(8px,-4px,0) rotate(1.2deg)} }
+  @keyframes w1-gust-mid { 0%,100%{transform:translate3d(0,0,0) rotate(0deg)} 52%{transform:translate3d(10px,-2px,0) rotate(.8deg)} }
+  @keyframes w1-gust-low { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(7px,2px,0)} }
+  @keyframes w1-hand { 0%,100%{transform:rotate(0deg)} 45%{transform:rotate(4deg) translate3d(3px,-2px,0)} 70%{transform:rotate(-3deg) translate3d(-2px,2px,0)} }
+  @keyframes w1-face { 0%,100%{transform:translate3d(0,0,0)} 40%{transform:translate3d(0,2px,0)} 72%{transform:translate3d(-1px,-1px,0)} }
+  @keyframes w1-blink { 0%,70%,76%,100%{transform:scaleY(1)} 72%,74%{transform:scaleY(.08)} }
+  @keyframes w1-look { 0%,46%,100%{transform:translate3d(0,0,0)} 56%,64%{transform:translate3d(3px,-1px,0)} 84%,90%{transform:translate3d(-2px,1px,0)} }
+  @keyframes w1-smile { 0%,100%{transform:translate3d(0,0,0) scale(1)} 48%{transform:translate3d(1px,-1px,0) scale(1.04,.97)} }
+  @media (prefers-reduced-motion: reduce) {
+    #windy1, #windy1-body, #windy1-gust-top, #windy1-gust-mid, #windy1-gust-low, #windy1-hand, #windy1-face, .windy1-eye, .windy1-pupil, #windy1-smile { animation: none; }
+  }
+</style>
+<g id="windy1">
+<path id="windy1-body" d="M351.66 104.044C449.676 104.044 578.833 209.427 578.833 312.135C578.833 414.842 449.676 475.825 351.66 475.825C253.644 475.825 131.634 374.187 131.634 271.479C131.634 168.772 253.643 104.044 351.66 104.044Z" fill="#1B3476"/>
+<path id="windy1-gust-top" d="M470.369 56.99C418.599 117.216 383.919 145.223 245.674 139.744" stroke="#1B3476" stroke-width="63.7339" stroke-linecap="round"/>
+<path id="windy1-gust-mid" d="M541.017 119.978C454.653 132.565 349.114 166.68 288.426 244.148" stroke="#1B3476" stroke-width="53.1116" stroke-linecap="round"/>
+<path id="windy1-gust-low" d="M583.225 183.516C497.085 169.471 386.172 170.17 304.947 225.73" stroke="#1B3476" stroke-width="31.8669" stroke-linecap="round"/>
+<g id="windy1-hand">
+<ellipse cx="89.4739" cy="407.095" rx="50.0179" ry="40.0143" fill="#1B3476"/>
+<ellipse cx="55.5965" cy="385.323" rx="16.5696" ry="53.742" transform="rotate(-98.4714 55.5965 385.323)" fill="#1B3476"/>
+<ellipse cx="61.6285" cy="406.7" rx="16.5696" ry="34.6996" transform="rotate(-98.4714 61.6285 406.7)" fill="#1B3476"/>
+<ellipse cx="73.5194" cy="428.913" rx="16.5696" ry="34.6996" transform="rotate(-80.2295 73.5194 428.913)" fill="#1B3476"/>
+<ellipse cx="123.714" cy="385.002" rx="16.5696" ry="37.709" transform="rotate(-9.83737 123.714 385.002)" fill="#1B3476"/>
+</g>
+<g id="windy1-face">
+<g id="windy1-smile"><path d="M305.305 292.806C315.595 288.322 320.3 276.345 315.816 266.056M278.555 282.296C283.04 292.585 295.016 297.291 305.305 292.806" stroke="#B8DCFF" stroke-width="7.12281" stroke-linecap="round"/></g>
+<g class="windy1-eye"><circle cx="39.458" cy="39.458" r="39.458" transform="matrix(-0.983995 0.178196 0.178196 0.983995 281.021 178.004)" fill="white"/><g class="windy1-pupil"><circle cx="23.7645" cy="23.7645" r="23.7645" transform="matrix(-0.983995 0.178196 0.178196 0.983995 268.762 195.95)" fill="black"/></g></g>
+<g class="windy1-eye"><circle cx="39.458" cy="39.458" r="39.458" transform="matrix(-0.983995 0.178196 0.178196 0.983995 357.792 164.103)" fill="white"/><g class="windy1-pupil"><circle cx="23.7645" cy="23.7645" r="23.7645" transform="matrix(-0.983995 0.178196 0.178196 0.983995 345.532 182.048)" fill="black"/></g></g>
+</g>
+</g>
+</svg>
