@@ -1,6 +1,8 @@
+"use client";
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { Navigate, Route, Routes, useLocation } from "react-router";
+import { usePathname, useRouter } from "next/navigation";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SkillBuilderPage from "./pages/SkillBuilderPage";
@@ -214,7 +216,14 @@ const HOME_STYLES = `
   }
 `;
 
-const HOME_REVEALS = [
+type HomeReveal = {
+  selector: string;
+  cls: "sk-up" | "sk-left" | "sk-right";
+  delay?: number;
+  stagger?: number;
+};
+
+const HOME_REVEALS: readonly HomeReveal[] = [
   { selector: "[data-name=\"Header Section\"]",               cls: "sk-up",    delay: 0.1  },
   { selector: "[data-name=\"Discover Background\"]",          cls: "sk-up",    stagger: 0.12 },
   { selector: "[data-name=\"Plan Background\"]",              cls: "sk-up",    delay: 0.12 },
@@ -252,8 +261,9 @@ const LEGACY_BACKGROUND_BANDS = {
 const easeOut3 = (t: number) => 1 - Math.pow(1 - t, 3);
 
 export default function App() {
-  const location = useLocation();
-  const route = useMemo(() => getRouteByPath(location.pathname), [location.pathname]);
+  const pathname = usePathname() ?? "/";
+  const router = useRouter();
+  const route = useMemo(() => getRouteByPath(pathname), [pathname]);
   const page = route.key;
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -288,6 +298,10 @@ export default function App() {
   const handleMockLogout = () => {
     window.localStorage.removeItem(MOCK_AUTH_STORAGE_KEY);
     setIsLoggedIn(false);
+  };
+
+  const navigate = (path: string) => {
+    router.push(path);
   };
 
   /* ── Responsive scale ── */
@@ -595,16 +609,12 @@ export default function App() {
           if (requestedPage.current === page) setReadyPage(page);
         }}
       >
-        <Routes location={location}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage onLogin={handleMockLogin} />} />
-          <Route path="/skill-dashboard" element={<SkillDashboardPage />} />
-          <Route path="/skill-trends" element={<SkillTrendsRoutePage />} />
-          <Route path="/skill-builder" element={<SkillBuilderPage />} />
-          <Route path="/skill-opportunities" element={<SkillOpportunitiesPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        {route.kind === "home" ? <HomePage /> : null}
+        {route.kind === "login" ? <LoginPage onLogin={handleMockLogin} onNavigate={navigate} /> : null}
+        {route.kind === "skill-dashboard" ? <SkillDashboardPage /> : null}
+        {route.kind === "skill-trends" ? <SkillTrendsRoutePage /> : null}
+        {route.kind === "skill-builder" ? <SkillBuilderPage /> : null}
+        {route.kind === "skill-opportunities" ? <SkillOpportunitiesPage /> : null}
       </motion.div>
     </AnimatePresence>
   );

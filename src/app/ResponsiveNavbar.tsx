@@ -1,6 +1,8 @@
+"use client";
+
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useLocation, useNavigate } from "react-router";
+import { usePathname, useRouter } from "next/navigation";
 import { getRouteByPath, NAV_ROUTES } from "./routes";
 import logoutIconSvg from "@/assets/icons/logout-3-linear.svg?raw";
 
@@ -30,9 +32,9 @@ export default function ResponsiveNavbar({ isLoggedIn, onLogout }: ResponsiveNav
   const [navHidden, setNavHidden] = useState(false);
   const lastScrollY = useRef(0);
   const frame = useRef<number | null>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const currentRoute = getRouteByPath(location.pathname);
+  const pathname = usePathname() ?? "/";
+  const router = useRouter();
+  const currentRoute = getRouteByPath(pathname);
   const reduceMotion = useReducedMotion();
 
   const spring = reduceMotion
@@ -56,7 +58,7 @@ export default function ResponsiveNavbar({ isLoggedIn, onLogout }: ResponsiveNav
     setOpen(false);
     setNavHidden(false);
     lastScrollY.current = window.scrollY;
-  }, [location.pathname]);
+  }, [pathname]);
 
   useEffect(() => {
     if (open) {
@@ -99,7 +101,7 @@ export default function ResponsiveNavbar({ isLoggedIn, onLogout }: ResponsiveNav
   }, [open]);
 
   const go = (path: string) => {
-    navigate(path);
+    router.push(path);
     setOpen(false);
   };
 

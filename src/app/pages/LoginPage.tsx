@@ -1,11 +1,13 @@
+"use client";
+
 import { motion, useReducedMotion } from "motion/react";
 import { EyeOff, UserRound } from "lucide-react";
-import { useNavigate } from "react-router";
 import cloudyMascot from "@/assets/characters/cloudy/cloudy2-idle.svg";
 import windyMascot from "@/assets/characters/windy/windy2-idle.svg";
 
 type LoginPageProps = {
   onLogin: () => void;
+  onNavigate: (path: string) => void;
 };
 
 function BrandMark({ type }: { type: "google" | "microsoft" }) {
@@ -104,12 +106,10 @@ function RotatingGlow({
   );
 }
 
-export default function LoginPage({ onLogin }: LoginPageProps) {
-  const navigate = useNavigate();
-
+export default function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
   const completeLogin = () => {
     onLogin();
-    navigate("/skill-dashboard");
+    onNavigate("/skill-dashboard");
   };
 
   return (
@@ -129,7 +129,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
 
       <button
         type="button"
-        onClick={() => navigate("/")}
+        onClick={() => onNavigate("/")}
         className="absolute right-5 top-5 z-10 hidden h-12 cursor-pointer items-center gap-2 rounded-full border border-[#0d6ec8] bg-white px-4 text-[16px] font-semibold text-[#0d6ec8] shadow-sm transition hover:bg-[#f7fbff] sm:flex"
       >
         <UserRound className="size-5" strokeWidth={2} aria-hidden />
