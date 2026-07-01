@@ -1,6 +1,6 @@
-# Skillogy Design System
+# Sklg* Design System
 
-This system is extracted from the current Skillogy visual direction. It preserves the existing playful education/career identity instead of replacing the product with a new style.
+This system is extracted from the current Sklg* visual direction. It preserves the existing playful education/career identity instead of replacing the product with a new style.
 
 ## Principles
 

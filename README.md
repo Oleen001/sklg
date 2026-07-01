@@ -2,8 +2,6 @@
 
 Sklg* is a React + Vite prototype for a learning and career-skills platform. The app started as a Figma Make export and has been wrapped with a responsive React shell, client-side routing, mock data, and Vercel-ready SPA deployment config.
 
-Original Figma source: https://www.figma.com/design/G4j2TMMOZHHiJYBidncRcQ/Add-transitions-and-animations
-
 ## Quick Start
 
 Requirements:
@@ -68,8 +66,6 @@ src/
   styles/                      Global CSS, theme, design-system tokens
 docs/
   DESIGN_SYSTEM.md
-  UX_UI_REVIEW.md
-HANDOFF.md                     Engineering handoff and known follow-up work
 vercel.json                    SPA rewrite config for Vercel
 ```
 
@@ -77,7 +73,7 @@ vercel.json                    SPA rewrite config for Vercel
 
 - `src/imports/**` is generated from Figma Make. Prefer changing code in `src/app/**` so future design exports do not overwrite hand-authored work.
 - Several animation hooks still depend on Figma `data-name` attributes. Renaming those attributes can silently break animation behavior.
-- Authentication is currently mock-only and stored in `localStorage` under `skillogy_mock_logged_in`.
+- Authentication is currently mock-only and stored in a local `localStorage` flag.
 - Data for learning, skill scan, and opportunities lives in `src/app/mock-api/**`; there is no backend integration yet.
 - Large image assets are currently committed for visual fidelity. The production build works, but image optimization and route-level code splitting are recommended next.
 

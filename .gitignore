@@ -7,3 +7,6 @@ dist/
 !.env.example
 .vercel/
 .codex/
+HANDOFF.md
+default_shadcn_theme.css
+guidelines/
