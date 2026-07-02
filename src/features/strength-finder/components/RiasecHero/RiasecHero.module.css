@@ -1,0 +1,235 @@
+/* Hero "mess" decoration layer.
+   Ported from the riasec-landing-hero-mesh reference (plain CSS -> CSS Module).
+   The 4 RIASEC characters fly in from their own off-screen corner with an
+   overshoot bounce (left/top + scale + rotate), then float forever. The
+   entrance animates left/top together with calc()-based bounce stops that don't
+   map cleanly onto framer-motion/Tailwind, so the whole choreography — plus
+   each character's position, timing and rotation — lives here as custom
+   properties keyed per character. */
+
+.messLayer {
+  --enter-duration: 920ms;
+  --enter-ease: cubic-bezier(0.18, 0.9, 0.24, 1.18);
+
+  inset: 0;
+  pointer-events: none;
+  position: absolute;
+  z-index: 3;
+}
+
+.mess {
+  animation: mess-enter var(--enter-duration) var(--enter-ease) var(--enter-delay) both;
+  left: var(--final-x);
+  position: absolute;
+  top: var(--final-y);
+  transform: scale(1) rotate(var(--rotate, 0deg));
+  transform-origin: 50% 50%;
+  width: var(--w);
+  will-change: left, top, opacity, transform;
+}
+
+.messFloat {
+  animation: mess-float var(--float-duration) ease-in-out
+    calc(var(--enter-delay) + var(--enter-duration)) infinite;
+  height: auto;
+  width: 100%;
+  will-change: transform;
+}
+
+/* ── Per-character placement (desktop) ─────────────────────────────────────── */
+.blue {
+  --w: 22.7%;
+  --final-x: 71.5%;
+  --final-y: calc(74.09% - 40px);
+  --x0: 88%;
+  --y0: 116.8%;
+  --x1: 70%;
+  --y1: calc(70.6% - 40px);
+  --x2: 72.5%;
+  --y2: calc(75.4% - 40px);
+  --enter-delay: 120ms;
+  --float-distance: 9px;
+  --float-duration: 3400ms;
+  --rotate: -15deg;
+  --rotate-in: -27deg;
+  z-index: 2;
+}
+
+.orange {
+  --w: 25.42%;
+  --final-x: 8.5%;
+  --final-y: calc(78.63% - 24px);
+  --x0: -12%;
+  --y0: 111.2%;
+  --x1: 10%;
+  --y1: calc(76.4% - 24px);
+  --x2: 7%;
+  --y2: calc(79.9% - 24px);
+  --enter-delay: 500ms;
+  --float-distance: 7px;
+  --float-duration: 3800ms;
+  --rotate: 0deg;
+  --rotate-in: -12deg;
+  z-index: 2;
+}
+
+.orange .messFloat {
+  animation-direction: reverse;
+}
+
+.bigRed {
+  --w: 31.2%;
+  --final-x: 77%;
+  --final-y: -9%;
+  --x0: 101%;
+  --y0: -18%;
+  --x1: 75%;
+  --y1: -7%;
+  --x2: 78%;
+  --y2: -10.5%;
+  --enter-delay: 880ms;
+  --float-distance: 10px;
+  --float-duration: 4200ms;
+  --rotate: -130deg;
+  --rotate-in: -142deg;
+  z-index: 5;
+}
+
+.bigRed .messFloat {
+  animation-delay: calc(var(--enter-delay) + var(--enter-duration) + 220ms);
+}
+
+.smallRed {
+  --w: 10.83%;
+  --final-x: 7.2%;
+  --final-y: 17.32%;
+  --x0: -21.4%;
+  --y0: -19.45%;
+  --x1: 8.9%;
+  --y1: 18.9%;
+  --x2: 6.3%;
+  --y2: 16.4%;
+  --enter-delay: 1260ms;
+  --float-distance: 6px;
+  --float-duration: 3200ms;
+  --rotate: 33.5deg;
+  --rotate-in: 21.5deg;
+  z-index: 5;
+}
+
+@keyframes mess-enter {
+  0% {
+    left: var(--x0);
+    opacity: 0;
+    top: var(--y0);
+    transform: scale(0.84) rotate(var(--rotate-in, -5deg));
+  }
+
+  64% {
+    left: var(--x1);
+    opacity: 1;
+    top: var(--y1);
+    transform: scale(1.08) rotate(calc(var(--rotate, 0deg) + 7deg));
+  }
+
+  82% {
+    left: var(--x2);
+    top: var(--y2);
+    transform: scale(0.96) rotate(calc(var(--rotate, 0deg) - 4deg));
+  }
+
+  100% {
+    left: var(--final-x);
+    opacity: 1;
+    top: var(--final-y);
+    transform: scale(1) rotate(var(--rotate, 0deg));
+  }
+}
+
+@keyframes mess-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(0, calc(var(--float-distance) * -1), 0) rotate(1.2deg);
+  }
+}
+
+/* ── Tablet ────────────────────────────────────────────────────────────────── */
+@media (max-width: 980px) {
+  .blue {
+    --w: 30%;
+  }
+
+  .orange {
+    --w: 32%;
+  }
+
+  .bigRed {
+    --w: 40%;
+  }
+
+  .smallRed {
+    --w: 13%;
+  }
+}
+
+/* ── Mobile ────────────────────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .blue {
+    --w: 42%;
+    --final-x: 65%;
+    --final-y: calc(81% - 40px);
+    --x0: 92%;
+    --y0: 112%;
+    --x1: 63%;
+    --y1: calc(78% - 40px);
+    --x2: 67%;
+    --y2: calc(83% - 40px);
+  }
+
+  .orange {
+    --w: 48%;
+    --final-x: -7%;
+    --final-y: calc(86% - 24px);
+    --x0: -28%;
+    --y0: 112%;
+    --x1: -4%;
+    --y1: calc(83% - 24px);
+    --x2: -10%;
+    --y2: calc(87.5% - 24px);
+  }
+
+  .bigRed {
+    --w: 56%;
+    --final-x: 62%;
+    --final-y: 0%;
+    --x0: 105%;
+    --y0: -16%;
+    --x1: 60%;
+    --y1: 1.5%;
+    --x2: 64%;
+    --y2: -2%;
+  }
+
+  .smallRed {
+    --w: 18%;
+    --final-x: 7%;
+    --final-y: 12%;
+    --x0: -26%;
+    --y0: -18%;
+    --x1: 9%;
+    --y1: 14%;
+    --x2: 6%;
+    --y2: 10.5%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mess,
+  .messFloat {
+    animation: none;
+  }
+}

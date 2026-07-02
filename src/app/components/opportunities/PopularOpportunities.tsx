@@ -1,4 +1,5 @@
 import { ChevronRight } from "lucide-react";
+import type React from "react";
 import type { PopularOpportunity } from "../../mock-api/opportunities";
 
 type Props = {
@@ -7,8 +8,11 @@ type Props = {
 
 export default function PopularOpportunities({ items }: Props) {
   return (
-    <aside className="rounded-[16px] bg-white p-5 shadow-[var(--sk-shadow-sm)] ring-1 ring-[var(--sk-color-border)] lg:sticky lg:top-28">
-      <div className="mb-5 flex items-center justify-between gap-4">
+    <aside
+      className="rounded-[16px] bg-white p-5 shadow-[var(--sk-shadow-sm)] ring-1 ring-[var(--sk-color-border)] lg:sticky lg:top-[var(--popular-panel-top)] lg:flex lg:max-h-[calc(100dvh-var(--popular-panel-top)-16px)] lg:flex-col lg:overflow-hidden lg:transition-[top,max-height] lg:duration-300"
+      style={{ "--popular-panel-top": "var(--sk-navbar-sticky-clearance, 0px)" } as React.CSSProperties}
+    >
+      <div className="mb-5 flex shrink-0 items-center justify-between gap-4">
         <h2 className="text-[20px] font-bold leading-7 text-[var(--sk-color-ink)]">Most Popular</h2>
         <a
           href="/skill-opportunities/popular"
@@ -19,7 +23,7 @@ export default function PopularOpportunities({ items }: Props) {
         </a>
       </div>
 
-      <div className="divide-y divide-[var(--sk-color-border)]">
+      <div className="-mr-2 min-h-0 divide-y divide-[var(--sk-color-border)] pr-2 lg:flex-1 lg:overflow-y-auto lg:overscroll-contain [scrollbar-color:var(--sk-color-blue-200)_transparent] [scrollbar-width:thin]">
         {items.map((item) => (
           <article key={item.id} className="rounded-[12px] px-2 py-4 first:pt-0 last:pb-0 hover:bg-[var(--sk-color-blue-50)]">
             <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1">

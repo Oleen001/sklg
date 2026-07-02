@@ -12,6 +12,7 @@ const NAV_HIDE_OFFSET = 96;
 const NAV_SCROLL_DELTA = 8;
 const NAV_HIDE_Y = -112;
 const NAV_MAX_WIDTH = 1180;
+const NAV_STICKY_CLEARANCE = "112px";
 
 type ResponsiveNavbarProps = {
   isLoggedIn: boolean;
@@ -112,6 +113,17 @@ export default function ResponsiveNavbar({ isLoggedIn, onLogout, profile }: Resp
       }
     };
   }, [open]);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--sk-navbar-sticky-clearance",
+      navHidden ? "0px" : NAV_STICKY_CLEARANCE,
+    );
+
+    return () => {
+      document.documentElement.style.removeProperty("--sk-navbar-sticky-clearance");
+    };
+  }, [navHidden]);
 
   const go = (path: string) => {
     router.push(path);

@@ -1,5 +1,6 @@
 :root {
-  --sk-font-sans: "Noto Sans Thai", "Noto Sans", sans-serif;
+  --sk-font-sans: var(--font-noto-sans-thai), var(--font-noto-sans), sans-serif;
+  --sk-font-brand: var(--font-abeezee), var(--sk-font-sans);
 
   --sk-color-blue-50: #eff7ff;
   --sk-color-blue-100: #dff0ff;
@@ -54,7 +55,7 @@ body * {
 }
 
 .sk-brand-logo {
-  font-family: "ABeeZee", var(--sk-font-sans) !important;
+  font-family: var(--sk-font-brand) !important;
 }
 
 .sk-press-tilt-card {

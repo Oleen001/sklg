@@ -1,0 +1,282 @@
+/**
+ * Tier 1: Primitive color scales — HI Design System
+ *
+ * Tailwind v4 CSS-first theme definition.
+ * Generates both Tailwind utilities and CSS custom properties on :root:
+ *   bg-brand-primary-500  →  background-color: var(--color-brand-primary-500)
+ *   --color-brand-primary-500: #945dff  (available for var() references)
+ *
+ * TypeScript mirror: src/theme/colors.ts — keep values in sync.
+ */
+
+@theme {
+  /* ── Brand Primary (Blue) ────────────────────────────────────────────────── */
+  --color-brand-primary-50: #eef5fc;
+  --color-brand-primary-100: #d8e8f8;
+  --color-brand-primary-200: #b9dbff;
+  --color-brand-primary-300: #83b8ec;
+  --color-brand-primary-400: #4996e4;
+  --color-brand-primary-500: #1e78d4;
+  --color-brand-primary-600: #196bbe;
+  --color-brand-primary-700: #14599f;
+  --color-brand-primary-800: #104a84;
+  --color-brand-primary-900: #0d3b69;
+
+  /* ── Brand Secondary (Yellow/Gold) ───────────────────────────────────────── */
+  --color-brand-secondary-50: #fffae6;
+  --color-brand-secondary-100: #fff1b2;
+  --color-brand-secondary-200: #ffe88d;
+  --color-brand-secondary-300: #ffe266;
+  --color-brand-secondary-400: #ffda39;
+  --color-brand-secondary-500: #ffd108;
+  --color-brand-secondary-600: #dcb506;
+  --color-brand-secondary-700: #b59406;
+  --color-brand-secondary-800: #8c7304;
+  --color-brand-secondary-900: #6b5803;
+  --color-brand-secondary-1000: #3d3201;
+
+  /* ── Brand Tertiary (Red) ────────────────────────────────────────────────── */
+  --color-brand-tertiary-50: #fff0f0;
+  --color-brand-tertiary-100: #ffd3d4;
+  --color-brand-tertiary-200: #ffb5b8;
+  --color-brand-tertiary-300: #ff8a8a;
+  --color-brand-tertiary-400: #ef5f5e;
+  --color-brand-tertiary-500: #c5312f;
+  --color-brand-tertiary-600: #a3201a;
+  --color-brand-tertiary-700: #881a10;
+  --color-brand-tertiary-800: #6f160d;
+  --color-brand-tertiary-900: #4a0f09;
+  --color-brand-tertiary-1000: #2d0806;
+
+  /* ── Neutral Gray ────────────────────────────────────────────────────────── */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f5f4f5;
+  --color-gray-200: #e6e4e7;
+  --color-gray-300: #d7d5d8;
+  --color-gray-400: #a5a2a9;
+  --color-gray-500: #767279;
+  --color-gray-600: #56535a;
+  --color-gray-700: #424045;
+  --color-gray-800: #242325;
+  --color-gray-900: #19181b;
+
+  /* ── Neutral Sky-Blue tints (Figma "Sky Blue" mode surfaces) ─────────────── */
+  --color-gray-blue-50: #eff4f9;
+  --color-gray-blue-100: #dbe6f0;
+
+  /* ── System Error (Red) ──────────────────────────────────────────────────── */
+  --color-error-50: #fdf3f4;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+
+  /* ── System Warning (Yellow) ─────────────────────────────────────────────── */
+  --color-warning-50: #fefce8;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+
+  /* ── System Success (Green) ──────────────────────────────────────────────── */
+  --color-success-50: #ecfdf4;
+  --color-success-100: #d1fae5;
+  --color-success-200: #a7f3d0;
+  --color-success-300: #6ee7b7;
+  --color-success-400: #34d399;
+  --color-success-500: #10b981;
+  --color-success-600: #059669;
+  --color-success-700: #047857;
+  --color-success-800: #065f46;
+  --color-success-900: #064e3b;
+
+  /* ── System Info (Blue) ──────────────────────────────────────────────────── */
+  --color-info-50: #eff8ff;
+  --color-info-100: #e0f2fe;
+  --color-info-200: #bae6fd;
+  --color-info-300: #78d3ff;
+  --color-info-400: #38bdf8;
+  --color-info-500: #0ea5e9;
+  --color-info-600: #0284c7;
+  --color-info-700: #0369a1;
+  --color-info-800: #075985;
+  --color-info-900: #0c4a6e;
+
+  /* ── Accent Red ──────────────────────────────────────────────────────────── */
+  --color-accent-red-50: #ffe8e8;
+  --color-accent-red-100: #ffd3d4;
+  --color-accent-red-200: #ffadae;
+  --color-accent-red-300: #fc8e8e;
+  --color-accent-red-400: #ef5f5e;
+  --color-accent-red-500: #c5312f;
+  --color-accent-red-600: #a3201a;
+  --color-accent-red-700: #881a10;
+  --color-accent-red-800: #6f160d;
+  --color-accent-red-900: #5e170f;
+
+  /* ── Accent Orange ───────────────────────────────────────────────────────── */
+  --color-accent-orange-50: #fff5e9;
+  --color-accent-orange-100: #ffdfbc;
+  --color-accent-orange-200: #ffc29c;
+  --color-accent-orange-300: #ff9c6e;
+  --color-accent-orange-400: #ff8952;
+  --color-accent-orange-500: #ff6b27;
+  --color-accent-orange-600: #e86123;
+  --color-accent-orange-700: #b54c1c;
+  --color-accent-orange-800: #8c3b15;
+  --color-accent-orange-900: #6b2d10;
+
+  /* ── Accent Yellow ───────────────────────────────────────────────────────── */
+  --color-accent-yellow-50: #fffae6;
+  --color-accent-yellow-100: #fff1b2;
+  --color-accent-yellow-200: #ffea8d;
+  --color-accent-yellow-300: #ffe059;
+  --color-accent-yellow-400: #ffda39;
+  --color-accent-yellow-500: #ffd108;
+  --color-accent-yellow-600: #e8be07;
+  --color-accent-yellow-700: #b59406;
+  --color-accent-yellow-800: #8c7304;
+  --color-accent-yellow-900: #6b5803;
+
+  /* ── Accent Lime ─────────────────────────────────────────────────────────── */
+  --color-accent-lime-50: #eaf3bb;
+  --color-accent-lime-100: #d8ea88;
+  --color-accent-lime-200: #bed954;
+  --color-accent-lime-300: #a2c132;
+  --color-accent-lime-400: #83a41f;
+  --color-accent-lime-500: #6b8b1e;
+  --color-accent-lime-600: #54751b;
+  --color-accent-lime-700: #436119;
+  --color-accent-lime-800: #354e13;
+  --color-accent-lime-900: #2c3f0f;
+
+  /* ── Accent Green ────────────────────────────────────────────────────────── */
+  --color-accent-green-50: #cbf9d9;
+  --color-accent-green-100: #9af2be;
+  --color-accent-green-200: #6ce5a2;
+  --color-accent-green-300: #52cc85;
+  --color-accent-green-400: #46aa67;
+  --color-accent-green-500: #3d8c4e;
+  --color-accent-green-600: #35743f;
+  --color-accent-green-700: #326032;
+  --color-accent-green-800: #2b4f2a;
+  --color-accent-green-900: #204024;
+
+  /* ── Accent Emerald ──────────────────────────────────────────────────────── */
+  --color-accent-emerald-50: #ecfbf3;
+  --color-accent-emerald-100: #cbf4de;
+  --color-accent-emerald-200: #a3ebc4;
+  --color-accent-emerald-300: #74dda3;
+  --color-accent-emerald-400: #55d090;
+  --color-accent-emerald-500: #44c67f;
+  --color-accent-emerald-600: #33a566;
+  --color-accent-emerald-700: #298351;
+  --color-accent-emerald-800: #236842;
+  --color-accent-emerald-900: #1d5537;
+
+  /* ── Accent Teal ─────────────────────────────────────────────────────────── */
+  --color-accent-teal-50: #f0fdfb;
+  --color-accent-teal-100: #cdfaf4;
+  --color-accent-teal-200: #9bf4eb;
+  --color-accent-teal-300: #6ae8e0;
+  --color-accent-teal-400: #31d0cb;
+  --color-accent-teal-500: #18b4b2;
+  --color-accent-teal-600: #109191;
+  --color-accent-teal-700: #117374;
+  --color-accent-teal-800: #135a5c;
+  --color-accent-teal-900: #144c4d;
+
+  /* ── Accent Sky ──────────────────────────────────────────────────────────── */
+  --color-accent-sky-50: #ccf5fc;
+  --color-accent-sky-100: #a8e9f4;
+  --color-accent-sky-200: #78daeb;
+  --color-accent-sky-300: #4dbcd3;
+  --color-accent-sky-400: #2d9bb3;
+  --color-accent-sky-500: #0f7a94;
+  --color-accent-sky-600: #14657f;
+  --color-accent-sky-700: #1e566f;
+  --color-accent-sky-800: #1f475d;
+  --color-accent-sky-900: #193a4d;
+
+  /* ── Accent Cyan ─────────────────────────────────────────────────────────── */
+  --color-accent-cyan-50: #e6fafd;
+  --color-accent-cyan-100: #c3f2f8;
+  --color-accent-cyan-200: #93e7f0;
+  --color-accent-cyan-300: #5bd6e5;
+  --color-accent-cyan-400: #22c1d5;
+  --color-accent-cyan-500: #0cb2c5;
+  --color-accent-cyan-600: #0a97a8;
+  --color-accent-cyan-700: #0b7987;
+  --color-accent-cyan-800: #0d616c;
+  --color-accent-cyan-900: #0f4f58;
+
+  /* ── Accent Blue ─────────────────────────────────────────────────────────── */
+  --color-accent-blue-50: #e0eeff;
+  --color-accent-blue-100: #c5dffe;
+  --color-accent-blue-200: #a8cfff;
+  --color-accent-blue-300: #85b0f4;
+  --color-accent-blue-400: #5c8bdc;
+  --color-accent-blue-500: #3268c4;
+  --color-accent-blue-600: #2451b0;
+  --color-accent-blue-700: #234195;
+  --color-accent-blue-800: #253378;
+  --color-accent-blue-900: #212b61;
+
+  /* ── Accent Indigo ───────────────────────────────────────────────────────── */
+  --color-accent-indigo-50: #e6ebfe;
+  --color-accent-indigo-100: #d3dcff;
+  --color-accent-indigo-200: #bbcaff;
+  --color-accent-indigo-300: #97aafe;
+  --color-accent-indigo-400: #6c7fe9;
+  --color-accent-indigo-500: #4a58d1;
+  --color-accent-indigo-600: #4344bc;
+  --color-accent-indigo-700: #3c36a2;
+  --color-accent-indigo-800: #362d8a;
+  --color-accent-indigo-900: #33276c;
+
+  /* ── Accent Violet ───────────────────────────────────────────────────────── */
+  --color-accent-violet-50: #f9f6ff;
+  --color-accent-violet-100: #ece2ff;
+  --color-accent-violet-200: #e2d4ff;
+  --color-accent-violet-300: #d5c1ff;
+  --color-accent-violet-400: #cdb5ff;
+  --color-accent-violet-500: #c1a2ff;
+  --color-accent-violet-600: #b093e8;
+  --color-accent-violet-700: #8973b5;
+  --color-accent-violet-800: #6a598c;
+  --color-accent-violet-900: #51446b;
+
+  /* ── Accent Purple ───────────────────────────────────────────────────────── */
+  --color-accent-purple-50: #f8e8ff;
+  --color-accent-purple-100: #f0d3fc;
+  --color-accent-purple-200: #ebbaf9;
+  --color-accent-purple-300: #dd94ea;
+  --color-accent-purple-400: #c962d4;
+  --color-accent-purple-500: #b130b3;
+  --color-accent-purple-600: #960f97;
+  --color-accent-purple-700: #810c80;
+  --color-accent-purple-800: #6b0e69;
+  --color-accent-purple-900: #581355;
+
+  /* ── Accent Pink ─────────────────────────────────────────────────────────── */
+  --color-accent-pink-50: #ffe6f9;
+  --color-accent-pink-100: #ffd0f5;
+  --color-accent-pink-200: #ffb5ee;
+  --color-accent-pink-300: #f588d6;
+  --color-accent-pink-400: #de56af;
+  --color-accent-pink-500: #bc2f86;
+  --color-accent-pink-600: #a01868;
+  --color-accent-pink-700: #881354;
+  --color-accent-pink-800: #701445;
+  --color-accent-pink-900: #5b1538;
+}

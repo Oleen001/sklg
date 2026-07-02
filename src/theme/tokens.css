@@ -1,0 +1,286 @@
+/**
+ * Tier 2: Semantic tokens + Tier 3: Component tokens — HI Design System
+ *
+ * Uses @theme so Tailwind v4 generates both CSS vars AND utility classes.
+ * All values reference var(--color-*) from colors.css.
+ *
+ * Tailwind utility examples:
+ *   text-text-base-primary, bg-btn-solid-bg, border-btn-outline-border
+ */
+
+@theme {
+  /* ── Tier 2: Text ─────────────────────────────────────────────────────────── */
+
+  /* base */
+  --color-text-base-primary: var(--color-gray-900);
+  --color-text-base-secondary: var(--color-gray-500);
+  --color-text-base-tertiary: var(--color-gray-400);
+  --color-text-base-black: #000000;
+  --color-text-base-white: #ffffff;
+
+  /* brand */
+  --color-text-brand-primary-dark: var(--color-brand-primary-800);
+  --color-text-brand-primary-medium: var(--color-brand-primary-600);
+  --color-text-brand-primary-light: var(--color-brand-primary-300);
+  --color-text-brand-secondary-dark: var(--color-brand-secondary-700);
+  --color-text-brand-secondary-medium: var(--color-brand-secondary-500);
+  --color-text-brand-secondary-light: var(--color-brand-secondary-300);
+  --color-text-brand-tertiary-dark: var(--color-brand-tertiary-700);
+  --color-text-brand-tertiary-medium: var(--color-brand-tertiary-500);
+  --color-text-brand-tertiary-light: var(--color-brand-tertiary-300);
+
+  /* system */
+  --color-text-system-error: var(--color-error-700);
+  --color-text-system-warning: var(--color-warning-700);
+  --color-text-system-success: var(--color-success-700);
+  --color-text-system-info: var(--color-info-700);
+
+  /* link */
+  --color-text-link-primary: var(--color-brand-primary-800);
+  --color-text-link-primary-hover: var(--color-brand-primary-600);
+
+  /* ── Tier 2: Background ───────────────────────────────────────────────────── */
+
+  /* brand */
+  --color-bg-brand-primary-light: var(--color-brand-primary-50);
+  --color-bg-brand-primary-light2: var(--color-brand-primary-100);
+  --color-bg-brand-primary-medium: var(--color-brand-primary-500);
+  --color-bg-brand-primary-dark: var(--color-brand-primary-800);
+
+  /* base */
+  --color-bg-base-white: #ffffff;
+  --color-bg-base-subtle: var(--color-gray-blue-50);
+  --color-bg-base-gray-light: var(--color-gray-100);
+  --color-bg-base-gray-medium: var(--color-gray-200);
+  --color-bg-base-gray-dark: var(--color-gray-800);
+
+  /* system */
+  --color-bg-system-error-light: var(--color-error-100);
+  --color-bg-system-error-medium: var(--color-error-500);
+  --color-bg-system-error-dark: var(--color-error-700);
+  --color-bg-system-warning-light: var(--color-warning-100);
+  --color-bg-system-warning-medium: var(--color-warning-400);
+  --color-bg-system-warning-dark: var(--color-warning-700);
+  --color-bg-system-success-light: var(--color-success-100);
+  --color-bg-system-success-medium: var(--color-success-400);
+  --color-bg-system-success-dark: var(--color-success-700);
+  --color-bg-system-info-light: var(--color-info-100);
+  --color-bg-system-info-medium: var(--color-info-400);
+  --color-bg-system-info-dark: var(--color-info-700);
+
+  /* accent */
+  --color-bg-accent-red: var(--color-accent-red-50);
+  --color-bg-accent-orange: var(--color-accent-orange-50);
+  --color-bg-accent-yellow: var(--color-accent-yellow-50);
+  --color-bg-accent-lime: var(--color-accent-lime-50);
+  --color-bg-accent-green: var(--color-accent-green-50);
+  --color-bg-accent-teal: var(--color-accent-teal-50);
+  --color-bg-accent-sky: var(--color-accent-sky-50);
+  --color-bg-accent-blue: var(--color-accent-blue-50);
+  --color-bg-accent-indigo: var(--color-accent-indigo-50);
+  --color-bg-accent-violet: var(--color-accent-violet-50);
+  --color-bg-accent-purple: var(--color-accent-purple-50);
+  --color-bg-accent-pink: var(--color-accent-pink-50);
+
+  /* transparent */
+  --color-bg-transparent-black10: #0000001a;
+  --color-bg-transparent-black25: #00000040;
+  --color-bg-transparent-white10: #ffffff1a;
+  --color-bg-transparent-white25: #ffffff40;
+
+  /* ── Tier 2: Fill ─────────────────────────────────────────────────────────── */
+
+  /* brand */
+  --color-fill-brand-primary-very-light: var(--color-brand-primary-50);
+  --color-fill-brand-primary-light: var(--color-brand-primary-200);
+  --color-fill-brand-primary-medium: var(--color-brand-primary-400);
+  --color-fill-brand-primary-dark: var(--color-brand-primary-800);
+  --color-fill-brand-secondary-light: var(--color-brand-secondary-200);
+  --color-fill-brand-secondary-medium: var(--color-brand-secondary-400);
+  --color-fill-brand-secondary-dark: var(--color-brand-secondary-700);
+  --color-fill-brand-tertiary-light: var(--color-brand-tertiary-200);
+  --color-fill-brand-tertiary-medium: var(--color-brand-tertiary-400);
+  --color-fill-brand-tertiary-dark: var(--color-brand-tertiary-700);
+
+  /* overlay */
+  --color-fill-overlay-black: #00000080;
+  --color-fill-overlay-white: #ffffff80;
+
+  /* base */
+  --color-fill-base-gray-very-light: var(--color-gray-100);
+  --color-fill-base-gray-light: var(--color-gray-200);
+  --color-fill-base-gray-medium: var(--color-gray-400);
+  --color-fill-base-gray-dark: var(--color-gray-600);
+  --color-fill-base-gray-dark2: var(--color-gray-800);
+  --color-fill-base-white: #ffffff;
+
+  /* accent */
+  --color-fill-accent-red: var(--color-accent-red-500);
+  --color-fill-accent-orange: var(--color-accent-orange-500);
+  --color-fill-accent-yellow: var(--color-accent-yellow-500);
+  --color-fill-accent-lime: var(--color-accent-lime-500);
+  --color-fill-accent-green: var(--color-accent-green-500);
+  --color-fill-accent-emerald: var(--color-accent-emerald-500);
+  --color-fill-accent-teal: var(--color-accent-teal-500);
+  --color-fill-accent-cyan: var(--color-accent-cyan-500);
+  --color-fill-accent-sky: var(--color-accent-sky-500);
+  --color-fill-accent-blue: var(--color-accent-blue-500);
+  --color-fill-accent-indigo: var(--color-accent-indigo-500);
+  --color-fill-accent-violet: var(--color-accent-violet-500);
+  --color-fill-accent-purple: var(--color-accent-purple-500);
+  --color-fill-accent-pink: var(--color-accent-pink-500);
+
+  /* ── Tier 2: Border ───────────────────────────────────────────────────────── */
+
+  /* base */
+  --color-border-base-subtle: var(--color-gray-blue-100);
+  --color-border-base-gray-light: var(--color-gray-200);
+  --color-border-base-gray-medium: var(--color-gray-300);
+
+  /* brand */
+  --color-border-brand-primary-light: var(--color-brand-primary-300);
+  --color-border-brand-primary-medium: var(--color-brand-primary-500);
+  --color-border-brand-primary-dark: var(--color-brand-primary-700);
+  --color-border-brand-secondary-medium: var(--color-brand-secondary-600);
+  --color-border-brand-tertiary-medium: var(--color-brand-tertiary-600);
+
+  /* system */
+  --color-border-system-error-medium: var(--color-error-400);
+  --color-border-system-error-dark: var(--color-error-600);
+  --color-border-system-warning-medium: var(--color-warning-400);
+  --color-border-system-warning-dark: var(--color-warning-600);
+  --color-border-system-success-medium: var(--color-success-400);
+  --color-border-system-success-dark: var(--color-success-600);
+  --color-border-system-info-medium: var(--color-info-400);
+  --color-border-system-info-dark: var(--color-info-600);
+
+  /* ── Tier 3: Button ───────────────────────────────────────────────────────── */
+
+  /* focus ring */
+  --color-btn-focus: var(--color-brand-primary-700);
+
+  /* solid primary */
+  --color-btn-solid-bg: var(--color-brand-primary-500);
+  --color-btn-solid-bg-hover: var(--color-brand-primary-800);
+  --color-btn-solid-text: #ffffff;
+
+  /* solid danger */
+  --color-btn-solid-danger-bg: var(--color-error-700);
+  --color-btn-solid-danger-bg-hover: var(--color-error-500);
+  --color-btn-solid-danger-text: #ffffff;
+
+  /* outline primary */
+  --color-btn-outline-border: var(--color-brand-primary-700);
+  --color-btn-outline-bg: #ffffff;
+  --color-btn-outline-bg-hover: var(--color-brand-primary-100);
+  --color-btn-outline-text: var(--color-brand-primary-800);
+
+  /* outline danger */
+  --color-btn-outline-danger-border: var(--color-error-600);
+  --color-btn-outline-danger-bg: #ffffff;
+  --color-btn-outline-danger-bg-hover: var(--color-error-100);
+  --color-btn-outline-danger-border-hover: var(--color-error-400);
+  --color-btn-outline-danger-text: var(--color-error-700);
+
+  /* ghost primary */
+  --color-btn-ghost-text: var(--color-brand-primary-800);
+  --color-btn-ghost-bg-hover: var(--color-brand-primary-100);
+  --color-btn-ghost-text-pressed: var(--color-brand-primary-600);
+
+  /* ghost icon */
+  --color-btn-ghost-icon-text: var(--color-gray-900);
+  --color-btn-ghost-icon-bg-hover: var(--color-gray-100);
+
+  /* ghost danger */
+  --color-btn-ghost-danger-text: var(--color-error-700);
+  --color-btn-ghost-danger-bg-hover: var(--color-error-100);
+
+  /* ── Tier 3: Input ────────────────────────────────────────────────────────── */
+  --color-input-label: var(--color-gray-900);
+  --color-input-text-fill: var(--color-gray-900);
+  --color-input-text-disable: var(--color-gray-500);
+  --color-input-placeholder: var(--color-gray-400);
+  --color-input-hint-text: var(--color-gray-400);
+  --color-input-assistive-text: var(--color-gray-500);
+  --color-input-icon: var(--color-gray-900);
+  --color-input-border-default: var(--color-gray-300);
+  --color-input-border-focus: var(--color-brand-primary-700);
+  --color-input-bg: #ffffff;
+  --color-input-bg-disable: var(--color-gray-100);
+  --color-input-error: var(--color-error-700);
+
+  /* ── Tier 3: Tag ──────────────────────────────────────────────────────────── */
+
+  /* text — uniform across all states per Figma */
+  --color-tag-text: var(--color-text-base-primary);
+
+  /* background */
+  --color-tag-bg-gray: #eaeaea;
+  --color-tag-bg-red: #ffbab5;
+  --color-tag-bg-yellow: var(--color-accent-yellow-300);
+  --color-tag-bg-green: var(--color-accent-teal-300);
+  --color-tag-bg-blue: var(--color-info-300);
+  --color-tag-bg-primary: var(--color-accent-violet-300);
+
+  /* border — category-colored outlines for skill-count tags */
+  --color-tag-border-blue: var(--color-brand-primary-500);
+  --color-tag-border-red: var(--color-accent-red-500);
+  --color-tag-border-yellow: var(--color-brand-secondary-600);
+  --color-tag-border-green: var(--color-accent-green-500);
+  --color-tag-border-gray: var(--color-gray-400);
+
+  /* ── Tier 3: Tooltip ───────────────────────────────────────────────────────── */
+  --color-tooltip-bg: #1a1a1a;
+  --color-tooltip-text: #ffffff;
+
+  /* ── Tier 3: Chip ──────────────────────────────────────────────────────────── */
+  --color-chip-outlined-bg: var(--color-fill-base-white);
+  --color-chip-outlined-border: var(--color-border-base-gray-medium);
+  --color-chip-outlined-text: var(--color-text-base-primary);
+  --color-chip-outlined-hover-bg: var(--color-bg-brand-primary-light2);
+  --color-chip-outlined-hover-border: var(--color-border-brand-primary-medium);
+  --color-chip-filled-bg: var(--color-bg-brand-primary-medium);
+  --color-chip-filled-text: #ffffff;
+
+  /* ── Tier 3: Speech Bubble ─────────────────────────────────────────────────── */
+  --color-speech-bubble-gradient-from: #ffffff;
+  --color-speech-bubble-gradient-to: #f5f6fe;
+
+  /* ── Tier 3: Career Goal Hero ──────────────────────────────────────────────── */
+  --color-career-goal-hero-gradient-from: #fff3d4;
+  --color-career-goal-hero-gradient-to: #a080ff;
+
+  /* ── Tier 3: Explore Hero ──────────────────────────────────────────────────── */
+  /* RIASEC promo card fill — vibrant sticky-note yellow (no semantic mid-yellow bg) */
+  --color-explore-riasec-bg: var(--color-accent-yellow-300);
+
+  /* ── Tier 3: RIASEC Banner ─────────────────────────────────────────────────── */
+  --color-riasec-banner-gradient-from: #ccb9ff;
+  --color-riasec-banner-gradient-to: #f5f5ff;
+
+  /* ── Tier 3: Bootcamp Banner ───────────────────────────────────────────────── */
+  --color-bootcamp-banner-bg: var(--color-gray-900);
+  --color-bootcamp-banner-control-bg: #ffffff66;
+  --color-bootcamp-banner-control-bg-hover: #ffffff99;
+  --color-bootcamp-banner-dot-active: var(--color-accent-yellow-500);
+  --color-bootcamp-banner-dot-inactive: #ffffff33;
+
+  /* ── Tier 3: Auth Hero ─────────────────────────────────────────────────────── */
+  --color-auth-hero-bg: #1560b3;
+  --color-auth-hero-glow: #72aee4;
+  /* Figma ties every interactive element on this frame (CTA, links, guest-mode
+     button) to this one accent — it doesn't match any existing global btn/link
+     token, so it's scoped to auth rather than changing those site-wide. */
+  --color-auth-hero-accent: #0d6ec8;
+  --color-auth-hero-accent-hover: #0b5fb0;
+
+  /* ── Tier 3: Skill Match Hero ──────────────────────────────────────────────── */
+  /* Navy backdrop behind the Skill-to-Career Match tab's tab bar + hero card.
+     Scoped (not a global token) since this navy only appears behind this one
+     dashboard tab, not site-wide. */
+  --color-skill-match-hero-bg: #0c3468;
+
+  /* Navy space panel that holds the "My Skill Collection" skill cards. Same
+     navy as the match hero; scoped to this dashboard tab, not site-wide. */
+  --color-skill-collection-panel-bg: #0c3468;
+}

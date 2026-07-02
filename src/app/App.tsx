@@ -9,6 +9,7 @@ import SkillBuilderPage from "./pages/SkillBuilderPage";
 import SkillDashboardPage from "./pages/SkillDashboardPage";
 import SkillOpportunitiesPage from "./pages/SkillOpportunitiesPage";
 import ProfilePage from "./pages/ProfilePage";
+import RiasecPage from "./pages/RiasecPage";
 import SkillTrendsRoutePage from "./pages/SkillTrendsRoutePage";
 import ResponsiveNavbar from "./ResponsiveNavbar";
 import ResponsiveFooter from "./ResponsiveFooter";
@@ -31,14 +32,14 @@ const CHROME_HIDE_CSS = `[data-name="Navbar"], [data-name="Footer"] { display: n
 
 /* ═══════════════════════════════════════════════════════════
    STAR ROTATION — scroll-driven + timed auto-spin
-   • 100 vh scroll  = 720° (2 full rotations) at mult = 1
-   • Every 10 s each star auto-spins 720°, fast→slow (easeOut³)
+   • 100 vh scroll  = 360° (1 full rotation) at mult = 1
+   • Every 18 s each star auto-spins gently, fast→slow (easeOut³)
    • CSS `rotate` property — additive with existing `transform`
 ═══════════════════════════════════════════════════════════ */
 const STAR_MULTS = [0.6, 1.0, 1.5, 0.8, 1.3, 0.5, 2.0, 0.9, 1.4, 0.7, 1.8, 1.1, 1.3, 1.6, 0.75];
 const STAR_DIRS: (1 | -1)[] = [1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1];
-const STAR_SPIN_DEGS = [420, 540, 660, 780, 900, 1020, 1140, 1260];
-const SPIN_DURS  = [1400, 1100, 1700, 1200, 1600, 1000, 1800, 1300, 1500, 1050];
+const STAR_SPIN_DEGS = [120, 160, 220, 260, 320, 360];
+const SPIN_DURS  = [2600, 3000, 3400, 3800, 4200, 4600];
 
 const DECORATIVE_SPIN_VIEWBOXES = new Set([
   "0 0 12 12",
@@ -364,7 +365,6 @@ type HomeReveal = {
 
 const HOME_REVEALS: readonly HomeReveal[] = [
   { selector: "[data-name=\"Header Section\"]",               cls: "sk-up",    delay: 0.1  },
-  { selector: ".sk-work-card",                                cls: "sk-up",    stagger: 0.12 },
   { selector: "[data-name=\"Discover Background\"]",          cls: "sk-up",    stagger: 0.12 },
   { selector: "[data-name=\"Plan Background\"]",              cls: "sk-up",    delay: 0.12 },
   { selector: "[data-name=\"Test Course Container\"]",        cls: "sk-left",  delay: 0    },
@@ -405,6 +405,10 @@ export default function App() {
   const router = useRouter();
   const route = useMemo(() => getRouteByPath(pathname), [pathname]);
   const page = route.key;
+  const riasecResultId = useMemo(() => {
+    const match = pathname.match(/^\/RIASEC\/test\/result\/([^/]+)$/);
+    return match?.[1];
+  }, [pathname]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [authHydrated, setAuthHydrated] = useState(false);
   const [scale, setScale] = useState(1);
@@ -426,7 +430,8 @@ export default function App() {
   const pageTransition = reduceMotion
     ? { duration: 0 }
     : { duration: 0.35, ease: [0.16, 1, 0.3, 1] as const };
-  const showChrome = route.kind !== "login";
+  const isRiasecRoute = route.kind === "riasec" || route.kind === "riasec-test" || route.kind === "riasec-result" || route.kind === "riasec-history";
+  const showChrome = route.kind !== "login" && !isRiasecRoute;
 
   const handleMockLogin = () => {
     window.localStorage.setItem(MOCK_AUTH_STORAGE_KEY, "true");
@@ -497,7 +502,7 @@ export default function App() {
 
     const stars: Star[] = [];
     const VH = window.innerHeight;
-    const BASE = 720 / VH; // deg per CSS pixel → 100 vh = 720°
+    const BASE = 360 / VH; // deg per CSS pixel → 100 vh = 360°
     const useScrollRotation = window.innerWidth >= 1024;
 
     /* Collect decorative star elements */
@@ -591,11 +596,11 @@ export default function App() {
     const initTid = setTimeout(() => {
       collect();
       raf = requestAnimationFrame(tick);
-      // First auto-spin after 2 s, then every 10 s
-      firstSpinTid = setTimeout(triggerSpin, 2000);
+      // First auto-spin after 4 s, then every 18 s
+      firstSpinTid = setTimeout(triggerSpin, 4000);
     }, 200);
 
-    const spinInterval = setInterval(triggerSpin, 10000);
+    const spinInterval = setInterval(triggerSpin, 18000);
 
     return () => {
       clearTimeout(initTid);
@@ -690,6 +695,123 @@ export default function App() {
       targets.forEach(({ el }) => {
         el.style.transform = "";
         delete el.dataset.parallaxY;
+      });
+    };
+  }, [route.kind, reduceMotion]);
+
+  /* ── How Skillogy works: pinned scroll cards, one-by-one, then active state ── */
+  useEffect(() => {
+    if (route.kind !== "home" || reduceMotion) return;
+
+    type WorkScrollTarget = {
+      section: HTMLElement;
+      cards: HTMLElement[];
+      startY: number;
+      scrollLength: number;
+    };
+
+    let frame = 0;
+    let target: WorkScrollTarget | null = null;
+    const retryTids: ReturnType<typeof setTimeout>[] = [];
+
+    const collect = () => {
+      const section = document.querySelector<HTMLElement>("[data-work-scroll-section]");
+      const cards = Array.from(document.querySelectorAll<HTMLElement>("[data-work-motion-card]"));
+
+      if (!section || cards.length === 0) {
+        target = null;
+        document.documentElement.dataset.skWorkScroll = "waiting";
+        return;
+      }
+
+      const viewportHeight = window.innerHeight || 1;
+      target = {
+        section,
+        cards,
+        startY: section.getBoundingClientRect().top + window.scrollY,
+        scrollLength: Math.max(section.offsetHeight - viewportHeight, viewportHeight),
+      };
+      document.documentElement.dataset.skWorkScroll = "active";
+    };
+
+    const update = () => {
+      frame = 0;
+      if (!target) return;
+
+      const progress = Math.min(Math.max((window.scrollY - target.startY) / target.scrollLength, 0), 1);
+      const allActive = progress >= 0.76;
+      const fromXs = [-180, 0, 180];
+      const fromYs = [72, 96, 72];
+      const fromRotates = [-6, 2, 6];
+
+      target.cards.forEach((card, index) => {
+        const start = 0.1 + index * 0.19;
+        const end = start + 0.18;
+        const local = Math.min(Math.max((progress - start) / (end - start), 0), 1);
+        const eased = easeOut3(local);
+        const x = (fromXs[index] ?? 0) * (1 - eased);
+        const y = (fromYs[index] ?? 72) * (1 - eased);
+        const rotate = (fromRotates[index] ?? 0) * (1 - eased);
+        const scale = 0.94 + eased * 0.06;
+        const isVisible = local > 0.02 || progress >= end;
+        const isSettled = progress >= end + 0.02;
+        const input = card.querySelector<HTMLInputElement>("input[type='checkbox']");
+
+        card.style.opacity = `${Math.max(0, Math.min(1, eased))}`;
+        card.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${rotate.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+        card.style.filter = `blur(${((1 - eased) * 10).toFixed(2)}px)`;
+        card.style.pointerEvents = isVisible ? "auto" : "none";
+        card.style.zIndex = `${10 + index}`;
+        card.dataset.workScrollState = allActive ? "active" : isSettled ? "settled" : isVisible ? "entering" : "waiting";
+
+        if (input) {
+          input.checked = allActive;
+        }
+      });
+
+      document.documentElement.dataset.skWorkProgress = progress.toFixed(3);
+    };
+
+    const requestUpdate = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(update);
+    };
+
+    const handleResize = () => {
+      collect();
+      requestUpdate();
+    };
+
+    const init = (attempt = 0) => {
+      collect();
+      update();
+      if (!target && attempt < 20) {
+        retryTids.push(setTimeout(() => init(attempt + 1), 100));
+      }
+    };
+
+    const initTid = setTimeout(() => init(), 140);
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      clearTimeout(initTid);
+      retryTids.forEach(clearTimeout);
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", handleResize);
+      delete document.documentElement.dataset.skWorkScroll;
+      delete document.documentElement.dataset.skWorkProgress;
+      target?.cards.forEach((card) => {
+        card.style.opacity = "";
+        card.style.transform = "";
+        card.style.filter = "";
+        card.style.pointerEvents = "";
+        card.style.zIndex = "";
+        delete card.dataset.workScrollState;
+        const input = card.querySelector<HTMLInputElement>("input[type='checkbox']");
+        if (input) input.checked = false;
       });
     };
   }, [route.kind, reduceMotion]);
@@ -801,6 +923,10 @@ export default function App() {
         {route.kind === "skill-builder" ? <SkillBuilderPage /> : null}
         {route.kind === "skill-opportunities" ? <SkillOpportunitiesPage /> : null}
         {route.kind === "profile" ? <ProfilePage profile={currentUserProfile} /> : null}
+        {route.kind === "riasec" ? <RiasecPage view="landing" /> : null}
+        {route.kind === "riasec-test" ? <RiasecPage view="test" /> : null}
+        {route.kind === "riasec-result" ? <RiasecPage view="result" resultId={riasecResultId} /> : null}
+        {route.kind === "riasec-history" ? <RiasecPage view="history" /> : null}
       </motion.div>
     </AnimatePresence>
   );

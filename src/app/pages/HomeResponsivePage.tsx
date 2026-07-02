@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import HeroMascot from "../components/HeroMascot";
+import { BlurText } from "../components/ui/blur-text";
 import challengerIdleSvg from "@/assets/characters/new-3/the-challenger-idle.svg?raw";
 import championIdleSvg from "@/assets/characters/new-3/the-champion-idle.svg?raw";
 import explorerIdleSvg from "@/assets/characters/new-3/the-explorer-idle.svg?raw";
@@ -152,11 +153,40 @@ function ButtonLink({
   );
 }
 
-function SpeechBubble({ className, children }: { className: string; children: string }) {
+function GuideBubble({
+  className,
+  mascotClassName,
+  children,
+  bubbleClassName = "",
+  mascotSvg = explorerIdleSvg,
+  label = "The Explorer guide",
+}: {
+  className: string;
+  mascotClassName: string;
+  children: string;
+  bubbleClassName?: string;
+  mascotSvg?: string;
+  label?: string;
+}) {
   return (
-    <div className={`absolute rounded-full bg-[#2ccb6f] px-5 py-2.5 text-[18px] text-white shadow-sm ${className}`}>
-      {children}
-      <span className="absolute bottom-[-10px] right-8 size-5 rotate-45 bg-[#2ccb6f]" aria-hidden />
+    <div className={`absolute hidden lg:block ${className}`}>
+      <div className={`relative rounded-full bg-[#18bd83] px-8 py-4 text-[24px] leading-normal text-white shadow-[0_12px_24px_rgba(7,38,86,0.08)] ${bubbleClassName}`}>
+        {children}
+        <span className="absolute bottom-[-17px] right-[72px] h-9 w-8 rotate-[35deg] bg-[#18bd83] [clip-path:polygon(0_0,100%_0,100%_100%)]" aria-hidden />
+      </div>
+      <HeroMascot svg={mascotSvg} label={label} className={mascotClassName} maxLook={5} fitScale={1} />
+    </div>
+  );
+}
+
+function SectionMotifs({ tone = "light" }: { tone?: "light" | "blue" | "dark" }) {
+  const blue = tone === "dark" ? "#5aaed8" : "#5aaed8";
+  const yellow = tone === "dark" ? "#ffe040" : "#ffd108";
+
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      <DecorativeStar className="left-[38px] top-[72px] size-10 max-lg:left-[5%] max-lg:top-[42px] max-lg:size-8" color={blue} variant="sparkle" />
+      <DecorativeStar className="right-[142px] bottom-[72px] size-8 max-lg:right-[12%] max-lg:bottom-[42px] max-lg:size-6" color={yellow} variant="sparkle" />
     </div>
   );
 }
@@ -237,41 +267,37 @@ function RiasecGraphic() {
       {letters.map((letter) => (
         <div key={letter.className} className={`absolute ${letter.className} [&_svg]:block [&_svg]:h-full [&_svg]:w-full`} dangerouslySetInnerHTML={{ __html: letter.svg }} />
       ))}
-      <DecorativeStar className="left-[118px] top-[242px] size-12 max-lg:left-[2%] max-lg:top-[63%] max-lg:size-10" color="#5aaed8" />
       <DecorativeStar className="left-[221px] top-[193px] size-9 max-lg:left-[36%] max-lg:top-[46%] max-lg:size-8" color="#2ccb6f" variant="sparkle" />
       <DecorativeStar className="right-[10px] top-[119px] size-14 max-lg:right-[3%] max-lg:top-[26%] max-lg:size-10" color="#2ccb6f" />
-      <DecorativeStar className="right-[118px] top-[35px] size-10 max-lg:right-[20%] max-lg:top-[5%] max-lg:size-8" color="#5aaed8" />
-      <Dot className="right-[180px] top-[144px] size-3 max-lg:right-[31%] max-lg:top-[37%]" color="#2b7db8" />
     </div>
   );
 }
 
 function HeroSection() {
   return (
-    <section className="sticky top-0 z-[1] flex min-h-[620px] w-full items-center overflow-hidden bg-[#eff4f9] px-5 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0">
+    <section className="sticky top-0 z-[1] flex min-h-[620px] w-full items-center overflow-hidden bg-[#eff4f9] px-5 sm:px-8 lg:h-[93svh] lg:min-h-[760px] lg:px-0">
       <div data-sticky-parallax data-parallax-speed="0.23" data-parallax-max="190" className="relative mx-auto h-[620px] w-full max-w-[1180px] will-change-transform md:h-[660px] lg:h-[660px]">
         <div className="relative z-10 mx-auto pt-[104px] text-center md:pt-[116px]">
-          <h1 className="text-[38px] font-bold leading-[1.18] tracking-normal text-[#424045] sm:text-[58px] lg:text-[64px]">
-            เปลี่ยนศักยภาพให้เป็นทักษะจริง
-            <span className="block text-[#0d6ec8]">สู่เส้นทางความสำเร็จในอาชีพ</span>
+          <h1 className="text-[32px] font-bold leading-[1.18] tracking-normal text-[#424045] sm:text-[58px] lg:text-[64px]">
+            <BlurText text="เปลี่ยนศักยภาพให้เป็นทักษะจริง" />
+            <span className="block text-[#0d6ec8]">
+              <BlurText text="สู่เส้นทางความสำเร็จในอาชีพ" delay={0.12} />
+            </span>
           </h1>
           <div className="mt-7">
-            <ButtonLink href="/skill-dashboard" className="min-h-[58px] px-7 text-[22px]">
+            <ButtonLink href="/skill-dashboard" className="min-h-[52px] px-6 text-[18px] sm:min-h-[58px] sm:px-7 sm:text-[22px]">
               Welcome Back, Skillogist
             </ButtonLink>
           </div>
         </div>
 
-        <DecorativeStar className="left-[76px] top-[173px] size-[72px] max-sm:left-0 max-sm:top-[214px] max-sm:size-11" color="#ffe040" variant="asterisk" />
-        <DecorativeStar className="left-[255px] top-[224px] size-9 max-sm:left-[18%] max-sm:top-[308px]" color="#5aaed8" variant="sparkle" />
-        <DecorativeStar className="right-[96px] top-[161px] size-14 max-sm:right-[2%] max-sm:top-[210px] max-sm:size-10" color="#5aaed8" />
-        <DecorativeStar className="right-[170px] top-[274px] size-10 max-sm:right-[14%] max-sm:top-[352px] max-sm:size-8" color="#2ccb6f" variant="sparkle" />
-        <Dot className="left-[201px] top-[310px] size-5 max-sm:left-[11%] max-sm:top-[355px]" color="#2ccb6f" />
-        <Dot className="right-[88px] top-[259px] size-3.5 max-sm:right-[8%] max-sm:top-[320px]" color="#db475f" />
+        <DecorativeStar className="left-[-64px] top-[123px] size-[72px] max-sm:left-0 max-sm:top-[214px] max-sm:size-11" color="#ffe040" variant="asterisk" />
+        <DecorativeStar className="right-[26px] top-[174px] size-14 max-sm:right-[2%] max-sm:top-[210px] max-sm:size-10" color="#0fbf8a" />
+        <Dot className="left-[25px] top-[310px] size-5 max-sm:left-[11%] max-sm:top-[355px]" color="#2ccb6f" />
 
-        <HeroMascot svg={championIdleSvg} label="The Champion" maxLook={8} fitScale={1} className="z-[4] bottom-[-64px] left-[-112px] h-[270px] w-[340px] md:bottom-[-86px] md:left-[-20px] md:h-[360px] md:w-[440px] lg:bottom-auto lg:left-[8px] lg:top-[382px] lg:h-[430px] lg:w-[500px]" />
-        <HeroMascot svg={challengerIdleSvg} label="The Challenger" maxLook={9} fitScale={1} className="z-[4] bottom-[-62px] right-[-126px] h-[270px] w-[270px] rotate-[10deg] md:bottom-[-90px] md:right-[-24px] md:h-[360px] md:w-[360px] lg:bottom-auto lg:left-[786px] lg:right-auto lg:top-[366px] lg:h-[455px] lg:w-[455px]" />
-        <HeroMascot svg={explorerIdleSvg} label="The Explorer" maxLook={7} fitScale={1} className="z-[6] bottom-[-84px] left-[18%] h-[286px] w-[360px] md:bottom-[-112px] md:left-[30%] md:h-[380px] md:w-[460px] lg:bottom-auto lg:left-[344px] lg:top-[352px] lg:h-[480px] lg:w-[560px]" />
+        <HeroMascot svg={championIdleSvg} label="The Champion" maxLook={8} fitScale={1} className="z-[4] bottom-[-34px] left-[-82px] h-[228px] w-[286px] md:bottom-[-86px] md:left-[-20px] md:h-[360px] md:w-[440px] lg:bottom-auto lg:left-[-84px] lg:top-[382px] lg:h-[430px] lg:w-[500px]" />
+        <HeroMascot svg={challengerIdleSvg} label="The Challenger" maxLook={9} fitScale={1} className="z-[4] bottom-[-38px] right-[-90px] h-[230px] w-[230px] rotate-[10deg] md:bottom-[-90px] md:right-[-24px] md:h-[360px] md:w-[360px] lg:bottom-auto lg:left-[760px] lg:right-auto lg:top-[426px] lg:h-[430px] lg:w-[430px]" />
+        <HeroMascot svg={explorerIdleSvg} label="The Explorer" maxLook={7} fitScale={1} className="z-[6] bottom-[-48px] left-[18%] h-[246px] w-[310px] md:bottom-[-112px] md:left-[30%] md:h-[380px] md:w-[460px] lg:bottom-auto lg:left-[234px] lg:top-[388px] lg:h-[520px] lg:w-[650px]" />
       </div>
     </section>
   );
@@ -279,15 +305,28 @@ function HeroSection() {
 
 function WorksSection() {
   return (
-    <section className="sticky top-0 z-[2] flex min-h-[620px] w-full items-center bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
-      <div data-sticky-parallax data-parallax-speed="0.2" data-parallax-max="160" className="relative mx-auto w-full max-w-[1180px] will-change-transform lg:h-[567px] lg:pl-[108px] lg:pt-[64px]">
-        <h2 className="text-[32px] font-bold leading-tight text-[#1b3a5c]">How Skilogy works</h2>
-        <SpeechBubble className="left-[574px] top-[53px] hidden lg:block">เริ่มจากตรงไหนก็ได้ จะมีฉันคอยไกด์ตลอด</SpeechBubble>
-        <HeroMascot svg={explorerIdleSvg} label="The Explorer guide" className="left-[901px] top-[63px] hidden h-[140px] w-[183px] lg:block" maxLook={5} />
-        <div className="mt-10 grid gap-8 lg:grid-cols-[294px_294px_294px] lg:gap-[41px]">
-          {steps.map((step) => (
-            <WorkCard key={step.title} step={step} />
-          ))}
+    <section data-work-scroll-section className="relative z-[2] h-[260svh] min-h-[1760px] bg-white">
+      <div className="sticky top-0 flex min-h-[620px] w-full items-center overflow-hidden bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+        <SectionMotifs />
+        <div data-work-scroll-content className="relative mx-auto w-full max-w-[1180px] lg:h-[567px] lg:pl-[108px] lg:pt-[64px]">
+          <h2 className="relative z-10 text-[36px] font-bold leading-tight text-[#1b3a5c] sm:text-[44px]">
+            <BlurText text="How Skillogy works" />
+          </h2>
+          <GuideBubble
+            className="right-[10px] top-[2px] z-20"
+            bubbleClassName="min-w-[560px] pr-[112px] text-[22px]"
+            mascotClassName="left-[474px] top-[-24px] h-[154px] w-[192px]"
+          >
+            เริ่มจากตรงไหนก็ได้ จะมีฉันคอยไกด์ตลอด
+          </GuideBubble>
+          <HeroMascot svg={championIdleSvg} label="The Champion work peek" className="left-[-48px] top-[276px] hidden h-[176px] w-[176px] -rotate-12 opacity-95 lg:block" maxLook={4} fitScale={1} />
+          <div data-work-card-stage className="relative z-10 mt-14 grid gap-8 lg:mt-[112px] lg:grid-cols-[294px_294px_294px] lg:gap-[34px]">
+            {steps.map((step, index) => (
+              <div key={step.title} data-work-motion-card data-work-card-index={index} className="will-change-[transform,opacity,filter]">
+                <WorkCard step={step} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -296,21 +335,25 @@ function WorksSection() {
 
 function SelfKnowledgeSection() {
   return (
-    <section className="sticky top-0 z-[3] flex min-h-[620px] w-full items-center bg-[#c6ebfe] px-5 py-16 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:rounded-t-[44px] lg:px-0 lg:py-0">
+    <section className="sticky top-0 z-[3] flex min-h-[620px] w-full items-center overflow-hidden bg-[#c6ebfe] px-5 py-16 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:rounded-t-[44px] lg:px-0 lg:py-0">
+      <SectionMotifs tone="blue" />
       <div data-sticky-parallax data-parallax-speed="0.2" data-parallax-max="160" className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 will-change-transform lg:block lg:h-[470px]">
         <div className="relative z-10 lg:absolute lg:left-[109px] lg:top-[120px]">
           <DecorativeStar className="left-[-79px] top-[-13px] size-[58px] max-sm:left-0 max-sm:top-[-62px] max-sm:size-11" color="#4da8ee" />
           <p className="text-[24px] text-[#1b3a5c]">เริ่มจาก...</p>
-          <h2 className="mt-2 text-[42px] font-bold leading-tight text-[#05101f] sm:text-[48px]">รู้จักตัวเองให้ลึกขึ้น</h2>
+          <h2 className="mt-2 text-[42px] font-bold leading-tight text-[#05101f] sm:text-[48px]">
+            <BlurText text="รู้จักตัวเองให้ลึกขึ้น" />
+          </h2>
           <p className="mt-4 text-[20px] leading-8 text-[#0e2440]">
             ด้วยแบบทดสอบ RIASEC
             <br />
             ตัวช่วยแนะนำอาชีพที่เหมาะกับคุณ
           </p>
           <div className="mt-6">
-            <ButtonLink href="/skill-dashboard">เริ่มทำแบบทดสอบ</ButtonLink>
+            <ButtonLink href="/RIASEC">เริ่มทำแบบทดสอบ</ButtonLink>
           </div>
         </div>
+        <HeroMascot svg={explorerIdleSvg} label="The Explorer test peek" className="right-[-34px] top-[54px] hidden h-[120px] w-[150px] rotate-6 lg:block" maxLook={4} fitScale={1} />
         <RiasecGraphic />
       </div>
     </section>
@@ -319,7 +362,8 @@ function SelfKnowledgeSection() {
 
 function CareerSection() {
   return (
-    <section className="sticky top-0 z-[4] flex min-h-[620px] w-full items-center bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+    <section className="sticky top-0 z-[4] flex min-h-[620px] w-full items-center overflow-hidden bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+      <SectionMotifs />
       <div data-sticky-parallax data-parallax-speed="0.2" data-parallax-max="160" className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 will-change-transform lg:block lg:h-full">
         <div className="relative min-h-[560px] max-lg:min-h-[520px] max-sm:min-h-[500px] lg:absolute lg:inset-0 lg:min-h-0">
           <img src={imgCareer} alt="" className="absolute bottom-0 left-[8%] h-[540px] w-auto max-w-none object-contain lg:bottom-0 lg:left-[42px] lg:top-auto lg:h-[650px] max-lg:left-1/2 max-lg:h-[500px] max-lg:-translate-x-1/2 max-sm:h-[470px]" />
@@ -329,21 +373,24 @@ function CareerSection() {
               {chip.label}
             </span>
           ))}
-          <DecorativeStar className="left-[93px] top-[120px] size-12" color="#2ccb6f" />
         </div>
         <div className="relative lg:absolute lg:left-[658px] lg:top-[300px]">
-          <SpeechBubble className="left-[-34px] top-[-94px] hidden lg:block">จากตรงนี้ ฉันจะช่วยวางแผนเส้นทางสู่จุดหมายให้!</SpeechBubble>
-          <HeroMascot svg={explorerIdleSvg} label="The Explorer career guide" className="left-[241px] top-[-59px] hidden h-[101px] w-[132px] lg:block" maxLook={5} />
+          <GuideBubble
+            className="left-[-94px] top-[-154px] z-20"
+            bubbleClassName="min-w-[520px] pr-[112px] text-[20px]"
+            mascotClassName="left-[418px] top-[-16px] h-[124px] w-[155px]"
+          >
+            จากตรงนี้ ฉันจะช่วยวางแผนเส้นทางสู่จุดหมายให้!
+          </GuideBubble>
           <h2 className="text-[42px] font-bold leading-tight text-[#05101f] sm:text-[48px]">
-            สำรวจอาชีพ
+            <BlurText text="สำรวจอาชีพ" />
             <br />
-            และเป็นตั้งเป้าหมาย
+            <BlurText text="และตั้งเป้าหมาย" delay={0.08} />
           </h2>
           <p className="mt-4 text-[20px] text-[#0e2440]">เช็คความพร้อม ดูทักษะที่ยังขาด</p>
           <div className="mt-6">
             <ButtonLink href="/skill-trends">สำรวจอาชีพทั้งหมด</ButtonLink>
           </div>
-          <DecorativeStar className="right-0 top-24 size-8" color="#ffbf00" />
         </div>
       </div>
     </section>
@@ -360,20 +407,21 @@ function BootcampSection() {
   };
 
   return (
-    <section className="sticky top-0 z-[5] flex min-h-[620px] w-full items-center bg-[#1b3476] px-5 py-20 text-white sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+    <section className="sticky top-0 z-[5] flex min-h-[620px] w-full items-center overflow-hidden bg-[#1b3476] px-5 py-20 text-white sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+      <SectionMotifs tone="dark" />
       <div data-sticky-parallax data-parallax-speed="0.18" data-parallax-max="145" className="relative mx-auto h-full w-full max-w-[1180px] will-change-transform">
         <div className="relative min-h-[560px] overflow-hidden max-sm:min-h-[620px] lg:h-full lg:min-h-0">
           <div className="relative z-10 lg:absolute lg:left-[80px] lg:top-[92px]">
-            <h2 className="max-w-[760px] text-[42px] font-bold leading-tight max-sm:text-[38px] sm:text-[48px]">เปลี่ยนเป้าหมายให้เป็นความพร้อม</h2>
+            <h2 className="max-w-[760px] text-[42px] font-bold leading-tight max-sm:text-[38px] sm:text-[48px]">
+              <BlurText text="เปลี่ยนเป้าหมายให้เป็นความพร้อม" />
+            </h2>
             <p className="mt-3 text-[20px]">ด้วย Bootcamp ที่เหมาะกับคุณ</p>
             <div className="mt-5">
             <ButtonLink href="/skill-builder" inverse>ดูทั้งหมด</ButtonLink>
             </div>
           </div>
           <BootcampCloudCluster />
-          <HeroMascot svg={championIdleSvg} label="The Champion bootcamp" className="left-[682px] top-[104px] h-[400px] w-[480px] max-sm:right-[-90px] max-sm:top-[210px] max-sm:h-[240px] max-sm:w-[288px]" maxLook={6} />
-          <DecorativeStar className="left-[42px] top-[124px] size-12" color="#5aaed8" />
-          <DecorativeStar className="right-[98px] top-[76px] size-10" color="#fff" />
+          <HeroMascot svg={championIdleSvg} label="The Champion bootcamp" className="left-[682px] top-[104px] h-[400px] w-[480px] max-sm:right-[-70px] max-sm:top-[222px] max-sm:h-[210px] max-sm:w-[252px]" maxLook={6} fitScale={1} />
           <DecorativeStar className="right-[70px] top-[164px] size-7" color="#5aaed8" />
           <div className="absolute left-1/2 top-[320px] z-20 w-[88%] -translate-x-1/2 overflow-hidden rounded-[24px] bg-[#490909] shadow-[0_22px_45px_rgba(0,0,0,0.22)] max-sm:bottom-8 max-sm:top-auto max-sm:w-full max-sm:rounded-[18px] lg:w-[1039px]">
             <img
@@ -421,7 +469,8 @@ function BootcampSection() {
 
 function CourseSection() {
   return (
-    <section className="sticky top-0 z-[6] flex min-h-[620px] w-full items-center bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+    <section className="sticky top-0 z-[6] flex min-h-[620px] w-full items-center overflow-hidden bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+      <SectionMotifs />
       <div data-sticky-parallax data-parallax-speed="0.18" data-parallax-max="145" className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 will-change-transform lg:block lg:h-full">
         <div className="relative min-h-[540px] max-lg:min-h-[430px] max-sm:min-h-[390px] lg:absolute lg:inset-0 lg:min-h-0">
           <img src={imgCertificate} alt="" className="absolute bottom-0 left-[8%] h-[520px] w-auto max-w-none object-contain lg:bottom-0 lg:left-[80px] lg:top-auto lg:h-[520px] lg:w-auto max-lg:left-1/2 max-lg:h-[420px] max-lg:-translate-x-1/2 max-sm:h-[380px]" />
@@ -430,12 +479,19 @@ function CourseSection() {
           <Dot className="left-[171px] top-[193px] size-3" color="#2b7db8" />
         </div>
         <div className="relative lg:absolute lg:left-[785px] lg:top-[287px]">
-          <SpeechBubble className="left-[-276px] top-[-67px] hidden lg:block">มีใบรับรองจากมหาวิทยาลัย และบริษัทชั้นนำ</SpeechBubble>
-          <HeroMascot svg={explorerIdleSvg} label="The Explorer certificate" className="left-[-305px] top-[-33px] hidden h-[82px] w-[108px] lg:block" maxLook={5} />
+          <GuideBubble
+            className="left-[-470px] top-[-104px] z-20"
+            bubbleClassName="min-w-[540px] pr-[112px] text-[20px]"
+            mascotClassName="left-[438px] top-[-18px] h-[112px] w-[140px]"
+          >
+            มีใบรับรองจากมหาวิทยาลัย และบริษัทชั้นนำ
+          </GuideBubble>
           <DecorativeStar className="left-[-131px] top-[81px] size-10" color="#5aaed8" />
           <DecorativeStar className="right-[-140px] top-[117px] size-7 max-sm:right-2 max-sm:top-[132px]" color="#2ccb6f" />
           <p className="text-[24px] text-[#05101f]">อัปสกิลต่อด้วย...</p>
-          <h2 className="mt-1 text-[52px] font-bold leading-tight text-[#05101f] sm:text-[56px]">คอร์สออนไลน์</h2>
+          <h2 className="mt-1 text-[52px] font-bold leading-tight text-[#05101f] sm:text-[56px]">
+            <BlurText text="คอร์สออนไลน์" />
+          </h2>
           <div className="mt-6">
             <ButtonLink href="/skill-builder">ดูทั้งหมด</ButtonLink>
           </div>
