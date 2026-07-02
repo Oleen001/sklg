@@ -13,8 +13,7 @@ import modalBriefcaseIcon from "../../assets/figma/skill-dashboard/modal-briefca
 import modalCloseIcon from "../../assets/figma/skill-dashboard/modal-close.svg";
 import modalTrendIcon from "../../assets/figma/skill-dashboard/modal-trend.svg";
 import skillScanBeanFace from "../../assets/figma/skill-dashboard/skill-scan-bean-face.svg";
-import skillScanCloudFace from "../../assets/figma/skill-dashboard/skill-scan-cloud-face.svg";
-import skillScanCloudySearch from "../../assets/figma/skill-dashboard/skill-scan-cloudy-search.svg";
+import explorerIdle from "../../assets/characters/new-3/the-explorer-idle.svg";
 import skillScanStarFace from "../../assets/figma/skill-dashboard/skill-scan-star-face.svg";
 import imgEngineeringOpportunity from "@/assets/opportunities/engineering-101-hero.png";
 import imgHackathonOpportunity from "@/assets/opportunities/hackathon-green.png";
@@ -362,8 +361,8 @@ export default function SkillScanPage() {
       {activeTab === "skill-scan" ? (
       <>
       <section className="relative px-5 pb-12 pt-[132px] sm:px-8 sm:pt-[156px] lg:hidden">
-        <img src={skillScanCloudFace} alt="" className="absolute left-5 top-[124px] size-12 sm:left-12 sm:top-[148px] sm:size-16" aria-hidden />
-        <img src={skillScanCloudFace} alt="" className="absolute right-5 top-[124px] size-12 -scale-x-100 sm:right-12 sm:top-[148px] sm:size-16" aria-hidden />
+        <img src={explorerIdle} alt="" className="absolute left-5 top-[124px] size-12 sm:left-12 sm:top-[148px] sm:size-16" aria-hidden />
+        <img src={explorerIdle} alt="" className="absolute right-5 top-[124px] size-12 -scale-x-100 sm:right-12 sm:top-[148px] sm:size-16" aria-hidden />
 
         <div className="mx-auto flex max-w-[760px] flex-col items-center text-center">
           <p className="text-[18px] font-medium leading-7 text-[var(--sk-color-navy-900)]">
@@ -413,7 +412,7 @@ export default function SkillScanPage() {
           <div className="relative h-[560px] overflow-hidden rounded-[36px] bg-[#eff7ff] shadow-[var(--sk-shadow-sm)] sm:h-[720px]">
             <div className="absolute left-1/2 top-[52%] h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-[50%_48%_46%_52%] bg-[var(--sk-color-blue-200)] sm:h-[640px] sm:w-[640px]" />
             <div className="absolute left-1/2 top-[52%] h-[350px] w-[350px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/60 sm:h-[450px] sm:w-[450px]" />
-            <img src={skillScanCloudySearch} alt="" className="absolute left-1/2 top-[52%] h-[210px] w-[210px] -translate-x-1/2 -translate-y-1/2 sm:h-[260px] sm:w-[260px]" aria-hidden />
+            <img src={explorerIdle} alt="" className="absolute left-1/2 top-[52%] h-[210px] w-[210px] -translate-x-1/2 -translate-y-1/2 sm:h-[260px] sm:w-[260px]" aria-hidden />
 
             <div className="absolute inset-x-4 bottom-4 top-[205px] z-10 overflow-y-auto rounded-[24px] bg-white/85 p-4 shadow-[var(--sk-shadow-sm)] ring-1 ring-[rgba(14,36,64,0.06)] sm:hidden">
               {isLoading ? (
@@ -467,8 +466,8 @@ export default function SkillScanPage() {
       </section>
 
       <section className="relative mx-auto hidden h-[1210px] w-[1180px] px-[64px] pt-[112px] lg:block">
-        <img src={skillScanCloudFace} alt="" className="absolute left-[132px] top-[98px] size-[78px]" aria-hidden />
-        <img src={skillScanCloudFace} alt="" className="absolute right-[132px] top-[98px] size-[78px] -scale-x-100" aria-hidden />
+        <img src={explorerIdle} alt="" className="absolute left-[132px] top-[98px] size-[78px]" aria-hidden />
+        <img src={explorerIdle} alt="" className="absolute right-[132px] top-[98px] size-[78px] -scale-x-100" aria-hidden />
         <img src={skillScanStarFace} alt="" className="absolute left-[82px] top-[200px] size-[64px]" aria-hidden />
         <img src={skillScanStarFace} alt="" className="absolute right-[82px] top-[200px] size-[64px] -scale-x-100" aria-hidden />
         <img src={skillScanBeanFace} alt="" className="absolute left-[246px] top-[238px] size-[56px] rotate-[-18deg]" aria-hidden />
@@ -508,7 +507,7 @@ export default function SkillScanPage() {
         <div className="absolute left-1/2 top-[388px] h-[760px] w-[1068px] -translate-x-1/2">
           <div className="absolute left-1/2 top-1/2 h-[760px] w-[780px] -translate-x-1/2 -translate-y-1/2 rounded-[50%_48%_46%_52%] bg-[var(--sk-color-blue-200)]" />
           <div className="absolute left-1/2 top-1/2 h-[500px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[rgba(255,255,255,0.58)]" />
-          <img src={skillScanCloudySearch} alt="" className="absolute left-1/2 top-1/2 h-[270px] w-[270px] -translate-x-1/2 -translate-y-1/2" aria-hidden />
+          <img src={explorerIdle} alt="" className="absolute left-1/2 top-1/2 h-[270px] w-[270px] -translate-x-1/2 -translate-y-1/2" aria-hidden />
 
           <div className="absolute right-0 top-4 hidden flex-col gap-3 rounded-[20px] bg-white/80 px-4 py-3 text-[13px] leading-5 text-[var(--sk-color-blue-800)] shadow-[var(--sk-shadow-sm)] ring-1 ring-[var(--sk-color-border)]">
             {(["highest", "high", "moderate"] as MarketDemand[]).map((demand) => (

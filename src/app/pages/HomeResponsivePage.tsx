@@ -2,20 +2,20 @@
 
 import { useState } from "react";
 import HeroMascot from "../components/HeroMascot";
-import cloudy2IdleSvg from "@/assets/characters/cloudy/cloudy2-idle.svg?raw";
-import sunny2IdleSvg from "@/assets/characters/sunny/sunny2-idle.svg?raw";
-import windy3IdleSvg from "@/assets/characters/windy/windy3-idle.svg?raw";
+import challengerIdleSvg from "@/assets/characters/new-3/the-challenger-idle.svg?raw";
+import championIdleSvg from "@/assets/characters/new-3/the-champion-idle.svg?raw";
+import explorerIdleSvg from "@/assets/characters/new-3/the-explorer-idle.svg?raw";
 import riasecASvg from "@/assets/riasec/a-lottie-v2.svg?raw";
 import riasecCSvg from "@/assets/riasec/c-lottie-v2.svg?raw";
 import riasecESvg from "@/assets/riasec/e-lottie-v2.svg?raw";
 import riasecISvg from "@/assets/riasec/i-lottie-v2.svg?raw";
 import riasecRSvg from "@/assets/riasec/r-lottie-v2.svg?raw";
 import riasecSSvg from "@/assets/riasec/s-lottie-v2.svg?raw";
-import discoverCardCharacter from "@/assets/home-cards/cloudy-card.svg";
+import discoverCardCharacter from "@/assets/home-cards/the-explorer-card.svg";
 import discoverCardIcon from "@/assets/home-cards/compass-1.svg";
 import planCardIcon from "@/assets/home-cards/map-1.svg";
-import planCardCharacter from "@/assets/home-cards/starry-card.svg";
-import upskillCardCharacter from "@/assets/home-cards/sunny-card.svg";
+import planCardCharacter from "@/assets/home-cards/the-challenger-card.svg";
+import upskillCardCharacter from "@/assets/home-cards/the-champion-card.svg";
 import upskillCardIcon from "@/assets/home-cards/rocket-1.svg";
 import imgCareer from "@/imports/Homepage/fb00664fb29d5df01ed6086676d13d0df96965c5.png";
 import imgBootcamp from "@/imports/Homepage/12be04912d27d801c5eed4d993dfd2bc03db445d.png";
@@ -29,35 +29,35 @@ const steps = [
   {
     title: "Discover",
     body: "ค้นหาตัวเองว่า\nเหมาะกับอาชีพไหน",
-    helper: "รู้จักตัวเองให้ชัดขึ้น\nกับน้อง Cloudy",
+    helper: "รู้จักตัวเองให้ชัดขึ้น\nกับ Explorer",
     color: "#2B7DB8",
     backColor: "#247DB4",
     text: "text-white",
     icon: discoverCardIcon,
     character: discoverCardCharacter,
-    characterClassName: "left-[-9px] top-[206px] h-[292px] w-[312px]",
+    characterClassName: "left-[-75px] top-[136px] size-[445px]",
   },
   {
     title: "Plan",
     body: "วิเคราะห์ Skill gap\nวางแผน learning path",
-    helper: "วางแผนเส้นทาง\nต่อไปกับ Starry",
+    helper: "วางแผนเส้นทาง\nกับ Challenger",
     color: "#FFE040",
     backColor: "#DCC72B",
     text: "text-[#1b3a5c]",
     icon: planCardIcon,
     character: planCardCharacter,
-    characterClassName: "left-[-106px] top-[98px] h-[455px] w-[455px]",
+    characterClassName: "left-[24px] top-[140px] size-[445px]",
   },
   {
     title: "Upskill",
     body: "เรียน course + Bootcamp\nปิด gap ทีละ skill",
-    helper: "เติมสกิลให้พร้อม\nไปต่อกับ Sunny",
+    helper: "เติมสกิลให้พร้อม\nไปต่อกับ Champion",
     color: "#DB475F",
     backColor: "#B73A50",
     text: "text-white",
     icon: upskillCardIcon,
     character: upskillCardCharacter,
-    characterClassName: "left-[-98px] top-[120px] h-[491px] w-[491px]",
+    characterClassName: "left-[-48px] top-[120px] size-[445px]",
   },
 ];
 
@@ -129,13 +129,23 @@ function Dot({ className, color }: { className: string; color: string }) {
   return <span aria-hidden className={`absolute block rounded-full ${className}`} style={{ backgroundColor: color }} />;
 }
 
-function ButtonLink({ href, children, inverse = false }: { href: string; children: string; inverse?: boolean }) {
+function ButtonLink({
+  href,
+  children,
+  inverse = false,
+  className = "",
+}: {
+  href: string;
+  children: string;
+  inverse?: boolean;
+  className?: string;
+}) {
   return (
     <a
       href={href}
       className={`inline-flex min-h-12 items-center justify-center rounded-full px-6 text-[18px] font-semibold shadow-[var(--sk-shadow-sm)] transition-transform hover:-translate-y-0.5 ${
         inverse ? "bg-white text-[#053b80]" : "bg-[#0d6ec8] text-white"
-      }`}
+      } ${className}`}
     >
       {children}
     </a>
@@ -177,7 +187,7 @@ function WorkCard({ step }: { step: (typeof steps)[number] }) {
         <img
           src={step.character}
           alt=""
-          className={`absolute z-[2] max-w-none translate-y-32 scale-[0.82] origin-bottom opacity-0 transition duration-[680ms] ease-[cubic-bezier(0.2,1.35,0.28,1)] group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 peer-checked:translate-y-0 peer-checked:scale-100 peer-checked:opacity-100 ${step.characterClassName}`}
+          className={`absolute z-[2] max-w-none ${step.characterClassName}`}
         />
       </div>
     </label>
@@ -240,14 +250,15 @@ function HeroSection() {
   return (
     <section className="sticky top-0 z-[1] flex min-h-[620px] w-full items-center overflow-hidden bg-[#eff4f9] px-5 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0">
       <div data-sticky-parallax data-parallax-speed="0.23" data-parallax-max="190" className="relative mx-auto h-[620px] w-full max-w-[1180px] will-change-transform md:h-[660px] lg:h-[660px]">
-        <div className="relative z-10 mx-auto pt-[108px] text-center md:pt-[120px]">
-          <h1 className="text-[38px] font-bold leading-[1.18] tracking-normal text-[#424045] sm:text-[56px]">
-            ค้นพบเส้นทางสู่
-            <span className="block text-[#0d6ec8]">ความสำเร็จในอาชีพ</span>
-            <span className="block text-[32px] leading-[1.35] text-[#424045]">ไปด้วยกัน</span>
+        <div className="relative z-10 mx-auto pt-[104px] text-center md:pt-[116px]">
+          <h1 className="text-[38px] font-bold leading-[1.18] tracking-normal text-[#424045] sm:text-[58px] lg:text-[64px]">
+            เปลี่ยนศักยภาพให้เป็นทักษะจริง
+            <span className="block text-[#0d6ec8]">สู่เส้นทางความสำเร็จในอาชีพ</span>
           </h1>
           <div className="mt-7">
-            <ButtonLink href="/skill-dashboard">เข้าสู่ระบบ แล้วไปเริ่มกันเลย!</ButtonLink>
+            <ButtonLink href="/skill-dashboard" className="min-h-[58px] px-7 text-[22px]">
+              Welcome Back, Skillogist
+            </ButtonLink>
           </div>
         </div>
 
@@ -258,9 +269,9 @@ function HeroSection() {
         <Dot className="left-[201px] top-[310px] size-5 max-sm:left-[11%] max-sm:top-[355px]" color="#2ccb6f" />
         <Dot className="right-[88px] top-[259px] size-3.5 max-sm:right-[8%] max-sm:top-[320px]" color="#db475f" />
 
-        <HeroMascot svg={windy3IdleSvg} label="Windy" maxLook={9} className="bottom-2 left-8 h-[300px] w-[354px] lg:bottom-auto lg:left-[52px] lg:top-[315px] max-md:bottom-8 max-md:left-[-62px] max-md:h-[190px] max-md:w-[224px]" />
-        <HeroMascot svg={cloudy2IdleSvg} label="Cloudy" maxLook={7} className="bottom-[-34px] left-[34%] h-[238px] w-[398px] lg:bottom-auto lg:left-[396px] lg:top-[416px] max-md:bottom-[-18px] max-md:left-[22%] max-md:h-[156px] max-md:w-[262px]" />
-        <HeroMascot svg={sunny2IdleSvg} label="Sunny" maxLook={8} className="bottom-8 right-11 h-[260px] w-[432px] lg:bottom-auto lg:left-[704px] lg:right-auto lg:top-[326px] max-md:bottom-5 max-md:right-[-145px] max-md:h-[186px] max-md:w-[310px]" />
+        <HeroMascot svg={championIdleSvg} label="The Champion" maxLook={8} fitScale={1} className="z-[4] bottom-[-64px] left-[-112px] h-[270px] w-[340px] md:bottom-[-86px] md:left-[-20px] md:h-[360px] md:w-[440px] lg:bottom-auto lg:left-[8px] lg:top-[382px] lg:h-[430px] lg:w-[500px]" />
+        <HeroMascot svg={challengerIdleSvg} label="The Challenger" maxLook={9} fitScale={1} className="z-[4] bottom-[-62px] right-[-126px] h-[270px] w-[270px] rotate-[10deg] md:bottom-[-90px] md:right-[-24px] md:h-[360px] md:w-[360px] lg:bottom-auto lg:left-[786px] lg:right-auto lg:top-[366px] lg:h-[455px] lg:w-[455px]" />
+        <HeroMascot svg={explorerIdleSvg} label="The Explorer" maxLook={7} fitScale={1} className="z-[6] bottom-[-84px] left-[18%] h-[286px] w-[360px] md:bottom-[-112px] md:left-[30%] md:h-[380px] md:w-[460px] lg:bottom-auto lg:left-[344px] lg:top-[352px] lg:h-[480px] lg:w-[560px]" />
       </div>
     </section>
   );
@@ -272,7 +283,7 @@ function WorksSection() {
       <div data-sticky-parallax data-parallax-speed="0.2" data-parallax-max="160" className="relative mx-auto w-full max-w-[1180px] will-change-transform lg:h-[567px] lg:pl-[108px] lg:pt-[64px]">
         <h2 className="text-[32px] font-bold leading-tight text-[#1b3a5c]">How Skilogy works</h2>
         <SpeechBubble className="left-[574px] top-[53px] hidden lg:block">เริ่มจากตรงไหนก็ได้ จะมีฉันคอยไกด์ตลอด</SpeechBubble>
-        <HeroMascot svg={cloudy2IdleSvg} label="Cloudy guide" className="left-[901px] top-[63px] hidden h-[140px] w-[183px] lg:block" maxLook={5} />
+        <HeroMascot svg={explorerIdleSvg} label="The Explorer guide" className="left-[901px] top-[63px] hidden h-[140px] w-[183px] lg:block" maxLook={5} />
         <div className="mt-10 grid gap-8 lg:grid-cols-[294px_294px_294px] lg:gap-[41px]">
           {steps.map((step) => (
             <WorkCard key={step.title} step={step} />
@@ -322,7 +333,7 @@ function CareerSection() {
         </div>
         <div className="relative lg:absolute lg:left-[658px] lg:top-[300px]">
           <SpeechBubble className="left-[-34px] top-[-94px] hidden lg:block">จากตรงนี้ ฉันจะช่วยวางแผนเส้นทางสู่จุดหมายให้!</SpeechBubble>
-          <HeroMascot svg={cloudy2IdleSvg} label="Cloudy career guide" className="left-[241px] top-[-59px] hidden h-[101px] w-[132px] lg:block" maxLook={5} />
+          <HeroMascot svg={explorerIdleSvg} label="The Explorer career guide" className="left-[241px] top-[-59px] hidden h-[101px] w-[132px] lg:block" maxLook={5} />
           <h2 className="text-[42px] font-bold leading-tight text-[#05101f] sm:text-[48px]">
             สำรวจอาชีพ
             <br />
@@ -360,7 +371,7 @@ function BootcampSection() {
             </div>
           </div>
           <BootcampCloudCluster />
-          <HeroMascot svg={sunny2IdleSvg} label="Sunny bootcamp" className="left-[682px] top-[104px] h-[400px] w-[480px] max-sm:right-[-90px] max-sm:top-[210px] max-sm:h-[240px] max-sm:w-[288px]" maxLook={6} />
+          <HeroMascot svg={championIdleSvg} label="The Champion bootcamp" className="left-[682px] top-[104px] h-[400px] w-[480px] max-sm:right-[-90px] max-sm:top-[210px] max-sm:h-[240px] max-sm:w-[288px]" maxLook={6} />
           <DecorativeStar className="left-[42px] top-[124px] size-12" color="#5aaed8" />
           <DecorativeStar className="right-[98px] top-[76px] size-10" color="#fff" />
           <DecorativeStar className="right-[70px] top-[164px] size-7" color="#5aaed8" />
@@ -420,7 +431,7 @@ function CourseSection() {
         </div>
         <div className="relative lg:absolute lg:left-[785px] lg:top-[287px]">
           <SpeechBubble className="left-[-276px] top-[-67px] hidden lg:block">มีใบรับรองจากมหาวิทยาลัย และบริษัทชั้นนำ</SpeechBubble>
-          <HeroMascot svg={cloudy2IdleSvg} label="Cloudy certificate" className="left-[-305px] top-[-33px] hidden h-[82px] w-[108px] lg:block" maxLook={5} />
+          <HeroMascot svg={explorerIdleSvg} label="The Explorer certificate" className="left-[-305px] top-[-33px] hidden h-[82px] w-[108px] lg:block" maxLook={5} />
           <DecorativeStar className="left-[-131px] top-[81px] size-10" color="#5aaed8" />
           <DecorativeStar className="right-[-140px] top-[117px] size-7 max-sm:right-2 max-sm:top-[132px]" color="#2ccb6f" />
           <p className="text-[24px] text-[#05101f]">อัปสกิลต่อด้วย...</p>

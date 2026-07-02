@@ -112,7 +112,7 @@ const HOME_STYLES = `
     50%       { transform: scale(1.04); }
   }
 
-  [data-name="Sunny-A"]              { animation: sk-float 3s ease-in-out infinite; }
+  [data-name="The Champion"]         { animation: sk-float 3s ease-in-out infinite; }
   [data-name="Icon Group Container"] { animation: sk-float 3.5s ease-in-out infinite 0.4s; }
   [data-name="Mask Group Container"] { animation: sk-float-sm 3.2s ease-in-out infinite 0.8s; }
   [data-name="R animate"] { animation: sk-float 2.8s ease-in-out infinite 0s; }
@@ -121,7 +121,7 @@ const HOME_STYLES = `
   [data-name="S animate"] { animation: sk-float 2.8s ease-in-out infinite 0.05s; }
   [data-name="E animate"] { animation: sk-float 2.8s ease-in-out infinite 0.2s; }
   [data-name="C animate"] { animation: sk-float 2.8s ease-in-out infinite 0.35s; }
-  [data-name="Summary Section"] [data-name="Sunny-A"] {
+  [data-name="Summary Section"] [data-name="The Champion"] {
     animation: sk-pulse-scale 3s ease-in-out infinite;
   }
 
@@ -143,14 +143,14 @@ const HOME_STYLES = `
     --mascot-look-y: 0px;
     animation: sk-float 3.3s ease-in-out infinite;
   }
-  .sk-hero-mascot[aria-label="Sunny"] {
+  .sk-hero-mascot[aria-label^="The Champion"] {
     animation-duration: 3s;
   }
-  .sk-hero-mascot[aria-label="Windy"] {
+  .sk-hero-mascot[aria-label^="The Challenger"] {
     animation-duration: 3.5s;
     animation-delay: 0.4s;
   }
-  .sk-hero-mascot[aria-label="Cloudy"] {
+  .sk-hero-mascot[aria-label^="The Explorer"] {
     animation-duration: 3.2s;
     animation-delay: 0.8s;
   }
@@ -253,28 +253,24 @@ const HOME_STYLES = `
     position: absolute;
     z-index: 2;
     display: block;
-    opacity: 0;
-    transform: translateY(132px) scale(0.82);
-    transform-origin: 50% 100%;
-    transition: opacity 180ms ease 70ms, transform 680ms cubic-bezier(0.2, 1.35, 0.28, 1);
   }
-  .sk-work-card-character-cloudy {
-    left: -9px;
-    top: 206px;
-    width: 312px;
-    height: 292px;
+  .sk-work-card-character-explorer {
+    left: -75px;
+    top: 136px;
+    width: 445px;
+    height: 445px;
   }
-  .sk-work-card-character-starry {
-    left: -106px;
-    top: 98px;
-    width: 455px;
-    height: 455px;
+  .sk-work-card-character-challenger {
+    left: 24px;
+    top: 140px;
+    width: 445px;
+    height: 445px;
   }
-  .sk-work-card-character-sunny {
-    left: -98px;
+  .sk-work-card-character-champion {
+    left: -48px;
     top: 120px;
-    width: 491px;
-    height: 491px;
+    width: 445px;
+    height: 445px;
   }
   .sk-work-card:hover .sk-work-card-front,
   .sk-work-card:focus-visible .sk-work-card-front,
@@ -293,13 +289,6 @@ const HOME_STYLES = `
   .sk-work-card[data-active="true"] .sk-work-card-circle {
     transform: translateX(-50%) translateY(0) scale(1);
   }
-  .sk-work-card:hover .sk-work-card-character,
-  .sk-work-card:focus-visible .sk-work-card-character,
-  .sk-work-card[data-active="true"] .sk-work-card-character {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
   /* Hero text letter-by-letter */
   @keyframes hero-char-in {
     from { opacity: 0; transform: translateY(22px); }
@@ -355,7 +344,7 @@ const HOME_STYLES = `
   .sk-up.sk-in, .sk-left.sk-in, .sk-right.sk-in { opacity: 1; transform: none; }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-name="Sunny-A"], .sk-hero-mascot, .sk-work-card, [data-name="Icon Group Container"], [data-name="Mask Group Container"],
+    [data-name="The Champion"], .sk-hero-mascot, .sk-work-card, [data-name="Icon Group Container"], [data-name="Mask Group Container"],
     [data-name="R animate"], [data-name="I animate"], [data-name="A animate"],
     [data-name="S animate"], [data-name="E animate"], [data-name="C animate"] { animation: none; }
     .sk-work-card-front, .sk-work-card-back, .sk-work-card-circle, .sk-work-card-character {

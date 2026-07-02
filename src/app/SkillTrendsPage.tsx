@@ -3,7 +3,7 @@ import SkillTrends from "@/imports/SkillTrends/index";
 import svgPaths from "@/imports/SkillTrends/svg-79qsf1o8t9";
 import SkillTrendsMobilePage from "./pages/SkillTrendsMobilePage";
 import HeroMascot from "./components/HeroMascot";
-import cloudy2IdleSvg from "@/assets/characters/cloudy/cloudy2-idle.svg?raw";
+import explorerIdleSvg from "@/assets/characters/new-3/the-explorer-idle.svg?raw";
 
 const DESKTOP_QUERY = "(min-width: 1024px)";
 
@@ -39,7 +39,7 @@ const STYLES = `
     display: none !important;
   }
 
-  .st-static-cloudy-hidden {
+  .st-static-mascot-hidden {
     display: none !important;
   }
 
@@ -75,7 +75,7 @@ const STYLES = `
     width: 100%;
   }
 
-  .st-cloudy-hero {
+  .st-explorer-hero {
     height: 348px;
     left: calc(50% + 84px);
     top: 62px;
@@ -495,7 +495,7 @@ export default function SkillTrendsPage() {
       root.querySelectorAll(".absolute").forEach((el) => {
         const cl = el.classList;
         // Group2 — large goggles character (h-[366.002px])
-        if (cl.contains("h-[366.002px]")) el.classList.add("st-static-cloudy-hidden");
+          if (cl.contains("h-[366.002px]")) el.classList.add("st-static-mascot-hidden");
         // Group3 — small goggles character (h-[98.472px])
         if (cl.contains("h-[98.472px]"))  el.classList.add("st-float-small");
       });
@@ -541,7 +541,7 @@ export default function SkillTrendsPage() {
     <div id="st-root" style={{ width: "100%" }}>
       <style id="st-anims">{STYLES}</style>
       <BackgroundMagnifier />
-      <HeroMascot svg={cloudy2IdleSvg} label="Cloudy" className="st-cloudy-hero" maxLook={9} />
+      <HeroMascot svg={explorerIdleSvg} label="The Explorer" className="st-explorer-hero" maxLook={9} />
       <SkillTrends />
     </div>
   );

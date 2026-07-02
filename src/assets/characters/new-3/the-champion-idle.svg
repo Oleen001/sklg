@@ -1,0 +1,50 @@
+<svg viewBox="0 0 445 445" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Champion mascot, idle animation">
+<title>The Champion — idle</title>
+<style>
+/* ============ The Champion — idle ============
+   personality: มั่นใจ กระฉับกระเฉง
+   - chm-bob   2.6s : hop เด้งเบาๆ จากฐาน — ขึ้นเร็ว (ease-out) ค้างบน แล้วตกลง (ease-in)
+                      + squash ตอนแตะพื้น / stretch ตอนลอย (seamless: 0%=100%)
+   - chm-blink 3.4s : กะพริบตา ~200ms, ตาขวาหน่วง 60ms (overlap เล็กๆ)
+   - chm-smirk 3.4s : ปาก smirk กระตุกเงยขึ้นพร้อม blink — ยิ้มมุมปากมั่นใจ
+   class/keyframe prefix "chm-" กัน collision เวลา inline ใน HTML */
+.chm-bob{animation:chm-bob 2.6s infinite;transform-box:fill-box;transform-origin:50% 100%}
+.chm-eye{animation:chm-blink 3.4s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 50%}
+.chm-eye-r{animation-delay:.06s}
+.chm-mouth{animation:chm-smirk 3.4s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 50%}
+@keyframes chm-bob{
+  0%{transform:translateY(0) scale(1.028,.972);animation-timing-function:cubic-bezier(.3,.6,.35,1)}
+  42%{transform:translateY(-7px) scale(.988,1.018);animation-timing-function:cubic-bezier(.55,0,.7,.4)}
+  100%{transform:translateY(0) scale(1.028,.972)}
+}
+@keyframes chm-blink{
+  0%,91%,97.5%,100%{transform:scaleY(1)}
+  93.5%,95%{transform:scaleY(.15)}
+}
+@keyframes chm-smirk{
+  0%,91%,98.5%,100%{transform:rotate(0deg) translateY(0)}
+  93.5%,95.5%{transform:rotate(-7deg) translateY(-1.5px)}
+}
+@media (prefers-reduced-motion:reduce){
+  .chm-bob,.chm-eye,.chm-mouth{animation:none}
+}
+</style>
+<g class="chm-bob">
+  <!-- body: yellow blob -->
+  <path d="M219.643 64.0005C307.336 64.0005 422.889 153.977 422.889 241.67C422.889 329.362 307.336 381.43 219.643 381.43C131.95 381.43 22.7915 294.651 22.7915 206.958C22.7915 119.265 131.95 64.0005 219.643 64.0005Z" fill="#FFE266"/>
+  <!-- mouth: confident smirk (เส้นเฉียงใต้ตา) -->
+  <g class="chm-mouth">
+    <path d="M186.577 171.124C187.979 170.241 189.832 170.661 190.715 172.063C191.598 173.465 191.178 175.317 189.776 176.2L152.733 199.536C151.331 200.419 149.478 199.999 148.595 198.597C147.712 197.195 148.133 195.343 149.534 194.46L186.577 171.124Z" fill="#19181B"/>
+  </g>
+  <!-- eye left (white + pupil) -->
+  <g class="chm-eye chm-eye-l">
+    <circle cx="21.6075" cy="21.6075" r="21.6075" transform="matrix(-0.924596 0.380948 0.380948 0.924596 138.457 136.027)" fill="white"/>
+    <ellipse cx="11.8157" cy="11.5746" rx="11.8157" ry="11.5746" transform="matrix(-0.924596 0.380948 0.380948 0.924596 132.953 149.254)" fill="black"/>
+  </g>
+  <!-- eye right (white + pupil) -->
+  <g class="chm-eye chm-eye-r">
+    <circle cx="21.6075" cy="21.6075" r="21.6075" transform="matrix(-0.924596 0.380948 0.380948 0.924596 177.103 119.895)" fill="white"/>
+    <ellipse cx="11.8157" cy="11.5746" rx="11.8157" ry="11.5746" transform="matrix(-0.924596 0.380948 0.380948 0.924596 171.597 133.117)" fill="black"/>
+  </g>
+</g>
+</svg>

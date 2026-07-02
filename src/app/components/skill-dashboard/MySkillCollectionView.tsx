@@ -14,7 +14,7 @@ import {
   Wrench,
   X,
 } from "lucide-react";
-import sunnyIdle from "@/assets/characters/sunny/sunny1-idle.svg";
+import championIdle from "@/assets/characters/new-3/the-champion-idle.svg";
 import {
   addManualSkill,
   deleteSkill,
@@ -419,7 +419,7 @@ export default function MySkillCollectionView() {
           }
         }
       `}</style>
-      <img src={sunnyIdle} alt="" className="pointer-events-none absolute right-[5%] top-[-54px] hidden h-[142px] w-[142px] rotate-6 lg:block" aria-hidden />
+      <img src={championIdle} alt="" className="pointer-events-none absolute right-[5%] top-[-54px] hidden h-[142px] w-[142px] rotate-6 lg:block" aria-hidden />
       <div className="sk-reduce-motion mx-auto max-w-[1068px]">
         <div className="grid grid-cols-1 gap-2 opacity-0 [animation:sk-skill-card-in_560ms_cubic-bezier(0.16,1,0.3,1)_forwards] sm:grid-cols-2 lg:grid-cols-5 lg:gap-3">
           {(Object.keys(categoryLabel) as SkillFilter[]).map((item) => (

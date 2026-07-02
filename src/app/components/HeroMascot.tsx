@@ -15,44 +15,6 @@ export default function HeroMascot({ svg, label, className = "", maxLook = 7, fi
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
-
-    const shadow = root.shadowRoot ?? root.attachShadow({ mode: "open" });
-    shadow.innerHTML = `
-      <style>
-        :host { display: block; width: 100%; height: 100%; overflow: hidden; }
-        svg {
-          display: block;
-          width: 100%;
-          height: 100%;
-          overflow: visible;
-          transform: scale(var(--mascot-fit-scale, 0.96));
-          transform-origin: 50% 50%;
-        }
-        #pupils,
-        .sunny2-pupil,
-        .windy3-pupil {
-          transform: translate3d(var(--mascot-look-x, 0px), var(--mascot-look-y, 0px), 0) !important;
-          transform-box: fill-box;
-          transform-origin: 50% 50%;
-          transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          #pupils,
-          .sunny2-pupil,
-          .windy3-pupil {
-            transform: none !important;
-            transition: none;
-          }
-        }
-      </style>
-      ${svg}
-    `;
-  }, [svg]);
-
-  useEffect(() => {
-    const root = rootRef.current;
     if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     let frame = 0;
@@ -100,6 +62,36 @@ export default function HeroMascot({ svg, label, className = "", maxLook = 7, fi
           "--mascot-fit-scale": fitScale,
         } as CSSProperties
       }
-    />
+    >
+      <div className="sk-hero-mascot-svg" dangerouslySetInnerHTML={{ __html: svg }} />
+      <style>{`
+        .sk-hero-mascot-svg,
+        .sk-hero-mascot-svg > svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+
+        .sk-hero-mascot-svg > svg {
+          overflow: visible;
+          transform: scale(var(--mascot-fit-scale, 0.96));
+          transform-origin: 50% 50%;
+        }
+
+        .sk-hero-mascot-svg #pupils {
+          transform: translate3d(var(--mascot-look-x, 0px), var(--mascot-look-y, 0px), 0) !important;
+          transform-box: fill-box;
+          transform-origin: 50% 50%;
+          transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .sk-hero-mascot-svg #pupils {
+            transform: none !important;
+            transition: none;
+          }
+        }
+      `}</style>
+    </div>
   );
 }

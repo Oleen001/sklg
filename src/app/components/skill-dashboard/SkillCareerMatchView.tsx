@@ -10,7 +10,7 @@ import {
   MoreVertical,
   X,
 } from "lucide-react";
-import skillScanCloudySearch from "@/assets/figma/skill-dashboard/skill-scan-cloudy-search.svg";
+import explorerIdle from "@/assets/characters/new-3/the-explorer-idle.svg";
 import {
   getSkillCareerMatch,
   type SkillCareerCourse,
@@ -336,7 +336,7 @@ export default function SkillCareerMatchView() {
                 </div>
 
                 <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
-                  <img src={skillScanCloudySearch} alt="" className="h-[94px] w-[132px] object-contain sm:h-[104px]" aria-hidden />
+                  <img src={explorerIdle} alt="" className="h-[94px] w-[132px] object-contain sm:h-[104px]" aria-hidden />
                   <div className="relative rounded-full bg-[#ffd108] px-5 py-3 text-[14px] leading-6 text-[#05101f] sm:max-w-[520px] sm:px-6">
                     <p className="font-medium">{data.career.insight}</p>
                     <p className="truncate">

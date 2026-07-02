@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import explorerIdleUrl from "@/assets/characters/new-3/the-explorer-idle.svg";
 import svgPaths from "./svg-rtkfmeu8z6";
 import imgScreenshot25690625At095845RemovebgPreview1 from "./20bc659d0efe9b2f53c94ae71cb8a3c6cfea8f1f.png";
 import imgAdsBackground from "./12be04912d27d801c5eed4d993dfd2bc03db445d.png";
@@ -843,15 +844,10 @@ function Face() {
   );
 }
 
-function Cloudy() {
+function ExplorerMascot() {
   return (
-    <motion.div className="absolute contents inset-[30.31%_17.81%_20.55%_17.81%]" data-name="Cloudy">
-      <div className="absolute inset-[30.31%_17.81%_20.55%_17.81%]" data-name="Body">
-        <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 206 157.25">
-          <path d={svgPaths.p94ba00} fill="var(--fill-0, #B8DCFF)" id="Body" />
-        </svg>
-      </div>
-      <Face />
+    <motion.div className="absolute inset-[30.31%_17.81%_20.55%_17.81%]" data-name="The Explorer">
+      <img alt="" className="absolute inset-0 block size-full object-contain" src={explorerIdleUrl} />
     </motion.div>
   );
 }
@@ -876,7 +872,7 @@ function MagnifyingGlass() {
 function General() {
   return (
     <div className="-translate-x-1/2 -translate-y-1/2 absolute left-[calc(50%-0.1px)] size-[320px] top-[calc(50%-39.99px)]" data-name="General">
-      <Cloudy />
+      <ExplorerMascot />
       <MagnifyingGlass />
     </div>
   );

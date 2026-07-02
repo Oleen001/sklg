@@ -10,7 +10,7 @@ import CareerExplore from "@/imports/CareerExplore/index";
    8:3373  Ellipse 2208 (small inner ellipse)
            rotate: 0 → 360  (full forward revolution), 4s linear ∞
 
-   8:3375  Cloudy (cloud character body)
+   8:3375  Explorer mascot slot
            scaleX: 1.235 → 0.87 (squash/stretch), 4s ∞
            scaleY: 0.81  → 1.15
            y:      0 → -23px bounce, 4s ∞
@@ -21,7 +21,7 @@ import CareerExplore from "@/imports/CareerExplore/index";
 
    8:3390  magnifying glass
            scaleX/Y: 1.2 → 1, ease-in-out, 4s ∞
-           y: same bounce as Cloudy
+           y: same bounce as Explorer mascot
 
    8:3393+ HighestSalary pills — sinusoidal y orbit, amplitude ~7px, 4s linear ∞
 ═══════════════════════════════════════════════════════════════ */
@@ -52,7 +52,7 @@ const ANIM_CSS = `
   }
 
   /* ── Nodes 8:3375 + 8:3390: shared Y-bounce of entire General container ──
-     Both Cloudy and MagnifyingGlass bob together since they live inside General. */
+     Both ExplorerMascot and MagnifyingGlass bob together since they live inside General. */
   @keyframes ce-y-bounce {
     0%, 25%, 50%, 75%, 100%              { transform: translateX(-50%) translateY(-50%); }
     10.75%, 35.75%, 60.75%, 85.75% { transform: translateX(-50%) translateY(calc(-50% - 23px)); }
@@ -61,7 +61,7 @@ const ANIM_CSS = `
     animation: ce-y-bounce 4s cubic-bezier(0,0,0.15,1) infinite;
   }
 
-  /* ── Node 8:3375: Cloudy body squash / stretch ── */
+  /* ── Node 8:3375: Explorer mascot slot squash / stretch ── */
   @keyframes ce-squash {
     0%, 25%, 50%, 75%, 100%              { transform: scaleX(1.235) scaleY(0.81); }
     10.75%, 35.75%, 60.75%, 85.75% { transform: scaleX(0.87) scaleY(1.15); }

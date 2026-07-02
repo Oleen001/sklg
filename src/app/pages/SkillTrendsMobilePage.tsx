@@ -8,6 +8,7 @@ import imgAviation from "@/imports/SkillTrends/7ed7b4e9900c44b660a81aa4e778b2100
 import imgHealthcare from "@/imports/SkillTrends/8dedd4c97edb2b4d7f64860d079108bb37367142.png";
 import imgAgriculture from "@/imports/SkillTrends/82d56586589a933490fb04cf30534f0497bfa8c3.png";
 import imgFood from "@/imports/SkillTrends/c524a3775be8a3a6655692dfcb062cfe58647796.png";
+import explorerIdle from "@/assets/characters/new-3/the-explorer-idle.svg";
 
 const industries = [
   { th: "หุ่นยนต์", en: "Robotics", image: imgRobot, color: "#FFD108" },
@@ -22,18 +23,10 @@ const industries = [
   { th: "การแปรรูปอาหาร", en: "Food Manufacturing", image: imgFood, color: "#C5312F" },
 ];
 
-function CloudMascot() {
+function ExplorerMascot() {
   return (
     <div className="relative h-[210px] w-[280px] sm:h-[300px] sm:w-[400px]" aria-hidden>
-      <div className="absolute bottom-0 left-0 h-[142px] w-[210px] rounded-[48%_52%_42%_58%] bg-[#b9dbff] sm:h-[206px] sm:w-[310px]" />
-      <div className="absolute bottom-[40px] left-[90px] h-[128px] w-[146px] rounded-full bg-[#b9dbff] sm:bottom-[58px] sm:left-[130px] sm:h-[184px] sm:w-[210px]" />
-      <div className="absolute bottom-[22px] right-0 h-[142px] w-[170px] rounded-[50%] bg-[#b9dbff] sm:bottom-[34px] sm:h-[210px] sm:w-[250px]" />
-      <span className="absolute left-[116px] top-[96px] size-7 rounded-full bg-white sm:left-[164px] sm:top-[134px] sm:size-10" />
-      <span className="absolute left-[126px] top-[106px] size-4 rounded-full bg-black sm:left-[178px] sm:top-[148px] sm:size-6" />
-      <span className="absolute left-[170px] top-[96px] size-7 rounded-full bg-white sm:left-[240px] sm:top-[134px] sm:size-10" />
-      <span className="absolute left-[180px] top-[106px] size-4 rounded-full bg-[#516c8a] sm:left-[254px] sm:top-[148px] sm:size-6" />
-      <span className="absolute left-[154px] top-[86px] size-[74px] rounded-full border-[8px] border-[#ef5f5e] sm:left-[218px] sm:top-[120px] sm:size-[104px] sm:border-[10px]" />
-      <span className="absolute left-[208px] top-[148px] h-[92px] w-[14px] -rotate-45 rounded-full bg-[#ef5f5e] sm:left-[294px] sm:top-[208px] sm:h-[130px] sm:w-[18px]" />
+      <img src={explorerIdle} alt="" className="absolute inset-0 size-full object-contain" />
     </div>
   );
 }
@@ -53,7 +46,7 @@ export default function SkillTrendsMobilePage() {
             </a>
           </div>
           <div className="ml-auto">
-            <CloudMascot />
+            <ExplorerMascot />
           </div>
         </div>
       </section>

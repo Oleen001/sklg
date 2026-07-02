@@ -7,14 +7,15 @@ import imgAdsBackground from "./12be04912d27d801c5eed4d993dfd2bc03db445d.png";
 import imgMainImage from "./33fbdc33ffd551e1b3c4d0b4c11618dad9f622fe.png";
 import HeroMascot from "@/app/components/HeroMascot";
 import ShadowSvg from "@/app/components/ShadowSvg";
-import cloudy2IdleSvg from "@/assets/characters/cloudy/cloudy2-idle.svg?raw";
-import sunny2IdleSvg from "@/assets/characters/sunny/sunny2-idle.svg?raw";
-import windy3IdleSvg from "@/assets/characters/windy/windy3-idle.svg?raw";
-import discoverCardCharacter from "@/assets/home-cards/cloudy-card.svg";
+import challengerIdleSvg from "@/assets/characters/new-3/the-challenger-idle.svg?raw";
+import championIdleSvg from "@/assets/characters/new-3/the-champion-idle.svg?raw";
+import championIdleUrl from "@/assets/characters/new-3/the-champion-idle.svg";
+import explorerIdleSvg from "@/assets/characters/new-3/the-explorer-idle.svg?raw";
+import discoverCardCharacter from "@/assets/home-cards/the-explorer-card.svg";
 import discoverCardIcon from "@/assets/home-cards/compass-1.svg";
 import planCardIcon from "@/assets/home-cards/map-1.svg";
-import planCardCharacter from "@/assets/home-cards/starry-card.svg";
-import upskillCardCharacter from "@/assets/home-cards/sunny-card.svg";
+import planCardCharacter from "@/assets/home-cards/the-challenger-card.svg";
+import upskillCardCharacter from "@/assets/home-cards/the-champion-card.svg";
 import upskillCardIcon from "@/assets/home-cards/rocket-1.svg";
 import riasecASvg from "@/assets/riasec/a-lottie-v2.svg?raw";
 import riasecCSvg from "@/assets/riasec/c-lottie-v2.svg?raw";
@@ -115,26 +116,12 @@ function Group5() {
   );
 }
 
-function SunnyA() {
+function ChampionLegacyMascot() {
   return (
     <div className="absolute flex items-center justify-center left-[730px] size-[401px] top-[335px]">
       <div className="-scale-y-100 flex-none rotate-180">
-        <div className="relative size-[401px]" data-name="Sunny-A">
-          <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 401 401">
-            <g id="Sunny-A">
-              <path d={svgPaths.p371ccfc0} fill="var(--fill-0, #FFE040)" id="Vector" />
-              <path d={svgPaths.p1d2680} fill="var(--fill-0, #FFEF9A)" id="Vector_2" />
-              <path d={svgPaths.p3eb608e0} id="Ellipse 2329" stroke="var(--stroke-0, black)" strokeLinecap="round" strokeWidth="7.12507" />
-              <g id="Inner Icon Container Right">
-                <circle cx="220.353" cy="149.647" fill="var(--fill-0, white)" id="Ellipse 2309" r="22.647" />
-                <circle cx="220.779" cy="150" fill="var(--fill-0, black)" id="Ellipse 2311" r="12" />
-              </g>
-              <g id="Inner Icon Container Left">
-                <circle cx="176.353" cy="149.647" fill="var(--fill-0, white)" id="Ellipse 2309_2" r="22.647" />
-                <circle cx="176.779" cy="150" fill="var(--fill-0, black)" id="Ellipse 2311_2" r="12" />
-              </g>
-            </g>
-          </svg>
+        <div className="relative size-[401px]" data-name="The Champion">
+          <img alt="" className="absolute inset-0 block size-full object-contain" src={championIdleUrl} />
         </div>
       </div>
     </div>
@@ -368,9 +355,9 @@ function HeaderSection() {
       </div>
       <HeroMascot
         className="left-[704px] top-[326px] h-[260px] w-[432px]"
-        label="Sunny"
+        label="The Champion"
         maxLook={8}
-        svg={sunny2IdleSvg}
+        svg={championIdleSvg}
       />
       <div className="-translate-x-1/2 absolute bg-[#0d6ec8] content-stretch flex gap-[3.998px] h-[47.981px] items-center justify-center left-[calc(50%-0.01px)] min-w-[79.96864318847656px] px-[15.994px] rounded-[100px] top-[332px] w-[242.987px]" data-name="Solid button">
         <p className="[word-break:break-word] flex-[1_0_0] font-['noto_sans_thai:semiBold','Noto_Sans:SemiBold',sans-serif] leading-[26.989px] min-w-px relative text-[17.99px] text-center text-white" style={{ fontVariationSettings: '"CTGR" 0, "wdth" 100, "wght" 600' }}>
@@ -379,15 +366,15 @@ function HeaderSection() {
       </div>
       <HeroMascot
         className="left-[52px] top-[315px] h-[300px] w-[354px]"
-        label="Windy"
+        label="The Challenger"
         maxLook={9}
-        svg={windy3IdleSvg}
+        svg={challengerIdleSvg}
       />
       <HeroMascot
         className="left-[396px] top-[416px] h-[238px] w-[398px]"
-        label="Cloudy"
+        label="The Explorer"
         maxLook={7}
-        svg={cloudy2IdleSvg}
+        svg={explorerIdleSvg}
       />
     </div>
   );
@@ -526,10 +513,10 @@ function DiscoverSection() {
       background="#2b7db8"
       body={["ค้นหาตัวเองว่า", "เหมาะกับอาชีพไหน"]}
       character={discoverCardCharacter}
-      characterClassName="sk-work-card-character-cloudy"
+      characterClassName="sk-work-card-character-explorer"
       circleColor="#247db4"
       className="left-[108px] top-[793px] h-[342px] w-[294px]"
-      helper={"รู้จักตัวเองให้ชัดขึ้น\nกับน้อง Cloudy"}
+      helper={"รู้จักตัวเองให้ชัดขึ้น\nกับ Explorer"}
       icon={discoverCardIcon}
       name="Discover Background"
       textColor="#ffffff"
@@ -544,10 +531,10 @@ function PlanSection() {
       background="#ffe040"
       body={["วิเคราะห์ Skill gap", "วางแผน learning path"]}
       character={planCardCharacter}
-      characterClassName="sk-work-card-character-starry"
+      characterClassName="sk-work-card-character-challenger"
       circleColor="#dcc72b"
       className="left-[443px] top-[793px] h-[342px] w-[294px]"
-      helper={"วางแผนเส้นทาง\nต่อไปกับ Starry"}
+      helper={"วางแผนเส้นทาง\nกับ Challenger"}
       icon={planCardIcon}
       name="Plan Background"
       textColor="#1b3a5c"
@@ -562,10 +549,10 @@ function DiscoverSection1() {
       background="#db475f"
       body={["เรียน course + Bootcamp", "ปิด gap ทีละ skill"]}
       character={upskillCardCharacter}
-      characterClassName="sk-work-card-character-sunny"
+      characterClassName="sk-work-card-character-champion"
       circleColor="#b73a50"
       className="left-[778px] top-[793px] h-[342px] w-[294px]"
-      helper={"เติมสกิลให้พร้อม\nไปต่อกับ Sunny"}
+      helper={"เติมสกิลให้พร้อม\nไปต่อกับ Champion"}
       icon={upskillCardIcon}
       name="Upskill Background"
       textColor="#ffffff"
@@ -597,21 +584,9 @@ function SummaryImageContainer() {
             <path d={svgPaths.p30768f80} fill="var(--fill-0, white)" id="Union_2" />
           </g>
           <path d={svgPaths.pace3700} fill="var(--fill-0, white)" id="Union_3" opacity="0.2" />
-          <g id="Sunny-A">
-            <path d={svgPaths.p9325200} fill="var(--fill-0, #FFE040)" id="Vector" />
-            <path d={svgPaths.p2ccee800} fill="var(--fill-0, #FFEF9A)" id="Vector_2" />
-            <path d={svgPaths.p2639800} id="Ellipse 2329" stroke="var(--stroke-0, black)" strokeLinecap="round" strokeWidth="5.47262" />
-            <g id="Inner Icon Container Right">
-              <circle cx="17.3947" cy="17.3947" fill="var(--fill-0, white)" id="Ellipse 2309" r="17.3947" transform="matrix(-1 0 0 1 232.645 97.5464)" />
-              <circle cx="9.21696" cy="9.21696" fill="var(--fill-0, black)" id="Ellipse 2311" r="9.21696" transform="matrix(-1 0 0 1 224.14 105.995)" />
-            </g>
-            <g id="Inner Icon Container Left">
-              <circle cx="17.3947" cy="17.3947" fill="var(--fill-0, white)" id="Ellipse 2309_2" r="17.3947" transform="matrix(-1 0 0 1 266.44 97.5464)" />
-              <circle cx="9.21696" cy="9.21696" fill="var(--fill-0, black)" id="Ellipse 2311_2" r="9.21696" transform="matrix(-1 0 0 1 257.935 105.995)" />
-            </g>
-          </g>
         </g>
       </svg>
+      <img alt="" className="absolute left-[132px] top-[50px] h-[230px] w-[230px] object-contain" src={championIdleUrl} />
     </div>
   );
 }

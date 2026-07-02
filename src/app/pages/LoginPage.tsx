@@ -2,8 +2,8 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { EyeOff, UserRound } from "lucide-react";
-import cloudyMascot from "@/assets/characters/cloudy/cloudy2-idle.svg";
-import windyMascot from "@/assets/characters/windy/windy2-idle.svg";
+import challengerMascot from "@/assets/characters/new-3/the-challenger-idle.svg";
+import explorerMascot from "@/assets/characters/new-3/the-explorer-idle.svg";
 
 type LoginPageProps = {
   onLogin: () => void;
@@ -137,7 +137,7 @@ export default function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
       </button>
 
       <img
-        src={windyMascot}
+        src={challengerMascot}
         alt=""
         className="absolute left-[11%] top-8 hidden w-[154px] -scale-y-100 rotate-180 md:block lg:w-[208px]"
       />
@@ -197,7 +197,7 @@ export default function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
       </section>
 
       <img
-        src={cloudyMascot}
+        src={explorerMascot}
         alt=""
         className="absolute bottom-6 right-[9%] z-20 hidden w-[170px] md:block lg:w-[210px]"
       />

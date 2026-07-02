@@ -1,7 +1,7 @@
 import HeroMascot from "../components/HeroMascot";
-import cloudy2IdleSvg from "@/assets/characters/cloudy/cloudy2-idle.svg?raw";
-import sunny2IdleSvg from "@/assets/characters/sunny/sunny2-idle.svg?raw";
-import windy3IdleSvg from "@/assets/characters/windy/windy3-idle.svg?raw";
+import challengerIdleSvg from "@/assets/characters/new-3/the-challenger-idle.svg?raw";
+import championIdleSvg from "@/assets/characters/new-3/the-champion-idle.svg?raw";
+import explorerIdleSvg from "@/assets/characters/new-3/the-explorer-idle.svg?raw";
 import imgTestPreview from "@/imports/Homepage/a3c88a55fc72924c2d523c14a1d955ffd93d87e0.png";
 import imgCareerPreview from "@/imports/Homepage/fbc8677ca9dc2198c7e3452c8145ab7de9dc1fd0.png";
 import imgCourseBanner from "@/imports/Homepage/12be04912d27d801c5eed4d993dfd2bc03db445d.png";
@@ -37,9 +37,9 @@ export default function HomeMobilePage() {
         </div>
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-[320px] max-w-[760px] sm:h-[380px]">
-          <HeroMascot svg={windy3IdleSvg} label="Windy" className="bottom-[-26px] left-[-22px] h-[220px] w-[220px] sm:h-[300px] sm:w-[300px]" />
-          <HeroMascot svg={cloudy2IdleSvg} label="Cloudy" className="bottom-[-18px] left-1/2 h-[210px] w-[250px] -translate-x-1/2 sm:h-[300px] sm:w-[360px]" />
-          <HeroMascot svg={sunny2IdleSvg} label="Sunny" className="bottom-[-54px] right-[-52px] h-[230px] w-[230px] sm:h-[320px] sm:w-[320px]" />
+          <HeroMascot svg={challengerIdleSvg} label="The Challenger" className="bottom-[-26px] left-[-22px] h-[220px] w-[220px] sm:h-[300px] sm:w-[300px]" />
+          <HeroMascot svg={explorerIdleSvg} label="The Explorer" className="bottom-[-18px] left-1/2 h-[210px] w-[250px] -translate-x-1/2 sm:h-[300px] sm:w-[360px]" />
+          <HeroMascot svg={championIdleSvg} label="The Champion" className="bottom-[-54px] right-[-52px] h-[230px] w-[230px] sm:h-[320px] sm:w-[320px]" />
         </div>
       </section>
 

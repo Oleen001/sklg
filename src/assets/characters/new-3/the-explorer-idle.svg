@@ -1,0 +1,60 @@
+<svg viewBox="0 0 445 445" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The Explorer mascot, idle animation">
+<title>The Explorer — idle</title>
+<style>
+/* ============ The Explorer — idle ============
+   personality: ลอยเบา อยากรู้อยากเห็น
+   - exp-drift 5.6s : ลอยเอียงซ้าย-ขวา ±2px + rotate ±0.5deg (คนละคาบกับแกน Y → เส้นทาง drift ไม่ซ้ำตายตัว)
+   - exp-float 3.8s : ลอยขึ้นลง 6px + squash/stretch เบา ~1.5% จากฐาน
+   - exp-lag   3.8s : หน้า (ตา+ปาก) แกว่งเหลื่อมเฟส 1/4 คาบ = follow-through เวลาตัวลอย
+   - exp-blink 3.9s : ตา arc บีบ (happy squint) ~230ms + ปากยิ้มกว้างขึ้นนิดๆ (secondary)
+   class/keyframe prefix "exp-" กัน collision เวลา inline ใน HTML */
+.exp-drift{animation:exp-drift 5.6s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 60%}
+.exp-float{animation:exp-float 3.8s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+.exp-face{animation:exp-lag 3.8s infinite;transform-box:fill-box;transform-origin:50% 50%}
+.exp-eyes{animation:exp-blink 3.9s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 50%}
+.exp-mouth{animation:exp-smile 3.9s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 50%}
+@keyframes exp-drift{
+  0%,100%{transform:translateX(-2px) rotate(-.5deg)}
+  50%{transform:translateX(2px) rotate(.5deg)}
+}
+@keyframes exp-float{
+  0%,100%{transform:translateY(0) scale(1.014,.986)}
+  50%{transform:translateY(-6px) scale(.992,1.01)}
+}
+/* sine เหลื่อมเฟส: ลง peak ตอนตัวกำลังพุ่งขึ้น (25%) / ขึ้น peak ตอนตัวกำลังตก (75%) */
+@keyframes exp-lag{
+  0%{transform:translateY(0);animation-timing-function:cubic-bezier(.39,.575,.565,1)}
+  25%{transform:translateY(2.2px);animation-timing-function:cubic-bezier(.47,0,.745,.715)}
+  50%{transform:translateY(0);animation-timing-function:cubic-bezier(.39,.575,.565,1)}
+  75%{transform:translateY(-2.2px);animation-timing-function:cubic-bezier(.47,0,.745,.715)}
+  100%{transform:translateY(0)}
+}
+@keyframes exp-blink{
+  0%,90%,97%,100%{transform:translateY(0) scaleY(1)}
+  92.5%,94.5%{transform:translateY(2px) scaleY(.5)}
+}
+@keyframes exp-smile{
+  0%,90%,97%,100%{transform:scale(1)}
+  92.5%,94.5%{transform:scale(1.04)}
+}
+@media (prefers-reduced-motion:reduce){
+  .exp-drift,.exp-float,.exp-face,.exp-eyes,.exp-mouth{animation:none}
+}
+</style>
+<g class="exp-drift">
+  <g class="exp-float">
+    <!-- body: cloud (multi-lobe) -->
+    <path d="M223.944 39.4922C264.956 39.4922 299.846 60.6984 312.781 90.2979C314.654 89.8085 316.557 89.3869 318.489 89.0361C363.625 80.8416 407.499 114.318 416.484 163.809C420.89 188.077 416.087 211.689 404.726 230.42C413.253 242.391 418.211 256.697 418.211 272.066C418.21 314.162 381.023 348.288 335.149 348.288C327.081 348.288 319.281 347.231 311.905 345.262C303.26 379.808 266.726 405.748 222.967 405.748C179.405 405.748 143.001 380.043 134.144 345.73C127.314 347.398 120.139 348.288 112.737 348.288C66.8631 348.288 29.6748 314.162 29.6746 272.066C29.6746 256.718 34.6185 242.43 43.1238 230.469C31.702 213.578 25.7963 192.23 27.8845 169.639C32.4313 120.452 73.1477 84.0013 118.827 88.2236C124.293 88.7289 129.582 89.7949 134.651 91.3623C147.208 61.2078 182.442 39.4922 223.944 39.4922Z" fill="#B9DBFF"/>
+    <!-- face: ตา+ปาก (lag ตามตัวแบบ follow-through) -->
+    <g class="exp-face">
+      <g class="exp-eyes">
+        <path d="M246.764 137.596C242.204 137.904 238.258 134.457 237.949 129.897C237.838 128.244 236.407 126.995 234.754 127.106C233.101 127.218 231.851 128.649 231.963 130.302C232.495 138.168 239.303 144.114 247.169 143.582C255.035 143.05 260.981 136.243 260.449 128.376C260.337 126.723 258.906 125.474 257.253 125.585C255.6 125.697 254.351 127.128 254.463 128.781C254.771 133.341 251.324 137.287 246.764 137.596Z" fill="#0C3468"/>
+        <path d="M206.615 138.861C202.055 139.169 198.108 135.723 197.8 131.163C197.688 129.51 196.258 128.26 194.604 128.372C192.951 128.484 191.702 129.914 191.814 131.567C192.345 139.434 199.153 145.379 207.019 144.848C214.885 144.316 220.831 137.508 220.299 129.642C220.188 127.989 218.757 126.739 217.104 126.851C215.451 126.963 214.201 128.394 214.313 130.047C214.621 134.607 211.175 138.553 206.615 138.861Z" fill="#0C3468"/>
+      </g>
+      <g class="exp-mouth">
+        <path d="M287.59 154.739C289.717 152.966 291.844 151.193 293.73 149.131C294.096 148.844 294.397 148.481 294.612 148.068C294.827 147.654 294.952 147.199 294.978 146.733C295.005 146.267 294.932 145.8 294.765 145.363C294.598 144.927 294.34 144.53 294.009 144.199C293.678 143.869 293.281 143.612 292.844 143.446C292.407 143.279 291.941 143.208 291.475 143.235C291.009 143.262 290.555 143.389 290.143 143.605C289.73 143.821 289.368 144.123 289.082 144.49C272.989 160.378 251.492 169.608 228.851 170.35C206.209 171.092 184.076 163.291 166.838 148.495C166.164 148.055 165.354 147.875 164.559 147.99C163.765 148.104 163.041 148.505 162.523 149.117C162.006 149.729 161.729 150.51 161.746 151.313C161.763 152.117 162.073 152.888 162.616 153.482C180.028 168.395 202.115 176.699 224.98 176.929C247.844 177.159 270.018 169.3 287.59 154.739Z" fill="#0C3468"/>
+      </g>
+    </g>
+  </g>
+</g>
+</svg>
