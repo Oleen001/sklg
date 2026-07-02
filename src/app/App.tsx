@@ -399,6 +399,11 @@ const LEGACY_BACKGROUND_BANDS = {
 
 /* ─── Helpers ─── */
 const easeOut3 = (t: number) => 1 - Math.pow(1 - t, 3);
+const easeOutBack = (t: number) => {
+  const c1 = 1.70158;
+  const c3 = c1 + 1;
+  return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+};
 
 export default function App() {
   const pathname = usePathname() ?? "/";
@@ -699,6 +704,233 @@ export default function App() {
     };
   }, [route.kind, reduceMotion]);
 
+  /* ── RIASEC: pinned scroll word reveal, then edge characters, then release ── */
+  useEffect(() => {
+    if (route.kind !== "home") return;
+
+    type RiasecScrollTarget = {
+      section: HTMLElement;
+      copy: HTMLElement | null;
+      letters: HTMLElement[];
+      orbs: HTMLElement[];
+      startY: number;
+      scrollLength: number;
+    };
+
+    let frame = 0;
+    let target: RiasecScrollTarget | null = null;
+    const retryTids: ReturnType<typeof setTimeout>[] = [];
+
+    const clamp01 = (value: number) => Math.min(Math.max(value, 0), 1);
+    const phase = (progress: number, start: number, end: number) => clamp01((progress - start) / (end - start));
+
+    const collect = () => {
+      const section = document.querySelector<HTMLElement>("[data-riasec-scroll-section]");
+      const copy = document.querySelector<HTMLElement>("[data-riasec-motion-copy]");
+      const letters = Array.from(document.querySelectorAll<HTMLElement>("[data-riasec-letter]"));
+      const orbs = Array.from(document.querySelectorAll<HTMLElement>("[data-riasec-orb]"));
+
+      if (!section || letters.length === 0 || orbs.length === 0) {
+        target = null;
+        document.documentElement.dataset.skRiasecScroll = "waiting";
+        return;
+      }
+
+      const viewportHeight = window.innerHeight || 1;
+      const scrollOffsetVh = Number(section.dataset.scrollOffsetVh ?? 0);
+      target = {
+        section,
+        copy,
+        letters,
+        orbs,
+        startY: section.getBoundingClientRect().top + window.scrollY + viewportHeight * scrollOffsetVh,
+        scrollLength: Math.max(section.offsetHeight - viewportHeight * (1 + scrollOffsetVh), viewportHeight),
+      };
+      document.documentElement.dataset.skRiasecScroll = "active";
+    };
+
+    const update = () => {
+      frame = 0;
+      if (!target) return;
+
+      const progress = reduceMotion
+        ? 1
+        : Math.min(Math.max((window.scrollY - target.startY) / target.scrollLength, 0), 1);
+
+      if (target.copy) {
+        const local = phase(progress, 0.04, 0.18);
+        const eased = easeOut3(local);
+        target.copy.style.opacity = `${eased}`;
+        target.copy.style.transform = `translate3d(0, ${((1 - eased) * 30).toFixed(2)}px, 0) scale(${(0.965 + eased * 0.035).toFixed(3)})`;
+        target.copy.style.filter = `blur(${((1 - eased) * 16).toFixed(2)}px)`;
+      }
+
+      target.letters.forEach((letter, index) => {
+        const start = 0.2 + index * 0.06;
+        const end = start + 0.12;
+        const local = phase(progress, start, end);
+        const eased = easeOut3(local);
+        const y = (1 - eased) * 42;
+        const rotate = (index % 2 === 0 ? -5 : 5) * (1 - eased);
+        const scale = 0.88 + eased * 0.12;
+
+        letter.style.opacity = `${eased}`;
+        letter.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0) rotate(${rotate.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+        letter.style.filter = `blur(${((1 - eased) * 14).toFixed(2)}px)`;
+        letter.dataset.riasecScrollState = local >= 1 ? "settled" : local > 0 ? "entering" : "waiting";
+      });
+
+      target.orbs.forEach((orb, index) => {
+        const start = 0.58 + index * 0.07;
+        const end = start + 0.1;
+        const local = phase(progress, start, end);
+        const eased = Math.min(easeOutBack(local), 1.08);
+        const fromX = Number(orb.dataset.riasecFromX ?? 0);
+        const fromY = Number(orb.dataset.riasecFromY ?? 0);
+        const rotate = Number(orb.dataset.riasecRotate ?? 0);
+        const x = fromX * (1 - Math.min(eased, 1));
+        const y = fromY * (1 - Math.min(eased, 1));
+        const scale = 0.72 + eased * 0.28;
+
+        orb.style.opacity = `${Math.min(Math.max(local * 1.5, 0), 1)}`;
+        orb.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${rotate.toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+        orb.style.filter = `blur(${((1 - Math.min(local, 1)) * 10).toFixed(2)}px)`;
+        orb.dataset.riasecScrollState = local >= 1 ? "settled" : local > 0 ? "entering" : "waiting";
+      });
+
+      document.documentElement.dataset.skRiasecProgress = progress.toFixed(3);
+      document.documentElement.dataset.skRiasecReady = progress >= 0.9 ? "complete" : "building";
+    };
+
+    const requestUpdate = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(update);
+    };
+
+    const handleResize = () => {
+      collect();
+      requestUpdate();
+    };
+
+    const init = (attempt = 0) => {
+      collect();
+      update();
+      if (!target && attempt < 20) {
+        retryTids.push(setTimeout(() => init(attempt + 1), 100));
+      }
+    };
+
+    const initTid = setTimeout(() => init(), 160);
+
+    if (!reduceMotion) window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      clearTimeout(initTid);
+      retryTids.forEach(clearTimeout);
+      if (frame) cancelAnimationFrame(frame);
+      if (!reduceMotion) window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", handleResize);
+      delete document.documentElement.dataset.skRiasecScroll;
+      delete document.documentElement.dataset.skRiasecProgress;
+      delete document.documentElement.dataset.skRiasecReady;
+      if (target?.copy) {
+        target.copy.style.opacity = "";
+        target.copy.style.transform = "";
+        target.copy.style.filter = "";
+      }
+      target?.letters.forEach((letter) => {
+        letter.style.opacity = "";
+        letter.style.transform = "";
+        letter.style.filter = "";
+        delete letter.dataset.riasecScrollState;
+      });
+      target?.orbs.forEach((orb) => {
+        orb.style.opacity = "";
+        orb.style.transform = "";
+        orb.style.filter = "";
+        delete orb.dataset.riasecScrollState;
+      });
+    };
+  }, [route.kind, reduceMotion]);
+
+  /* ── Home guide bubbles + floating Explorer guide ── */
+  useEffect(() => {
+    if (route.kind !== "home") return;
+
+    let frame = 0;
+    let workStartY = 0;
+    const triggers = Array.from(document.querySelectorAll<HTMLElement>("[data-guide-bubble-trigger]"));
+    const guide = document.querySelector<HTMLElement>("[data-floating-explorer]");
+    const bubble = document.querySelector<HTMLElement>("[data-floating-guide-bubble]");
+    const message = document.querySelector<HTMLElement>("[data-floating-guide-message]");
+    const workSection = document.querySelector<HTMLElement>("[data-work-scroll-section]");
+
+    const collect = () => {
+      workStartY = workSection ? workSection.getBoundingClientRect().top + window.scrollY : 0;
+    };
+
+    const updateGuide = () => {
+      frame = 0;
+      if (!guide) return;
+
+      const viewportHeight = window.innerHeight || 1;
+      const shouldShow = window.scrollY >= workStartY - viewportHeight * 0.24;
+      const activeTrigger = triggers
+        .map((trigger) => {
+          const rect = trigger.getBoundingClientRect();
+          const distance = Math.abs(rect.top - viewportHeight * 0.42);
+          const inRange = rect.top < viewportHeight * 0.72 && rect.top > -viewportHeight * 0.22;
+          return { trigger, distance, inRange };
+        })
+        .filter((item) => item.inRange)
+        .sort((a, b) => a.distance - b.distance)[0]?.trigger ?? null;
+
+      guide.dataset.floatingGuideVisible = shouldShow ? "true" : "false";
+
+      if (bubble) {
+        bubble.dataset.floatingBubbleVisible = shouldShow && activeTrigger ? "true" : "false";
+      }
+
+      if (message && activeTrigger) {
+        const nextMessage = activeTrigger.dataset.guideMessage ?? "";
+        if (message.textContent !== nextMessage) {
+          message.textContent = nextMessage;
+        }
+      }
+    };
+
+    const requestUpdate = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(updateGuide);
+    };
+
+    const handleResize = () => {
+      collect();
+      requestUpdate();
+    };
+
+    collect();
+    updateGuide();
+    if (reduceMotion) {
+      if (guide) guide.dataset.floatingGuideVisible = "true";
+      if (bubble) bubble.dataset.floatingBubbleVisible = triggers.length ? "true" : "false";
+      if (message && triggers[0]) message.textContent = triggers[0].dataset.guideMessage ?? "";
+    } else {
+      window.addEventListener("scroll", requestUpdate, { passive: true });
+    }
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      if (!reduceMotion) window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", handleResize);
+      if (guide) delete guide.dataset.floatingGuideVisible;
+      if (bubble) delete bubble.dataset.floatingBubbleVisible;
+      if (message) message.textContent = "";
+    };
+  }, [route.kind, reduceMotion]);
+
   /* ── How Skillogy works: pinned scroll cards, one-by-one, then active state ── */
   useEffect(() => {
     if (route.kind !== "home" || reduceMotion) return;
@@ -916,7 +1148,7 @@ export default function App() {
           if (requestedPage.current === page) setReadyPage(page);
         }}
       >
-        {route.kind === "home" ? <HomePage /> : null}
+        {route.kind === "home" ? <HomePage isLoggedIn={authHydrated && isLoggedIn} /> : null}
         {route.kind === "login" ? <LoginPage onLogin={handleMockLogin} onNavigate={navigate} /> : null}
         {route.kind === "skill-dashboard" ? <SkillDashboardPage /> : null}
         {route.kind === "skill-trends" ? <SkillTrendsRoutePage /> : null}

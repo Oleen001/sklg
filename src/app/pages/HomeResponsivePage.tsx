@@ -18,12 +18,10 @@ import planCardIcon from "@/assets/home-cards/map-1.svg";
 import planCardCharacter from "@/assets/home-cards/the-challenger-card.svg";
 import upskillCardCharacter from "@/assets/home-cards/the-champion-card.svg";
 import upskillCardIcon from "@/assets/home-cards/rocket-1.svg";
+import imgBusinessBootcamp from "@/assets/home-banners/business-101-bootcamp.png";
+import imgCulinaryBootcamp from "@/assets/home-banners/culinary-101-bootcamp.png";
 import imgCareer from "@/imports/Homepage/fb00664fb29d5df01ed6086676d13d0df96965c5.png";
-import imgBootcamp from "@/imports/Homepage/12be04912d27d801c5eed4d993dfd2bc03db445d.png";
 import imgCertificate from "@/imports/Homepage/33fbdc33ffd551e1b3c4d0b4c11618dad9f622fe.png";
-import imgEngineeringOpportunity from "@/assets/opportunities/engineering-101-hero.png";
-import imgHackathonOpportunity from "@/assets/opportunities/hackathon-green.png";
-import svgPaths from "@/imports/Homepage/svg-7g4ywnxoxa";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const steps = [
@@ -71,21 +69,23 @@ const careerChips = [
 
 const bootcampBanners = [
   {
-    id: "engineering-101",
-    image: imgBootcamp,
-    alt: "Engineering 101 Bootcamp banner",
+    id: "business-101",
+    image: imgBusinessBootcamp,
+    alt: "Business 101 Bootcamp banner",
   },
   {
-    id: "engineering-opportunity",
-    image: imgEngineeringOpportunity,
-    alt: "Engineering opportunity banner",
-  },
-  {
-    id: "hackathon-green",
-    image: imgHackathonOpportunity,
-    alt: "Hackathon bootcamp banner",
+    id: "culinary-101",
+    image: imgCulinaryBootcamp,
+    alt: "Culinary 101 Bootcamp banner",
   },
 ];
+
+const riasecMesses = [
+  { id: "small-red", src: "/images/riasec-hero/mess/small-red.svg", className: "home-riasec-mess-small-red", fromX: -190, fromY: -90, rotate: 33.5 },
+  { id: "big-red", src: "/images/riasec-hero/mess/big-red-blink.svg", className: "home-riasec-mess-big-red", fromX: 250, fromY: -120, rotate: -130 },
+  { id: "orange", src: "/images/riasec-hero/mess/orange.svg", className: "home-riasec-mess-orange", fromX: -260, fromY: 190, rotate: 0 },
+  { id: "blue", src: "/images/riasec-hero/mess/blue.svg", className: "home-riasec-mess-blue", fromX: 240, fromY: 180, rotate: -13 },
+] as const;
 
 const starIllustrations = {
   sparkle: {
@@ -153,28 +153,20 @@ function ButtonLink({
   );
 }
 
-function GuideBubble({
-  className,
-  mascotClassName,
-  children,
-  bubbleClassName = "",
-  mascotSvg = explorerIdleSvg,
-  label = "The Explorer guide",
-}: {
-  className: string;
-  mascotClassName: string;
-  children: string;
-  bubbleClassName?: string;
-  mascotSvg?: string;
-  label?: string;
-}) {
+function GuideBubble({ className, children }: { className: string; children: string }) {
   return (
-    <div className={`absolute hidden lg:block ${className}`}>
-      <div className={`relative rounded-full bg-[#18bd83] px-8 py-4 text-[24px] leading-normal text-white shadow-[0_12px_24px_rgba(7,38,86,0.08)] ${bubbleClassName}`}>
-        {children}
-        <span className="absolute bottom-[-17px] right-[72px] h-9 w-8 rotate-[35deg] bg-[#18bd83] [clip-path:polygon(0_0,100%_0,100%_100%)]" aria-hidden />
+    <div data-guide-bubble-trigger data-guide-message={children} className={`pointer-events-none absolute hidden size-1 opacity-0 lg:block ${className}`} aria-hidden />
+  );
+}
+
+function FloatingExplorerGuide() {
+  return (
+    <div data-floating-explorer className="pointer-events-none fixed bottom-5 right-5 z-[80] hidden h-[168px] w-[630px] opacity-0 will-change-[opacity,transform,filter] lg:block">
+      <div data-floating-guide-bubble className="absolute bottom-[34px] right-[128px] min-w-[440px] max-w-[520px] rounded-full bg-[#18bd83] px-8 py-4 pr-12 text-[22px] leading-normal text-white opacity-0 shadow-[0_12px_24px_rgba(7,38,86,0.08)]">
+        <span data-floating-guide-message className="whitespace-pre-line" />
+        <span className="absolute bottom-[-17px] right-[70px] h-9 w-8 rotate-[35deg] bg-[#18bd83] [clip-path:polygon(0_0,100%_0,100%_100%)]" aria-hidden />
       </div>
-      <HeroMascot svg={mascotSvg} label={label} className={mascotClassName} maxLook={5} fitScale={1} />
+      <HeroMascot svg={explorerIdleSvg} label="The Explorer guide" className="bottom-0 right-0 h-[150px] w-[188px]" maxLook={5} fitScale={1} />
     </div>
   );
 }
@@ -225,58 +217,70 @@ function WorkCard({ step }: { step: (typeof steps)[number] }) {
 }
 
 function BootcampCloudCluster() {
-  const bubbles = [
-    "left-[4px] top-[174px] h-[152px] w-[196px] bg-white/95",
-    "left-[94px] top-[126px] h-[210px] w-[260px] bg-white/95",
-    "left-[238px] top-[178px] h-[154px] w-[216px] bg-white/95",
-    "left-[116px] top-[56px] h-[292px] w-[330px] bg-white/20",
-    "left-[288px] top-[60px] h-[268px] w-[300px] bg-white/20",
-    "left-[390px] top-[172px] h-[174px] w-[196px] bg-white/20",
-  ];
-
   return (
     <div
       aria-hidden
       data-bootcamp-cloud-cluster="true"
       data-spin-decoration="false"
-      className="absolute left-[642px] top-[56px] h-[390px] w-[548px] [animation:sk-bootcamp-cloud-idle_5.8s_ease-in-out_infinite]"
+      className="absolute left-[718px] top-[80px] h-[392px] w-[392px] [animation:sk-bootcamp-cloud-idle_5.8s_ease-in-out_infinite]"
     >
-      {bubbles.map((className, index) => (
-        <span
-          key={className}
-          className={`absolute rounded-full ${className}`}
-          style={{ animation: `sk-bootcamp-cloud-breathe ${4.6 + index * 0.25}s ease-in-out ${index * 0.18}s infinite` }}
-        />
-      ))}
+      <span className="absolute inset-0 rounded-full bg-white/20" style={{ animation: "sk-bootcamp-cloud-breathe 4.8s ease-in-out infinite" }} />
+      <span className="absolute inset-[38px] rounded-full bg-white/30" style={{ animation: "sk-bootcamp-cloud-breathe 4.4s ease-in-out 120ms infinite" }} />
+      <span className="absolute inset-[86px] rounded-full bg-white/95" style={{ animation: "sk-bootcamp-cloud-breathe 4s ease-in-out 240ms infinite" }} />
     </div>
   );
 }
 
 function RiasecGraphic() {
   const letters = [
-    { svg: riasecRSvg, className: "left-[71px] top-[33px] h-[166px] w-[149px] max-lg:left-[5%] max-lg:top-[12%] max-lg:h-[112px] max-lg:w-[102px]" },
-    { svg: riasecISvg, className: "left-[183px] top-0 h-[177px] w-[162px] max-lg:left-[29%] max-lg:top-[4%] max-lg:h-[122px] max-lg:w-[72px]" },
-    { svg: riasecASvg, className: "left-[282px] top-[49px] h-[177px] w-[162px] max-lg:left-[51%] max-lg:top-[13%] max-lg:h-[118px] max-lg:w-[100px]" },
-    { svg: riasecSSvg, className: "left-[127px] top-[200px] h-[173px] w-[157px] max-lg:left-[21%] max-lg:top-[51%] max-lg:h-[122px] max-lg:w-[100px]" },
-    { svg: riasecESvg, className: "left-[251px] top-[222px] h-[187px] w-[173px] max-lg:left-[45%] max-lg:top-[55%] max-lg:h-[124px] max-lg:w-[116px]" },
-    { svg: riasecCSvg, className: "left-[376px] top-[188px] h-[188px] w-[174px] max-lg:left-[69%] max-lg:top-[45%] max-lg:h-[124px] max-lg:w-[118px]" },
+    { svg: riasecRSvg, label: "R", className: "h-[clamp(86px,11.3vw,166px)] w-[clamp(78px,10.2vw,149px)]" },
+    { svg: riasecISvg, label: "I", className: "h-[clamp(102px,13.1vw,194px)] w-[clamp(56px,6.9vw,102px)] -mx-[clamp(5px,0.45vw,8px)]" },
+    { svg: riasecASvg, label: "A", className: "h-[clamp(92px,12vw,177px)] w-[clamp(82px,11vw,162px)]" },
+    { svg: riasecSSvg, label: "S", className: "h-[clamp(88px,11.7vw,173px)] w-[clamp(80px,10.7vw,157px)]" },
+    { svg: riasecESvg, label: "E", className: "h-[clamp(96px,12.7vw,187px)] w-[clamp(90px,11.8vw,173px)]" },
+    { svg: riasecCSvg, label: "C", className: "h-[clamp(96px,12.8vw,188px)] w-[clamp(88px,11.8vw,174px)]" },
   ];
 
   return (
-    <div className="relative min-h-[390px] w-full overflow-visible lg:absolute lg:left-[527px] lg:top-[39px] lg:h-[410px] lg:min-h-0 lg:w-[620px] max-lg:mx-auto max-lg:min-h-[360px] max-lg:max-w-[390px] max-sm:min-h-[330px]">
-      {letters.map((letter) => (
-        <div key={letter.className} className={`absolute ${letter.className} [&_svg]:block [&_svg]:h-full [&_svg]:w-full`} dangerouslySetInnerHTML={{ __html: letter.svg }} />
+    <div data-riasec-word className="relative z-10 flex items-end justify-center gap-[clamp(0px,0.45vw,7px)] overflow-visible" aria-label="RIASEC">
+      {letters.map((letter, index) => (
+        <div
+          key={letter.label}
+          data-riasec-letter
+          data-riasec-letter-index={index}
+          className={`home-riasec-letter shrink-0 ${letter.className} [&_svg]:block [&_svg]:h-full [&_svg]:w-full`}
+          dangerouslySetInnerHTML={{ __html: letter.svg }}
+        />
       ))}
-      <DecorativeStar className="left-[221px] top-[193px] size-9 max-lg:left-[36%] max-lg:top-[46%] max-lg:size-8" color="#2ccb6f" variant="sparkle" />
-      <DecorativeStar className="right-[10px] top-[119px] size-14 max-lg:right-[3%] max-lg:top-[26%] max-lg:size-10" color="#2ccb6f" />
+      <DecorativeStar className="left-[64%] top-[72%] size-9 max-sm:size-7" color="#2ccb6f" variant="sparkle" />
     </div>
   );
 }
 
-function HeroSection() {
+function RiasecMessLayer({ className = "" }: { className?: string }) {
   return (
-    <section className="sticky top-0 z-[1] flex min-h-[620px] w-full items-center overflow-hidden bg-[#eff4f9] px-5 sm:px-8 lg:h-[93svh] lg:min-h-[760px] lg:px-0">
-      <div data-sticky-parallax data-parallax-speed="0.23" data-parallax-max="190" className="relative mx-auto h-[620px] w-full max-w-[1180px] will-change-transform md:h-[660px] lg:h-[660px]">
+    <div className={`home-riasec-mess-layer ${className}`} aria-hidden>
+      {riasecMesses.map((mess) => (
+        <div
+          key={mess.id}
+          data-riasec-orb
+          data-riasec-orb-id={mess.id}
+          data-riasec-from-x={mess.fromX}
+          data-riasec-from-y={mess.fromY}
+          data-riasec-rotate={mess.rotate}
+          className={`home-riasec-mess ${mess.className}`}
+        >
+          <img className="home-riasec-mess-float" src={mess.src} alt="" draggable={false} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function HeroSection({ isLoggedIn }: { isLoggedIn: boolean }) {
+  return (
+    <section className="sticky top-0 z-[1] flex h-[100svh] w-full items-center overflow-hidden bg-[#eff4f9] px-5 sm:px-8 lg:px-0">
+      <div data-sticky-parallax data-parallax-speed="0.23" data-parallax-max="190" className="relative mx-auto h-full w-full max-w-[1180px] will-change-transform">
         <div className="relative z-10 mx-auto pt-[104px] text-center md:pt-[116px]">
           <h1 className="text-[32px] font-bold leading-[1.18] tracking-normal text-[#424045] sm:text-[58px] lg:text-[64px]">
             <BlurText text="เปลี่ยนศักยภาพให้เป็นทักษะจริง" />
@@ -284,11 +288,13 @@ function HeroSection() {
               <BlurText text="สู่เส้นทางความสำเร็จในอาชีพ" delay={0.12} />
             </span>
           </h1>
-          <div className="mt-7">
-            <ButtonLink href="/skill-dashboard" className="min-h-[52px] px-6 text-[18px] sm:min-h-[58px] sm:px-7 sm:text-[22px]">
-              Welcome Back, Skillogist
-            </ButtonLink>
-          </div>
+          {!isLoggedIn ? (
+            <div className="mt-7">
+              <ButtonLink href="/login" className="min-h-[52px] px-6 text-[18px] sm:min-h-[58px] sm:px-7 sm:text-[22px]">
+                Become a Skillogist
+              </ButtonLink>
+            </div>
+          ) : null}
         </div>
 
         <DecorativeStar className="left-[-64px] top-[123px] size-[72px] max-sm:left-0 max-sm:top-[214px] max-sm:size-11" color="#ffe040" variant="asterisk" />
@@ -305,8 +311,8 @@ function HeroSection() {
 
 function WorksSection() {
   return (
-    <section data-work-scroll-section className="relative z-[2] h-[260svh] min-h-[1760px] bg-white">
-      <div className="sticky top-0 flex min-h-[620px] w-full items-center overflow-hidden bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+    <div data-work-scroll-section className="relative z-[2] h-[320svh] min-h-[2240px] bg-white">
+      <section className="sticky top-0 flex h-[100svh] w-full items-center overflow-hidden bg-white px-5 py-20 sm:px-8 lg:px-0 lg:py-0">
         <SectionMotifs />
         <div data-work-scroll-content className="relative mx-auto w-full max-w-[1180px] lg:h-[567px] lg:pl-[108px] lg:pt-[64px]">
           <h2 className="relative z-10 text-[36px] font-bold leading-tight text-[#1b3a5c] sm:text-[44px]">
@@ -314,8 +320,6 @@ function WorksSection() {
           </h2>
           <GuideBubble
             className="right-[10px] top-[2px] z-20"
-            bubbleClassName="min-w-[560px] pr-[112px] text-[22px]"
-            mascotClassName="left-[474px] top-[-24px] h-[154px] w-[192px]"
           >
             เริ่มจากตรงไหนก็ได้ จะมีฉันคอยไกด์ตลอด
           </GuideBubble>
@@ -328,41 +332,46 @@ function WorksSection() {
             ))}
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
 
 function SelfKnowledgeSection() {
   return (
-    <section className="sticky top-0 z-[3] flex min-h-[620px] w-full items-center overflow-hidden bg-[#c6ebfe] px-5 py-16 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:rounded-t-[44px] lg:px-0 lg:py-0">
-      <SectionMotifs tone="blue" />
-      <div data-sticky-parallax data-parallax-speed="0.2" data-parallax-max="160" className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 will-change-transform lg:block lg:h-[470px]">
-        <div className="relative z-10 lg:absolute lg:left-[109px] lg:top-[120px]">
-          <DecorativeStar className="left-[-79px] top-[-13px] size-[58px] max-sm:left-0 max-sm:top-[-62px] max-sm:size-11" color="#4da8ee" />
-          <p className="text-[24px] text-[#1b3a5c]">เริ่มจาก...</p>
-          <h2 className="mt-2 text-[42px] font-bold leading-tight text-[#05101f] sm:text-[48px]">
-            <BlurText text="รู้จักตัวเองให้ลึกขึ้น" />
-          </h2>
-          <p className="mt-4 text-[20px] leading-8 text-[#0e2440]">
-            ด้วยแบบทดสอบ RIASEC
-            <br />
-            ตัวช่วยแนะนำอาชีพที่เหมาะกับคุณ
-          </p>
-          <div className="mt-6">
-            <ButtonLink href="/RIASEC">เริ่มทำแบบทดสอบ</ButtonLink>
+    <div data-riasec-scroll-section data-scroll-offset-vh="1" className="relative z-[3] -mt-[100svh] h-[440svh] min-h-[3400px] bg-[#c6ebfe]">
+      <section className="sticky top-0 flex h-[100svh] w-full items-center overflow-hidden bg-[#c6ebfe] px-5 py-16 sm:px-8 lg:rounded-t-[44px] lg:px-0 lg:py-0">
+        <SectionMotifs tone="blue" />
+        <div data-riasec-scroll-content className="relative mx-auto h-full w-full max-w-[1180px]">
+          <RiasecMessLayer />
+          <DecorativeStar className="left-[2%] top-[63%] size-14 max-sm:left-[3%] max-sm:top-[70%] max-sm:size-10" color="#4da8ee" />
+          <DecorativeStar className="right-[4%] top-[39%] size-11 max-sm:right-[1%] max-sm:top-[32%] max-sm:size-9" color="#2ccb6f" />
+          <div className="absolute left-1/2 top-[22%] z-10 w-[min(760px,94vw)] -translate-x-1/2 max-sm:top-[18%]">
+            <RiasecGraphic />
+          </div>
+          <div data-riasec-motion-copy className="absolute inset-x-0 top-[48%] z-20 mx-auto flex w-full max-w-[620px] flex-col items-center text-center max-sm:top-[43%]">
+            <p className="text-[22px] leading-normal text-[#1b3a5c] max-sm:text-[18px]">เริ่มจาก...</p>
+            <h2 className="mt-2 text-[42px] font-bold leading-tight tracking-normal text-[#05101f] sm:text-[48px]">
+              <BlurText text="รู้จักตัวเองให้ลึกขึ้น" />
+            </h2>
+            <p className="mx-auto mt-4 max-w-[460px] text-[20px] leading-8 text-[#0e2440] max-sm:text-[17px] max-sm:leading-7">
+              ด้วยแบบทดสอบ RIASEC
+              <br />
+              ตัวช่วยแนะนำอาชีพที่เหมาะกับคุณ
+            </p>
+            <div className="mt-6">
+              <ButtonLink href="/RIASEC">เริ่มทำแบบทดสอบ</ButtonLink>
+            </div>
           </div>
         </div>
-        <HeroMascot svg={explorerIdleSvg} label="The Explorer test peek" className="right-[-34px] top-[54px] hidden h-[120px] w-[150px] rotate-6 lg:block" maxLook={4} fitScale={1} />
-        <RiasecGraphic />
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
 
 function CareerSection() {
   return (
-    <section className="sticky top-0 z-[4] flex min-h-[620px] w-full items-center overflow-hidden bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+    <section className="sticky top-0 z-[4] -mt-[100svh] flex h-[100svh] w-full items-center overflow-hidden bg-white px-5 py-20 sm:px-8 lg:px-0 lg:py-0">
       <SectionMotifs />
       <div data-sticky-parallax data-parallax-speed="0.2" data-parallax-max="160" className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 will-change-transform lg:block lg:h-full">
         <div className="relative min-h-[560px] max-lg:min-h-[520px] max-sm:min-h-[500px] lg:absolute lg:inset-0 lg:min-h-0">
@@ -377,8 +386,6 @@ function CareerSection() {
         <div className="relative lg:absolute lg:left-[658px] lg:top-[300px]">
           <GuideBubble
             className="left-[-94px] top-[-154px] z-20"
-            bubbleClassName="min-w-[520px] pr-[112px] text-[20px]"
-            mascotClassName="left-[418px] top-[-16px] h-[124px] w-[155px]"
           >
             จากตรงนี้ ฉันจะช่วยวางแผนเส้นทางสู่จุดหมายให้!
           </GuideBubble>
@@ -407,7 +414,7 @@ function BootcampSection() {
   };
 
   return (
-    <section className="sticky top-0 z-[5] flex min-h-[620px] w-full items-center overflow-hidden bg-[#1b3476] px-5 py-20 text-white sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+    <section className="sticky top-0 z-[5] flex h-[100svh] w-full items-center overflow-hidden bg-[#1b3476] px-5 py-20 text-white sm:px-8 lg:px-0 lg:py-0">
       <SectionMotifs tone="dark" />
       <div data-sticky-parallax data-parallax-speed="0.18" data-parallax-max="145" className="relative mx-auto h-full w-full max-w-[1180px] will-change-transform">
         <div className="relative min-h-[560px] overflow-hidden max-sm:min-h-[620px] lg:h-full lg:min-h-0">
@@ -423,12 +430,12 @@ function BootcampSection() {
           <BootcampCloudCluster />
           <HeroMascot svg={championIdleSvg} label="The Champion bootcamp" className="left-[682px] top-[104px] h-[400px] w-[480px] max-sm:right-[-70px] max-sm:top-[222px] max-sm:h-[210px] max-sm:w-[252px]" maxLook={6} fitScale={1} />
           <DecorativeStar className="right-[70px] top-[164px] size-7" color="#5aaed8" />
-          <div className="absolute left-1/2 top-[320px] z-20 w-[88%] -translate-x-1/2 overflow-hidden rounded-[24px] bg-[#490909] shadow-[0_22px_45px_rgba(0,0,0,0.22)] max-sm:bottom-8 max-sm:top-auto max-sm:w-full max-sm:rounded-[18px] lg:w-[1039px]">
+          <div className="absolute left-1/2 top-[320px] z-20 aspect-[238/70] w-[88%] -translate-x-1/2 overflow-hidden rounded-[24px] bg-[#490909] shadow-[0_22px_45px_rgba(0,0,0,0.22)] max-sm:bottom-8 max-sm:top-auto max-sm:w-full max-sm:rounded-[18px] lg:w-[1039px]">
             <img
               key={activeBanner.id}
               src={activeBanner.image}
               alt={activeBanner.alt}
-              className="h-[308px] w-full object-cover [animation:sk-bootcamp-banner-in_520ms_cubic-bezier(0.16,1,0.3,1)_both] max-sm:h-auto max-sm:aspect-[1039/308]"
+              className="h-full w-full object-cover [animation:sk-bootcamp-banner-in_520ms_cubic-bezier(0.16,1,0.3,1)_both]"
             />
           </div>
           <button
@@ -469,7 +476,7 @@ function BootcampSection() {
 
 function CourseSection() {
   return (
-    <section className="sticky top-0 z-[6] flex min-h-[620px] w-full items-center overflow-hidden bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
+    <section className="sticky top-0 z-[6] flex h-[100svh] w-full items-center overflow-hidden bg-white px-5 py-20 sm:px-8 lg:px-0 lg:py-0">
       <SectionMotifs />
       <div data-sticky-parallax data-parallax-speed="0.18" data-parallax-max="145" className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 will-change-transform lg:block lg:h-full">
         <div className="relative min-h-[540px] max-lg:min-h-[430px] max-sm:min-h-[390px] lg:absolute lg:inset-0 lg:min-h-0">
@@ -481,8 +488,6 @@ function CourseSection() {
         <div className="relative lg:absolute lg:left-[785px] lg:top-[287px]">
           <GuideBubble
             className="left-[-470px] top-[-104px] z-20"
-            bubbleClassName="min-w-[540px] pr-[112px] text-[20px]"
-            mascotClassName="left-[438px] top-[-18px] h-[112px] w-[140px]"
           >
             มีใบรับรองจากมหาวิทยาลัย และบริษัทชั้นนำ
           </GuideBubble>
@@ -501,7 +506,7 @@ function CourseSection() {
   );
 }
 
-export default function HomeResponsivePage() {
+export default function HomeResponsivePage({ isLoggedIn }: { isLoggedIn: boolean }) {
   return (
     <main className="relative w-full overflow-x-clip bg-white text-[var(--sk-color-ink)]">
       <style>{`
@@ -529,35 +534,150 @@ export default function HomeResponsivePage() {
             transform: scale(1);
           }
         }
+        @keyframes sk-home-riasec-mess-float {
+          0%, 100% {
+            transform: translate3d(0, 0, 0) rotate(0deg);
+          }
+          50% {
+            transform: translate3d(0, calc(var(--float-distance) * -1), 0) rotate(1.2deg);
+          }
+        }
+        .home-riasec-mess-layer {
+          position: absolute;
+          inset: 0;
+          z-index: 6;
+          pointer-events: none;
+        }
+        [data-riasec-motion-copy] {
+          opacity: 0;
+          filter: blur(16px);
+          transform: translate3d(0, 28px, 0) scale(0.96);
+          will-change: opacity, transform, filter;
+        }
+        .home-riasec-letter {
+          opacity: 0;
+          filter: blur(16px);
+          transform: translate3d(0, 28px, 0) scale(0.96);
+          will-change: opacity, transform, filter;
+        }
+        .home-riasec-mess {
+          position: absolute;
+          left: var(--x);
+          top: var(--y);
+          width: var(--w);
+          opacity: 0;
+          transform-origin: 50% 50%;
+          will-change: opacity, transform;
+        }
+        [data-floating-explorer] {
+          filter: blur(12px);
+          transform: translate3d(18px, 28px, 0) scale(0.94);
+          transition:
+            opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
+            filter 720ms cubic-bezier(0.16, 1, 0.3, 1),
+            transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        [data-floating-explorer][data-floating-guide-visible="true"] {
+          opacity: 1;
+          filter: blur(0);
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        [data-floating-guide-bubble] {
+          filter: blur(16px);
+          transform: translate3d(0, 24px, 0) scale(0.98);
+          transition:
+            opacity 560ms cubic-bezier(0.16, 1, 0.3, 1),
+            filter 680ms cubic-bezier(0.16, 1, 0.3, 1),
+            transform 680ms cubic-bezier(0.16, 1, 0.3, 1);
+          will-change: opacity, transform, filter;
+        }
+        [data-floating-guide-bubble][data-floating-bubble-visible="true"] {
+          opacity: 1;
+          filter: blur(0);
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+        .home-riasec-mess-float {
+          display: block;
+          width: 100%;
+          height: auto;
+          animation: sk-home-riasec-mess-float var(--float-duration) ease-in-out infinite;
+          will-change: transform;
+        }
+        .home-riasec-mess-blue {
+          --w: min(260px, 22vw);
+          --x: 76%;
+          --y: 76%;
+          --float-distance: 9px;
+          --float-duration: 3400ms;
+        }
+        .home-riasec-mess-orange {
+          --w: min(292px, 24vw);
+          --x: -1%;
+          --y: 78%;
+          --float-distance: 7px;
+          --float-duration: 3800ms;
+        }
+        .home-riasec-mess-big-red {
+          --w: min(320px, 27vw);
+          --x: 82%;
+          --y: -9%;
+          --float-distance: 10px;
+          --float-duration: 4200ms;
+        }
+        .home-riasec-mess-small-red {
+          --w: min(78px, 9vw);
+          --x: 8%;
+          --y: 10%;
+          --float-distance: 6px;
+          --float-duration: 3200ms;
+        }
+        @media (max-width: 900px) {
+          .home-riasec-mess-blue {
+            --w: 34%;
+            --x: 63%;
+            --y: 78%;
+          }
+          .home-riasec-mess-orange {
+            --w: 36%;
+            --x: -12%;
+            --y: 79%;
+          }
+          .home-riasec-mess-big-red {
+            --w: 42%;
+            --x: 72%;
+            --y: -4%;
+          }
+          .home-riasec-mess-small-red {
+            --w: 13%;
+            --x: 4%;
+            --y: 11%;
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .home-riasec-mess-float {
+            animation: none;
+          }
+          [data-riasec-motion-copy],
+          .home-riasec-letter,
+          .home-riasec-mess,
+          [data-floating-explorer],
+          [data-floating-guide-bubble] {
+            opacity: 1;
+            filter: none;
+            transform: none;
+          }
+          [data-riasec-motion-copy] {
+            transform: translate3d(0, 0, 0);
+          }
+        }
       `}</style>
-      <JourneyLine />
-      <HeroSection />
+      <HeroSection isLoggedIn={isLoggedIn} />
       <WorksSection />
       <SelfKnowledgeSection />
       <CareerSection />
       <BootcampSection />
       <CourseSection />
+      <FloatingExplorerGuide />
     </main>
-  );
-}
-
-function JourneyLine() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute left-[-111px] top-[calc(180svh+161px)] z-20 hidden h-[1827px] w-[392px] items-center justify-center lg:flex">
-      <div className="h-[200px] w-[1816px] flex-none rotate-[96.1deg]">
-        <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 1819.66 204.974">
-          <path d={svgPaths.p304a5a00} stroke="url(#home-journey-line)" strokeWidth="5.99765" />
-          <defs>
-            <linearGradient gradientUnits="userSpaceOnUse" id="home-journey-line" x1="-262.436" x2="1974.23" y1="89.2626" y2="89.2626">
-              <stop stopColor="#E8F6FF" />
-              <stop offset="0.389423" stopColor="#DBE6F0" />
-              <stop offset="0.616567" stopColor="#E0F0FF" />
-              <stop offset="0.873952" stopColor="#4DA8EE" />
-              <stop offset="0.980769" stopColor="#00D4DA" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-    </div>
   );
 }
