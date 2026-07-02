@@ -13,7 +13,7 @@ export default function PlatformLogoRail({ platforms }: Props) {
           <a
             key={platform.id}
             href={platform.url}
-            className="flex h-[72px] items-center justify-center rounded-2xl bg-white text-[24px] font-bold text-[#1e78d4] shadow-sm ring-1 ring-[#dbe6f0]/80 transition hover:-translate-y-0.5 hover:shadow-[var(--sk-shadow-sm)]"
+            className="sk-press-tilt-card flex h-[72px] items-center justify-center rounded-2xl bg-white text-[24px] font-bold text-[#1e78d4] shadow-sm ring-1 ring-[#dbe6f0]/80 hover:shadow-[var(--sk-shadow-sm)]"
             aria-label={`ไปที่ ${platform.name}`}
           >
             {platform.mark}

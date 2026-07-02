@@ -32,7 +32,7 @@ function StatItem({ icon: Icon, label }: { icon: LucideIcon; label: string }) {
 
 export default function OpportunityPostCard({ post }: Props) {
   return (
-    <article className="overflow-hidden rounded-[16px] bg-white p-5 shadow-[var(--sk-shadow-sm)] ring-1 ring-[var(--sk-color-border)] sm:p-6">
+    <article className="overflow-hidden rounded-[16px] bg-white p-5 shadow-[var(--sk-shadow-sm)] ring-1 ring-[var(--sk-color-border)] transition-shadow duration-200 hover:shadow-[0_8px_22px_rgba(14,36,64,0.12)] sm:p-6">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <a
           href={`/skill-opportunities?category=${post.categoryId}`}

@@ -56,3 +56,63 @@ body * {
 .sk-brand-logo {
   font-family: "ABeeZee", var(--sk-font-sans) !important;
 }
+
+.sk-press-tilt-card {
+  --sk-tilt-x: 2.5deg;
+  --sk-tilt-y: -2.5deg;
+  --sk-tilt-z: 0deg;
+  --sk-press-y: 3px;
+  --sk-press-scale: 0.992;
+  transform: perspective(900px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);
+  transform-origin: 50% 55%;
+  transform-style: preserve-3d;
+  transition:
+    transform var(--sk-motion-normal) var(--sk-ease-standard),
+    box-shadow var(--sk-motion-normal) var(--sk-ease-standard),
+    filter var(--sk-motion-normal) var(--sk-ease-standard);
+  will-change: transform;
+}
+
+.sk-press-tilt-card:hover,
+.sk-press-tilt-card:focus-within {
+  filter: saturate(1.02);
+  transform:
+    perspective(900px)
+    translate3d(0, var(--sk-press-y), 0)
+    rotateX(var(--sk-tilt-x))
+    rotateY(var(--sk-tilt-y))
+    rotateZ(var(--sk-tilt-z))
+    scale(var(--sk-press-scale));
+}
+
+.sk-press-tilt-card:active {
+  transform:
+    perspective(900px)
+    translate3d(0, calc(var(--sk-press-y) + 2px), 0)
+    rotateX(calc(var(--sk-tilt-x) * 1.15))
+    rotateY(calc(var(--sk-tilt-y) * 1.15))
+    rotateZ(var(--sk-tilt-z))
+    scale(0.985);
+}
+
+.sk-press-tilt-card > * {
+  transform: translateZ(0.01px);
+}
+
+@media (hover: none) {
+  .sk-press-tilt-card:hover {
+    filter: none;
+    transform: perspective(900px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-press-tilt-card,
+  .sk-press-tilt-card:hover,
+  .sk-press-tilt-card:focus-within,
+  .sk-press-tilt-card:active {
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+}

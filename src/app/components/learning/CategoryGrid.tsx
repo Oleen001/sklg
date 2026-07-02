@@ -29,7 +29,7 @@ export default function CategoryGrid({ categories }: Props) {
             <a
               key={category.id}
               href={`/learning/categories/${category.id}`}
-              className="flex h-[56px] items-center rounded-2xl bg-white px-5 text-[#05101f] shadow-sm transition hover:-translate-y-0.5 hover:shadow-[var(--sk-shadow-sm)]"
+              className="sk-press-tilt-card flex h-[56px] items-center rounded-2xl bg-white px-5 text-[#05101f] shadow-sm hover:shadow-[var(--sk-shadow-sm)]"
             >
               <span className="mr-4 flex size-8 items-center justify-center rounded-lg bg-[#ff7a1a] text-white">
                 <Icon className="size-4" aria-hidden />

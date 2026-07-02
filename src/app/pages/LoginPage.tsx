@@ -109,7 +109,7 @@ function RotatingGlow({
 export default function LoginPage({ onLogin, onNavigate }: LoginPageProps) {
   const completeLogin = () => {
     onLogin();
-    onNavigate("/skill-dashboard");
+    onNavigate("/profile");
   };
 
   return (
