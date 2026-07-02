@@ -5,11 +5,12 @@ type HeroMascotProps = {
   label: string;
   className?: string;
   maxLook?: number;
+  fitScale?: number;
 };
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-export default function HeroMascot({ svg, label, className = "", maxLook = 7 }: HeroMascotProps) {
+export default function HeroMascot({ svg, label, className = "", maxLook = 7, fitScale = 0.96 }: HeroMascotProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -20,7 +21,14 @@ export default function HeroMascot({ svg, label, className = "", maxLook = 7 }: 
     shadow.innerHTML = `
       <style>
         :host { display: block; width: 100%; height: 100%; overflow: hidden; }
-        svg { display: block; width: 100%; height: 100%; overflow: hidden; }
+        svg {
+          display: block;
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+          transform: scale(var(--mascot-fit-scale, 0.96));
+          transform-origin: 50% 50%;
+        }
         #pupils,
         .sunny2-pupil,
         .windy3-pupil {
@@ -89,6 +97,7 @@ export default function HeroMascot({ svg, label, className = "", maxLook = 7 }: 
         {
           "--mascot-look-x": "0px",
           "--mascot-look-y": "0px",
+          "--mascot-fit-scale": fitScale,
         } as CSSProperties
       }
     />

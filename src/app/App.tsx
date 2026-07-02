@@ -8,9 +8,11 @@ import LoginPage from "./pages/LoginPage";
 import SkillBuilderPage from "./pages/SkillBuilderPage";
 import SkillDashboardPage from "./pages/SkillDashboardPage";
 import SkillOpportunitiesPage from "./pages/SkillOpportunitiesPage";
+import ProfilePage from "./pages/ProfilePage";
 import SkillTrendsRoutePage from "./pages/SkillTrendsRoutePage";
 import ResponsiveNavbar from "./ResponsiveNavbar";
 import ResponsiveFooter from "./ResponsiveFooter";
+import { currentUserProfile } from "./mock-api/profile";
 import { getRouteByPath, isHomeRouteKey, type AppRouteKey } from "./routes";
 
 const DESIGN_WIDTH  = 1180;
@@ -265,10 +267,8 @@ export default function App() {
   const router = useRouter();
   const route = useMemo(() => getRouteByPath(pathname), [pathname]);
   const page = route.key;
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.localStorage.getItem(MOCK_AUTH_STORAGE_KEY) === "true";
-  });
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [authHydrated, setAuthHydrated] = useState(false);
   const [scale, setScale] = useState(1);
   const [isDesktop, setIsDesktop] = useState(() => {
     if (typeof window === "undefined") return true;
@@ -293,11 +293,13 @@ export default function App() {
   const handleMockLogin = () => {
     window.localStorage.setItem(MOCK_AUTH_STORAGE_KEY, "true");
     setIsLoggedIn(true);
+    setAuthHydrated(true);
   };
 
   const handleMockLogout = () => {
     window.localStorage.removeItem(MOCK_AUTH_STORAGE_KEY);
     setIsLoggedIn(false);
+    setAuthHydrated(true);
   };
 
   const navigate = (path: string) => {
@@ -305,6 +307,11 @@ export default function App() {
   };
 
   /* ── Responsive scale ── */
+  useEffect(() => {
+    setIsLoggedIn(window.localStorage.getItem(MOCK_AUTH_STORAGE_KEY) === "true");
+    setAuthHydrated(true);
+  }, []);
+
   useEffect(() => {
     const update = () => setScale(Math.min(1, window.innerWidth / DESIGN_WIDTH));
     update();
@@ -615,13 +622,20 @@ export default function App() {
         {route.kind === "skill-trends" ? <SkillTrendsRoutePage /> : null}
         {route.kind === "skill-builder" ? <SkillBuilderPage /> : null}
         {route.kind === "skill-opportunities" ? <SkillOpportunitiesPage /> : null}
+        {route.kind === "profile" ? <ProfilePage profile={currentUserProfile} /> : null}
       </motion.div>
     </AnimatePresence>
   );
 
   return (
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100dvh", background: "#fff" }}>
-      {showChrome ? <ResponsiveNavbar isLoggedIn={isLoggedIn} onLogout={handleMockLogout} /> : null}
+      {showChrome ? (
+        <ResponsiveNavbar
+          isLoggedIn={authHydrated && isLoggedIn}
+          onLogout={handleMockLogout}
+          profile={currentUserProfile}
+        />
+      ) : null}
 
       {isNativeResponsivePage ? (
         <div style={{ width: "100%", overflowX: "clip", background: "#eff4f9", flex: "1 0 auto", touchAction: "pan-y" }}>

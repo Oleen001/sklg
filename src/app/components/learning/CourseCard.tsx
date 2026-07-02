@@ -13,7 +13,7 @@ export default function CourseCard({ course, variant = "course", onBookmark }: P
 
   return (
     <article
-      className={`relative shrink-0 snap-start overflow-hidden rounded-[18px] bg-white shadow-[0_8px_24px_rgba(14,36,64,0.10)] ring-1 ring-[#dbe6f0]/70 ${
+      className={`sk-press-tilt-card relative shrink-0 snap-start overflow-hidden rounded-[18px] bg-white shadow-[0_8px_24px_rgba(14,36,64,0.10)] ring-1 ring-[#dbe6f0]/70 hover:shadow-[0_6px_16px_rgba(14,36,64,0.12)] ${
         isWide
           ? "h-[220px] w-[min(480px,82vw)] sm:h-[240px] sm:w-[480px]"
           : isPoster

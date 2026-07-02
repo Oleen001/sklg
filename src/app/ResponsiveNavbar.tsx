@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { usePathname, useRouter } from "next/navigation";
+import type { ProfileSummary } from "./mock-api/profile";
 import { getRouteByPath, NAV_ROUTES } from "./routes";
 import logoutIconSvg from "@/assets/icons/logout-3-linear.svg?raw";
 
@@ -15,6 +16,7 @@ const NAV_MAX_WIDTH = 1180;
 type ResponsiveNavbarProps = {
   isLoggedIn: boolean;
   onLogout: () => void;
+  profile: ProfileSummary;
 };
 
 function LogoutIcon() {
@@ -27,7 +29,18 @@ function LogoutIcon() {
   );
 }
 
-export default function ResponsiveNavbar({ isLoggedIn, onLogout }: ResponsiveNavbarProps) {
+function ProfileAvatar({ profile, className = "" }: { profile: ProfileSummary; className?: string }) {
+  return (
+    <img
+      src={profile.avatarUrl}
+      alt={profile.avatarAlt}
+      className={`size-full rounded-full object-cover ${className}`}
+      style={{ objectPosition: "50% 28%" }}
+    />
+  );
+}
+
+export default function ResponsiveNavbar({ isLoggedIn, onLogout, profile }: ResponsiveNavbarProps) {
   const [open, setOpen] = useState(false);
   const [navHidden, setNavHidden] = useState(false);
   const lastScrollY = useRef(0);
@@ -110,6 +123,8 @@ export default function ResponsiveNavbar({ isLoggedIn, onLogout }: ResponsiveNav
     go("/");
   };
 
+  const goToProfile = () => go("/profile");
+
   return (
     <motion.header
       className="pointer-events-none fixed left-0 top-0 z-50 w-full bg-transparent px-4 pt-4 pb-2 will-change-transform"
@@ -161,16 +176,12 @@ export default function ResponsiveNavbar({ isLoggedIn, onLogout }: ResponsiveNav
             <div className="ml-4 flex items-center gap-2">
               <motion.button
                 type="button"
-                aria-label="Open profile"
-                onClick={() => go("/skill-dashboard")}
-                className="relative size-9 cursor-pointer rounded-full bg-[#2ccb6f] text-[#0e2440] transition hover:brightness-105 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[#2ccb6f]"
+                aria-label={`Open profile for ${profile.displayName}`}
+                onClick={goToProfile}
+                className="relative size-9 cursor-pointer overflow-hidden rounded-full bg-[#dceeff] shadow-[inset_2px_2px_0_0_#5098f4] ring-1 ring-white transition hover:brightness-105 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[#2ccb6f]"
                 {...pressable}
               >
-                <span className="absolute left-[10px] top-[10px] size-[5px] rounded-full bg-white" />
-                <span className="absolute left-[20px] top-[8px] size-[5px] rounded-full bg-white" />
-                <span className="absolute left-[12px] top-[11px] size-1.5 rounded-full bg-[#0e2440]" />
-                <span className="absolute left-[22px] top-[9px] size-1.5 rounded-full bg-[#0e2440]" />
-                <span className="absolute left-[12px] top-[20px] h-2 w-4 rounded-b-full border-b-2 border-[#0e2440]" />
+                <ProfileAvatar profile={profile} />
               </motion.button>
               <motion.button
                 type="button"
@@ -258,11 +269,14 @@ export default function ResponsiveNavbar({ isLoggedIn, onLogout }: ResponsiveNav
                 <div className="mt-2 grid grid-cols-[1fr_44px] gap-2">
                   <motion.button
                     type="button"
-                    onClick={() => go("/skill-dashboard")}
-                    className="flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-full bg-[#2ccb6f] px-4 text-[16px] font-semibold text-[#0e2440] transition-colors duration-200 hover:bg-[#29bd68]"
+                    onClick={goToProfile}
+                    className="flex min-h-11 cursor-pointer items-center justify-center gap-3 rounded-full bg-[#2ccb6f] px-4 text-[16px] font-semibold text-[#0e2440] transition-colors duration-200 hover:bg-[#29bd68]"
                     {...pressable}
                   >
-                    Profile
+                    <span className="size-8 overflow-hidden rounded-full bg-[#dceeff] shadow-[inset_2px_2px_0_0_#5098f4] ring-1 ring-white">
+                      <ProfileAvatar profile={profile} />
+                    </span>
+                    <span className="min-w-0 truncate">{profile.displayName}</span>
                   </motion.button>
                   <motion.button
                     type="button"

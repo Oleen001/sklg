@@ -17,6 +17,8 @@ import skillScanBeanFace from "../../assets/figma/skill-dashboard/skill-scan-bea
 import skillScanCloudFace from "../../assets/figma/skill-dashboard/skill-scan-cloud-face.svg";
 import skillScanCloudySearch from "../../assets/figma/skill-dashboard/skill-scan-cloudy-search.svg";
 import skillScanStarFace from "../../assets/figma/skill-dashboard/skill-scan-star-face.svg";
+import imgEngineeringOpportunity from "@/assets/opportunities/engineering-101-hero.png";
+import imgHackathonOpportunity from "@/assets/opportunities/hackathon-green.png";
 import imgAdsBackground from "../../imports/CareerExplore/12be04912d27d801c5eed4d993dfd2bc03db445d.png";
 import {
   getCareerDetail,
@@ -132,6 +134,24 @@ const dashboardPlaceholders: Record<Exclude<DashboardTab, "skill-scan">, { title
   },
 };
 
+const bootcampBanners = [
+  {
+    id: "engineering-101",
+    image: imgAdsBackground,
+    alt: "Engineering 101 Bootcamp banner",
+  },
+  {
+    id: "engineering-opportunity",
+    image: imgEngineeringOpportunity,
+    alt: "Engineering opportunity banner",
+  },
+  {
+    id: "hackathon-green",
+    image: imgHackathonOpportunity,
+    alt: "Hackathon bootcamp banner",
+  },
+];
+
 function MarketDot({ demand }: { demand: MarketDemand }) {
   return (
     <span
@@ -160,8 +180,30 @@ function DashboardOverview({
   activeTab: DashboardTab;
   onTabChange: (tab: DashboardTab) => void;
 }) {
+  const [activeBannerIndex, setActiveBannerIndex] = useState(0);
+  const activeBanner = bootcampBanners[activeBannerIndex];
+
+  const goToBanner = (nextIndex: number) => {
+    const normalizedIndex = (nextIndex + bootcampBanners.length) % bootcampBanners.length;
+    setActiveBannerIndex(normalizedIndex);
+  };
+
   return (
     <section className="bg-[#eff4f9] px-5 pb-8 pt-[112px] sm:px-8 lg:pb-[34px] lg:pt-[132px]">
+      <style>{`
+        @keyframes sk-scan-banner-in {
+          0% {
+            opacity: 0;
+            filter: blur(14px);
+            transform: scale(1.025);
+          }
+          100% {
+            opacity: 1;
+            filter: blur(0);
+            transform: scale(1);
+          }
+        }
+      `}</style>
       <div className="mx-auto max-w-[1068px]">
         <div
           role="tablist"
@@ -193,14 +235,16 @@ function DashboardOverview({
           <div className="min-w-0 rounded-[24px] bg-[var(--sk-color-blue-100)] p-4 sm:p-6 lg:h-[353px] lg:p-10">
             <div className="relative h-[210px] overflow-hidden rounded-[20px] sm:h-[292px] sm:rounded-[24px]">
               <img
-                src={imgAdsBackground}
-                alt="Engineering 101 Bootcamp"
-                className="h-full w-full bg-[#6a0610] object-contain lg:object-cover"
+                key={activeBanner.id}
+                src={activeBanner.image}
+                alt={activeBanner.alt}
+                className="h-full w-full bg-[#6a0610] object-contain [animation:sk-scan-banner-in_520ms_cubic-bezier(0.16,1,0.3,1)_both] lg:object-cover"
               />
               <button
                 type="button"
                 aria-label="Previous bootcamp banner"
                 className="absolute left-3 top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[var(--sk-color-navy-900)] shadow-[0_0_10px_rgba(0,0,0,0.10)] transition hover:bg-[#f7fbff] sm:flex lg:-left-16"
+                onClick={() => goToBanner(activeBannerIndex - 1)}
               >
                 <ChevronDown className="size-7 rotate-90" aria-hidden />
               </button>
@@ -208,15 +252,26 @@ function DashboardOverview({
                 type="button"
                 aria-label="Next bootcamp banner"
                 className="absolute right-3 top-1/2 hidden size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[var(--sk-color-navy-900)] shadow-[0_0_10px_rgba(0,0,0,0.10)] transition hover:bg-[#f7fbff] sm:flex lg:-right-16"
+                onClick={() => goToBanner(activeBannerIndex + 1)}
               >
                 <ChevronDown className="size-7 -rotate-90" aria-hidden />
               </button>
             </div>
             <div className="mt-3 flex justify-center gap-1">
-              <span className="h-2 w-10 rounded-full bg-[var(--sk-color-blue-600)]" aria-hidden />
-              <span className="h-2 w-6 rounded-full bg-white" aria-hidden />
-              <span className="h-2 w-6 rounded-full bg-white" aria-hidden />
-              <span className="h-2 w-6 rounded-full bg-white" aria-hidden />
+              {bootcampBanners.map((banner, index) => (
+                <button
+                  key={banner.id}
+                  type="button"
+                  aria-label={`Show bootcamp banner ${index + 1}`}
+                  aria-current={activeBannerIndex === index ? "true" : undefined}
+                  className={`h-2 rounded-full transition-all ${
+                    activeBannerIndex === index
+                      ? "w-10 bg-[var(--sk-color-blue-600)]"
+                      : "w-6 bg-white hover:bg-[#d7ecff]"
+                  }`}
+                  onClick={() => goToBanner(index)}
+                />
+              ))}
             </div>
           </div>
 

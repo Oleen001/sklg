@@ -21,7 +21,7 @@ export default function PopularOpportunities({ items }: Props) {
 
       <div className="divide-y divide-[var(--sk-color-border)]">
         {items.map((item) => (
-          <article key={item.id} className="py-4 first:pt-0 last:pb-0">
+          <article key={item.id} className="rounded-[12px] px-2 py-4 first:pt-0 last:pb-0 hover:bg-[var(--sk-color-blue-50)]">
             <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="text-[12px] font-bold leading-5 text-[var(--sk-color-blue-600)]">{item.categoryLabel}</span>
               <span className="text-[12px] leading-5 text-[var(--sk-color-gray-500)]">{item.timestamp}</span>
