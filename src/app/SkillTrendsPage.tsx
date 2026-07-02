@@ -339,8 +339,56 @@ function BackgroundMagnifier() {
   );
 }
 
-function useIndustryParallax() {
+function SkillTrendsSkeleton() {
+  const cards = Array.from({ length: 9 });
+
+  return (
+    <div className="min-h-[1498px] w-full overflow-hidden bg-[#dceeff] text-[#0e2440]">
+      <section className="relative h-[440px] overflow-hidden bg-[#1560b3] px-14 pt-6">
+        <div className="mx-auto h-20 max-w-[1068px] rounded-[40px] bg-white/85 shadow-[0_18px_45px_rgba(14,36,64,0.14)]">
+          <div className="flex h-full items-center justify-between px-16">
+            <div className="h-9 w-44 animate-pulse rounded-full bg-[#dceeff]" />
+            <div className="h-5 w-36 animate-pulse rounded-full bg-[#c2dcf7]" />
+          </div>
+        </div>
+
+        <div className="mx-auto mt-16 grid max-w-[1068px] grid-cols-[1fr_420px] gap-8">
+          <div className="space-y-5">
+            <div className="h-16 w-[520px] animate-pulse rounded-[22px] bg-white/26" />
+            <div className="h-5 w-[620px] animate-pulse rounded-full bg-white/22" />
+            <div className="h-5 w-[500px] animate-pulse rounded-full bg-white/18" />
+            <div className="mt-8 h-12 w-36 animate-pulse rounded-full bg-white/75" />
+          </div>
+          <div className="h-56 animate-pulse rounded-[40px] bg-[#b9dbff]/80 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.35)]" />
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-[1068px] grid-cols-4 gap-5 px-0 py-8">
+        <div className="col-span-2 h-28 animate-pulse rounded-[24px] bg-white/80" />
+        <div className="h-28 animate-pulse rounded-[24px] bg-white/72" />
+        <div className="h-28 animate-pulse rounded-[24px] bg-white/72" />
+        {cards.map((_, index) => (
+          <div
+            key={index}
+            className={[
+              "animate-pulse rounded-[24px] bg-white/80",
+              index === 1 || index === 5 ? "col-span-2 h-[280px]" : "h-[178px]",
+            ].join(" ")}
+          >
+            <div className="m-7 h-8 w-3/5 rounded-full bg-[#cfe6fc]" />
+            <div className="mx-7 mt-4 h-5 w-2/5 rounded-full bg-[#d9ecff]" />
+            <div className="mx-7 mt-12 h-24 rounded-[22px] bg-[#b8dcff]" />
+          </div>
+        ))}
+      </section>
+    </div>
+  );
+}
+
+function useIndustryParallax(enabled: boolean) {
   useEffect(() => {
+    if (!enabled) return;
+
     type ParallaxEntry = { img: HTMLElement; factor: number; flip: boolean };
     const items: ParallaxEntry[] = [];
 
@@ -399,13 +447,18 @@ function useIndustryParallax() {
       if (raf !== 0) cancelAnimationFrame(raf);
       items.forEach(({ img }) => { img.style.translate = ""; });
     };
-  }, []);
+  }, [enabled]);
 }
 
 export default function SkillTrendsPage() {
   const [isDesktop, setIsDesktop] = useState(getIsDesktop);
+  const [hasMounted, setHasMounted] = useState(false);
 
-  useIndustryParallax();
+  useIndustryParallax(hasMounted && isDesktop);
+
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
 
   useEffect(() => {
     const media = window.matchMedia(DESKTOP_QUERY);
@@ -416,10 +469,7 @@ export default function SkillTrendsPage() {
   }, []);
 
   useEffect(() => {
-    const styleEl = document.createElement("style");
-    styleEl.id = "st-anims";
-    styleEl.textContent = STYLES;
-    document.head.appendChild(styleEl);
+    if (!hasMounted || !isDesktop) return;
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -481,14 +531,15 @@ export default function SkillTrendsPage() {
     return () => {
       clearTimeout(tid);
       io.disconnect();
-      styleEl.remove();
     };
-  }, []);
+  }, [hasMounted, isDesktop]);
 
   if (!isDesktop) return <SkillTrendsMobilePage />;
+  if (!hasMounted) return <SkillTrendsSkeleton />;
 
   return (
     <div id="st-root" style={{ width: "100%" }}>
+      <style id="st-anims">{STYLES}</style>
       <BackgroundMagnifier />
       <HeroMascot svg={cloudy2IdleSvg} label="Cloudy" className="st-cloudy-hero" maxLook={9} />
       <SkillTrends />

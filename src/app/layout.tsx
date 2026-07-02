@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "@/styles/index.css";
+import App from "./App";
 
 export const metadata: Metadata = {
   title: "Skillogy",
@@ -7,13 +8,15 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
+  children: _children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html lang="th">
-      <body>{children}</body>
+      <body>
+        <App />
+      </body>
     </html>
   );
 }

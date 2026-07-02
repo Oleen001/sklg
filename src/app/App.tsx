@@ -255,7 +255,7 @@ const LEGACY_BACKGROUND_BANDS = {
   ],
   "skill-trends": [
     { top: 0, height: 440, color: "#1560b3" },
-    { top: 440, height: 914, color: "#dceeff" },
+    { top: 440, height: TRENDS_HEIGHT - 440, color: "#dceeff" },
   ],
 } satisfies Partial<Record<Page, readonly { top: number; height: number; color: string }[]>>;
 
