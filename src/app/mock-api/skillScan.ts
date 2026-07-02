@@ -1,5 +1,16 @@
+import generatedCover1 from "@/assets/generated/skill-builder-covers/cover-1.png";
+import generatedCover2 from "@/assets/generated/skill-builder-covers/cover-2.png";
+import generatedCover3 from "@/assets/generated/skill-builder-covers/cover-3.png";
+import generatedCover4 from "@/assets/generated/skill-builder-covers/cover-4.png";
+import generatedCover5 from "@/assets/generated/skill-builder-covers/cover-5.png";
+import generatedCover6 from "@/assets/generated/skill-builder-covers/cover-6.png";
+import generatedCover7 from "@/assets/generated/skill-builder-covers/cover-7.png";
+import generatedCover8 from "@/assets/generated/skill-builder-covers/cover-8.png";
+
 export type MarketDemand = "highest" | "high" | "moderate";
 export type MatchTier = "closest" | "near" | "explore";
+export type SkillClusterType = "core" | "career" | "expert";
+export type SkillCareerCourseType = "online" | "university";
 
 export type SkillScanArchetype = {
   id: string;
@@ -31,6 +42,54 @@ export type GoalResponse = {
   ok: boolean;
   careerId: string;
   message: string;
+};
+
+export type SkillCareerCourse = {
+  id: string;
+  title: string;
+  provider: string;
+  instructor?: string;
+  type: SkillCareerCourseType;
+  level: "easy" | "medium" | "hard";
+  duration: string;
+  imageUrl: string;
+  targetUrl: string;
+};
+
+export type SkillMatchSkill = {
+  id: string;
+  title: string;
+  progress: number;
+  isCompleted: boolean;
+};
+
+export type SkillMatchCluster = {
+  id: string;
+  title: string;
+  type: SkillClusterType;
+  progress: number;
+  skills: SkillMatchSkill[];
+};
+
+export type SkillCareerMatchResponse = {
+  career: {
+    id: string;
+    title: string;
+    subtitle: string;
+    readiness: number;
+    updatedAt: string;
+    insight: string;
+    insightDetail: string;
+  };
+  recommendedCourses: SkillCareerCourse[];
+  clusters: SkillMatchCluster[];
+  courseRecommendationsBySkill: Record<
+    string,
+    {
+      online: SkillCareerCourse[];
+      university: SkillCareerCourse[];
+    }
+  >;
 };
 
 const archetypes: SkillScanArchetype[] = [
@@ -368,6 +427,240 @@ const careersByArchetype: Record<string, SkillScanCareer[]> = {
   ],
 };
 
+const matchCourses: Record<string, SkillCareerCourse> = {
+  pythonStats: {
+    id: "python-statistics",
+    title: "สถิติสำหรับการวิเคราะห์ข้อมูลด้วยภาษา Python",
+    provider: "Skillogy Online",
+    type: "online",
+    level: "hard",
+    duration: "2 ชม. 30 นาที",
+    imageUrl: generatedCover1,
+    targetUrl: "/learning/courses/python-statistics",
+  },
+  machineLearning: {
+    id: "machine-learning-foundation",
+    title: "เจาะลึกสถิติเพื่อวิทยาศาสตร์ข้อมูลและ Machine Learning",
+    provider: "Skillogy Online",
+    type: "online",
+    level: "easy",
+    duration: "2 ชม. 30 นาที",
+    imageUrl: generatedCover2,
+    targetUrl: "/learning/courses/machine-learning-foundation",
+  },
+  claudeCowork: {
+    id: "claude-cowork-skills",
+    title: "Claude Cowork: เสริมประสิทธิภาพ AI ด้วย Skills",
+    provider: "Skillogy Online",
+    instructor: "ธนศักดิ์ เกียรติเจริญ",
+    type: "online",
+    level: "medium",
+    duration: "1 ชม. 45 นาที",
+    imageUrl: generatedCover7,
+    targetUrl: "/learning/courses/claude-cowork-skills",
+  },
+  dataInsight: {
+    id: "data-analysis-insight",
+    title: "Data Analysis: สกัดอินไซต์เพื่อสร้างสรรค์ไอเดีย",
+    provider: "Skillogy Online",
+    instructor: "ดร. อังคณา ปิ่นเวหา",
+    type: "online",
+    level: "medium",
+    duration: "2 ชม.",
+    imageUrl: generatedCover8,
+    targetUrl: "/learning/courses/data-analysis-insight",
+  },
+  softwareEngineering: {
+    id: "ai-for-software-engineering",
+    title: "AI สำหรับวิศวกรรมซอฟต์แวร์",
+    provider: "TechUp",
+    type: "online",
+    level: "medium",
+    duration: "3 ชม.",
+    imageUrl: generatedCover3,
+    targetUrl: "/learning/courses/ai-for-software-engineering",
+  },
+  promptStudio: {
+    id: "prompt-studio",
+    title: "Prompt Studio สำหรับงานวิเคราะห์และออกแบบระบบ",
+    provider: "Skillogy Online",
+    type: "online",
+    level: "easy",
+    duration: "1 ชม. 20 นาที",
+    imageUrl: generatedCover4,
+    targetUrl: "/learning/courses/prompt-studio",
+  },
+  chulaAi: {
+    id: "chula-ai-engineering",
+    title: "AI Engineering Studio",
+    provider: "Chula Engineering",
+    type: "university",
+    level: "hard",
+    duration: "8 สัปดาห์",
+    imageUrl: generatedCover5,
+    targetUrl: "/learning/courses/chula-ai-engineering",
+  },
+  dataGovernance: {
+    id: "data-governance-lab",
+    title: "Data Governance and Responsible AI Lab",
+    provider: "มหาวิทยาลัยพันธมิตร",
+    type: "university",
+    level: "medium",
+    duration: "6 สัปดาห์",
+    imageUrl: generatedCover6,
+    targetUrl: "/learning/courses/data-governance-lab",
+  },
+};
+
+const skillCareerMatch: SkillCareerMatchResponse = {
+  career: {
+    id: "ai-prompt-engineer",
+    title: "วิศวกรพรอมต์ AI",
+    subtitle: "AI Prompt Engineer",
+    readiness: 68,
+    updatedAt: "12 ม.ค. 2568",
+    insight: "คุณมีทักษะ Python Programming และ Statistical Analysis ที่ตรงสาย วิศวกร AI โดยตรง",
+    insightDetail: "ซึ่งสามารถนำมาต่อยอดงาน Data Pipeline, Prompt Workflow และการประเมินผลโมเดลได้ทันที",
+  },
+  recommendedCourses: [
+    matchCourses.pythonStats,
+    matchCourses.machineLearning,
+    matchCourses.claudeCowork,
+  ],
+  clusters: [
+    {
+      id: "data-modeling",
+      title: "การจัดการและการจำลองข้อมูล",
+      type: "core",
+      progress: 59,
+      skills: [
+        { id: "data-model-design", title: "การออกแบบข้อมูล", progress: 0, isCompleted: false },
+        { id: "data-category", title: "การจัดหมวดหมู่ข้อมูล", progress: 0, isCompleted: false },
+        { id: "data-pattern", title: "การออกแบบฐานข้อมูล", progress: 30, isCompleted: false },
+        { id: "data-method", title: "การจัดการข้อมูลวิธีคิด", progress: 44, isCompleted: false },
+        { id: "digital-data", title: "การจัดการข้อมูลดิจิทัล", progress: 65, isCompleted: false },
+        { id: "data-engineering", title: "วิศวกรรมข้อมูล", progress: 70, isCompleted: false },
+        { id: "data-structure", title: "ข้อมูลในโครงสร้าง", progress: 70, isCompleted: false },
+        { id: "data-quality", title: "การคุมคุณภาพข้อมูล", progress: 80, isCompleted: false },
+        { id: "data-science", title: "วิทยาการข้อมูล", progress: 90, isCompleted: false },
+        { id: "data-set", title: "ชุดข้อมูล", progress: 100, isCompleted: true },
+        { id: "data-visualization", title: "วิทยาการข้อมูล", progress: 100, isCompleted: true },
+      ],
+    },
+    {
+      id: "analyst-developer",
+      title: "พื้นฐานการวิเคราะห์และความต้องการ",
+      type: "core",
+      progress: 42,
+      skills: [
+        { id: "requirement-analysis", title: "Requirement Analysis", progress: 55, isCompleted: false },
+        { id: "stakeholder-map", title: "Stakeholder Mapping", progress: 35, isCompleted: false },
+        { id: "business-problem", title: "Business Problem Framing", progress: 40, isCompleted: false },
+      ],
+    },
+    {
+      id: "ict-programming",
+      title: "พื้นฐาน ICT และการเขียนโปรแกรม",
+      type: "career",
+      progress: 0,
+      skills: [
+        { id: "python-programming", title: "Python Programming", progress: 0, isCompleted: false },
+        { id: "api-integration", title: "API Integration", progress: 0, isCompleted: false },
+      ],
+    },
+    {
+      id: "business-system",
+      title: "ระบบนิเวศธุรกิจและการเปลี่ยนข้อมูลเป็นภาพ",
+      type: "career",
+      progress: 11,
+      skills: [
+        { id: "data-storytelling", title: "Data Storytelling", progress: 20, isCompleted: false },
+        { id: "dashboard-design", title: "Dashboard Design", progress: 10, isCompleted: false },
+        { id: "business-model", title: "Business Model", progress: 5, isCompleted: false },
+      ],
+    },
+    {
+      id: "ai-semantic",
+      title: "ปัญญาประดิษฐ์และระบบอัจฉริยะ",
+      type: "expert",
+      progress: 100,
+      skills: [
+        { id: "prompt-engineering", title: "Prompt Engineering", progress: 100, isCompleted: true },
+        { id: "ai-evaluation", title: "AI Evaluation", progress: 100, isCompleted: true },
+      ],
+    },
+    {
+      id: "advanced-data",
+      title: "การวิเคราะห์ข้อมูลขั้นสูงและนวัตกรรม",
+      type: "career",
+      progress: 11,
+      skills: [
+        { id: "statistical-analysis", title: "Statistical Analysis", progress: 30, isCompleted: false },
+        { id: "experiment-design", title: "Experiment Design", progress: 0, isCompleted: false },
+        { id: "model-metrics", title: "Model Metrics", progress: 5, isCompleted: false },
+      ],
+    },
+    {
+      id: "semantic-data",
+      title: "ระบบความรู้และข้อมูลเชิงความหมาย",
+      type: "career",
+      progress: 0,
+      skills: [
+        { id: "knowledge-graph", title: "Knowledge Graph", progress: 0, isCompleted: false },
+      ],
+    },
+    {
+      id: "software-system",
+      title: "วิศวกรรมซอฟต์แวร์และระบบ",
+      type: "career",
+      progress: 16,
+      skills: [
+        { id: "software-architecture", title: "Software Architecture", progress: 16, isCompleted: false },
+      ],
+    },
+    {
+      id: "cloud-infrastructure",
+      title: "ระบบคลาวด์และโครงสร้างพื้นฐานซอฟต์แวร์",
+      type: "expert",
+      progress: 11,
+      skills: [
+        { id: "cloud-deployment", title: "Cloud Deployment", progress: 11, isCompleted: false },
+      ],
+    },
+    {
+      id: "data-safety",
+      title: "การกำกับดูแลและความปลอดภัยของข้อมูล",
+      type: "expert",
+      progress: 0,
+      skills: [
+        { id: "data-privacy", title: "Data Privacy", progress: 0, isCompleted: false },
+        { id: "responsible-ai", title: "Responsible AI", progress: 0, isCompleted: false },
+      ],
+    },
+  ],
+  courseRecommendationsBySkill: {},
+};
+
+skillCareerMatch.clusters.flatMap((cluster) => cluster.skills).forEach((skill, index) => {
+  const onlineRotation = [
+    matchCourses.pythonStats,
+    matchCourses.machineLearning,
+    matchCourses.claudeCowork,
+    matchCourses.dataInsight,
+    matchCourses.softwareEngineering,
+    matchCourses.promptStudio,
+  ];
+  skillCareerMatch.courseRecommendationsBySkill[skill.id] = {
+    online: [
+      onlineRotation[index % onlineRotation.length],
+      onlineRotation[(index + 2) % onlineRotation.length],
+    ],
+    university: [
+      index % 2 === 0 ? matchCourses.chulaAi : matchCourses.dataGovernance,
+    ],
+  };
+});
+
 const delay = (ms = 220) => new Promise((resolve) => window.setTimeout(resolve, ms));
 
 export async function getSkillScanArchetypes() {
@@ -396,4 +689,9 @@ export async function setCareerGoal(careerId: string): Promise<GoalResponse> {
     careerId,
     message: "ตั้งเป้าหมายอาชีพแล้ว",
   };
+}
+
+export async function getSkillCareerMatch(): Promise<SkillCareerMatchResponse> {
+  await delay(180);
+  return skillCareerMatch;
 }

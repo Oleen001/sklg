@@ -56,7 +56,7 @@ export default function SkillBuilderPage() {
         <div className="h-[320px] animate-pulse rounded-[24px] bg-white/70" />
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {Array.from({ length: 8 }).map((_, index) => (
-            <div key={index} className="h-[288px] animate-pulse rounded-[18px] bg-white/80" />
+            <div key={index} className="h-[304px] animate-pulse rounded-[18px] bg-white/80" />
           ))}
         </div>
       </main>
@@ -67,7 +67,7 @@ export default function SkillBuilderPage() {
     <main className="w-full bg-[#eff4f9] text-[#05101f]">
       <LearningHeroCarousel banners={home.banners} />
 
-      <div className="mx-auto max-w-[1180px] px-5 py-8 sm:px-8 lg:px-14 lg:py-10">
+      <div className="mx-auto max-w-[1180px] px-5 py-8 sm:px-8 lg:px-14 lg:py-12">
         <div className="relative z-20">
           <LearningSearchBar value={query} onChange={setQuery} />
           {searchResults.length > 0 ? (
@@ -87,8 +87,8 @@ export default function SkillBuilderPage() {
           ) : null}
         </div>
 
-        <section className="mt-10">
-          <div className="mb-5 flex h-9 items-center gap-2">
+        <section className="mt-12">
+          <div className="mb-6 flex h-9 items-center gap-2">
             <h2 className="text-[24px] font-bold leading-9">คอร์สของฉัน</h2>
             <button
               type="button"
@@ -114,7 +114,7 @@ export default function SkillBuilderPage() {
               <span className="absolute left-1/2 top-1/2 h-2 w-7 -translate-x-3 translate-y-3 rounded-b-full border-b-[3px] border-[#1b3a5c]" />
             </div>
             <p className="mb-5 w-fit rounded-full bg-[#ffde33] px-5 py-2 text-[14px] font-semibold text-[#1b3a5c] lg:absolute lg:left-[120px] lg:top-[24px] lg:mb-0">
-              Lorem ipsum dolor sit amet consectetur. Malesuada commod
+              คัดมาให้ตรงกับโปรไฟล์ทักษะของคุณ
             </p>
             <h2 className="text-[28px] font-bold leading-[1.45] sm:text-[32px]">{home.aiSuggestion.title}</h2>
             <p className="mt-4 text-[16px] leading-[1.7] text-white/90">{home.aiSuggestion.description}</p>

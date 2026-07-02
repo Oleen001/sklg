@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import HeroMascot from "../components/HeroMascot";
 import cloudy2IdleSvg from "@/assets/characters/cloudy/cloudy2-idle.svg?raw";
@@ -9,7 +11,12 @@ import riasecESvg from "@/assets/riasec/e-lottie-v2.svg?raw";
 import riasecISvg from "@/assets/riasec/i-lottie-v2.svg?raw";
 import riasecRSvg from "@/assets/riasec/r-lottie-v2.svg?raw";
 import riasecSSvg from "@/assets/riasec/s-lottie-v2.svg?raw";
-import imgCardsSheet from "@/imports/Homepage/a3c88a55fc72924c2d523c14a1d955ffd93d87e0.png";
+import discoverCardCharacter from "@/assets/home-cards/cloudy-card.svg";
+import discoverCardIcon from "@/assets/home-cards/compass-1.svg";
+import planCardIcon from "@/assets/home-cards/map-1.svg";
+import planCardCharacter from "@/assets/home-cards/starry-card.svg";
+import upskillCardCharacter from "@/assets/home-cards/sunny-card.svg";
+import upskillCardIcon from "@/assets/home-cards/rocket-1.svg";
 import imgCareer from "@/imports/Homepage/fb00664fb29d5df01ed6086676d13d0df96965c5.png";
 import imgBootcamp from "@/imports/Homepage/12be04912d27d801c5eed4d993dfd2bc03db445d.png";
 import imgCertificate from "@/imports/Homepage/33fbdc33ffd551e1b3c4d0b4c11618dad9f622fe.png";
@@ -22,23 +29,35 @@ const steps = [
   {
     title: "Discover",
     body: "ค้นหาตัวเองว่า\nเหมาะกับอาชีพไหน",
-    color: "bg-[#2b7db8]",
+    helper: "รู้จักตัวเองให้ชัดขึ้น\nกับน้อง Cloudy",
+    color: "#2B7DB8",
+    backColor: "#247DB4",
     text: "text-white",
-    iconLeft: "-523.68%",
+    icon: discoverCardIcon,
+    character: discoverCardCharacter,
+    characterClassName: "left-[-9px] top-[206px] h-[292px] w-[312px]",
   },
   {
     title: "Plan",
-    body: "วิเคราะห์ skill gap\nวางแผน learning path",
-    color: "bg-[#ffe040]",
+    body: "วิเคราะห์ Skill gap\nวางแผน learning path",
+    helper: "วางแผนเส้นทาง\nต่อไปกับ Starry",
+    color: "#FFE040",
+    backColor: "#DCC72B",
     text: "text-[#1b3a5c]",
-    iconLeft: "-162.5%",
+    icon: planCardIcon,
+    character: planCardCharacter,
+    characterClassName: "left-[-106px] top-[98px] h-[455px] w-[455px]",
   },
   {
     title: "Upskill",
     body: "เรียน course + Bootcamp\nปิด gap ทีละ skill",
-    color: "bg-[#db475f]",
+    helper: "เติมสกิลให้พร้อม\nไปต่อกับ Sunny",
+    color: "#DB475F",
+    backColor: "#B73A50",
     text: "text-white",
-    iconLeft: "-335.24%",
+    icon: upskillCardIcon,
+    character: upskillCardCharacter,
+    characterClassName: "left-[-98px] top-[120px] h-[491px] w-[491px]",
   },
 ];
 
@@ -132,24 +151,36 @@ function SpeechBubble({ className, children }: { className: string; children: st
   );
 }
 
-function WorkCard({ step, index }: { step: (typeof steps)[number]; index: number }) {
+function WorkCard({ step }: { step: (typeof steps)[number] }) {
   return (
-    <article className={`${step.color} ${step.text} relative flex h-[342px] flex-col items-center justify-end overflow-hidden rounded-[12px] p-7 text-center shadow-[var(--sk-shadow-sm)]`}>
-      <div className="absolute top-10 h-[137px] w-[139px] overflow-hidden bg-[#f5efe7]">
+    <label
+      aria-label={`${step.title}: ${step.helper}`}
+      className={`${step.text} group relative mx-auto block h-[342px] w-full max-w-[294px] cursor-pointer overflow-hidden rounded-[16px] text-center shadow-[var(--sk-shadow-sm)] outline-none transition-transform hover:-translate-y-1 focus-within:ring-4 focus-within:ring-[#0d6ec8]/25`}
+      style={{ backgroundColor: step.color }}
+    >
+      <input className="peer sr-only" type="checkbox" />
+      <div className="absolute inset-0 flex translate-y-0 scale-100 flex-col items-center gap-4 pt-10 opacity-100 transition duration-[420ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:opacity-0 group-hover:-translate-y-4 group-hover:scale-[0.96] peer-checked:opacity-0 peer-checked:-translate-y-4 peer-checked:scale-[0.96]">
+        <img src={step.icon} alt="" className="h-[150px] w-[150px] object-contain" />
+        <div className="flex w-full flex-col items-center gap-1">
+          <h3 className="text-[32px] font-semibold leading-9">{step.title}</h3>
+          <p className="whitespace-pre-line text-[20px] leading-normal">{step.body}</p>
+        </div>
+        <span aria-hidden className="absolute bottom-[-8px] left-1/2 size-2 -translate-x-1/2 rounded-full opacity-35" style={{ backgroundColor: step.backColor }} />
+      </div>
+      <div className="pointer-events-none absolute inset-0 translate-y-6 opacity-0 transition duration-[460ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:opacity-100 peer-checked:translate-y-0 peer-checked:opacity-100">
+        <p className="absolute left-0 right-0 top-[72px] z-[3] whitespace-pre-line px-6 text-center text-[30px] font-normal leading-[1.35] tracking-normal">{step.helper}</p>
+        <span
+          aria-hidden
+          className="absolute bottom-[-375px] left-1/2 z-[1] size-[740px] -translate-x-1/2 translate-y-24 scale-[0.04] rounded-full transition-transform duration-[620ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:scale-100 peer-checked:translate-y-0 peer-checked:scale-100"
+          style={{ backgroundColor: step.backColor }}
+        />
         <img
-          src={imgCardsSheet}
+          src={step.character}
           alt=""
-          className="absolute h-[412.41%] max-w-none top-[-110.95%] w-[958.03%]"
-          style={{ left: step.iconLeft }}
+          className={`absolute z-[2] max-w-none translate-y-32 scale-[0.82] origin-bottom opacity-0 transition duration-[680ms] ease-[cubic-bezier(0.2,1.35,0.28,1)] group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 peer-checked:translate-y-0 peer-checked:scale-100 peer-checked:opacity-100 ${step.characterClassName}`}
         />
       </div>
-      <h3 className="text-[32px] font-bold leading-none">{step.title}</h3>
-      <p className="mt-4 whitespace-pre-line text-[20px] leading-[1.45]">{step.body}</p>
-      <span aria-hidden className="absolute bottom-4 right-4 text-[#0e2440]/55">
-        ↺
-      </span>
-      {index === 2 ? <DecorativeStar className="right-20 top-16 size-6" color="#ffe040" /> : null}
-    </article>
+    </label>
   );
 }
 
@@ -243,8 +274,8 @@ function WorksSection() {
         <SpeechBubble className="left-[574px] top-[53px] hidden lg:block">เริ่มจากตรงไหนก็ได้ จะมีฉันคอยไกด์ตลอด</SpeechBubble>
         <HeroMascot svg={cloudy2IdleSvg} label="Cloudy guide" className="left-[901px] top-[63px] hidden h-[140px] w-[183px] lg:block" maxLook={5} />
         <div className="mt-10 grid gap-8 lg:grid-cols-[294px_294px_294px] lg:gap-[41px]">
-          {steps.map((step, index) => (
-            <WorkCard key={step.title} step={step} index={index} />
+          {steps.map((step) => (
+            <WorkCard key={step.title} step={step} />
           ))}
         </div>
       </div>

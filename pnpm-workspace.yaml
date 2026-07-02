@@ -11,6 +11,8 @@ supportedArchitectures:
     - glibc
 # Refuse packages published < 7 days ago, matching the root pnpm-workspace.yaml.
 minimumReleaseAge: 10080
+overrides:
+  postcss: 8.5.15
 allowBuilds:
   '@tailwindcss/oxide': true
   esbuild: true

@@ -1,3 +1,4 @@
+import { useState, type CSSProperties } from "react";
 import svgPaths from "./svg-7g4ywnxoxa";
 import imgScreenshot25690625At0916212 from "./a3c88a55fc72924c2d523c14a1d955ffd93d87e0.png";
 import imgScreenshot25690625At916213 from "./fbc8677ca9dc2198c7e3452c8145ab7de9dc1fd0.png";
@@ -9,6 +10,12 @@ import ShadowSvg from "@/app/components/ShadowSvg";
 import cloudy2IdleSvg from "@/assets/characters/cloudy/cloudy2-idle.svg?raw";
 import sunny2IdleSvg from "@/assets/characters/sunny/sunny2-idle.svg?raw";
 import windy3IdleSvg from "@/assets/characters/windy/windy3-idle.svg?raw";
+import discoverCardCharacter from "@/assets/home-cards/cloudy-card.svg";
+import discoverCardIcon from "@/assets/home-cards/compass-1.svg";
+import planCardIcon from "@/assets/home-cards/map-1.svg";
+import planCardCharacter from "@/assets/home-cards/starry-card.svg";
+import upskillCardCharacter from "@/assets/home-cards/sunny-card.svg";
+import upskillCardIcon from "@/assets/home-cards/rocket-1.svg";
 import riasecASvg from "@/assets/riasec/a-lottie-v2.svg?raw";
 import riasecCSvg from "@/assets/riasec/c-lottie-v2.svg?raw";
 import riasecESvg from "@/assets/riasec/e-lottie-v2.svg?raw";
@@ -437,66 +444,133 @@ function NavbarContent() {
   );
 }
 
+type SkillogyWorkCardProps = {
+  className: string;
+  title: string;
+  body: string[];
+  helper: string;
+  icon: string;
+  character: string;
+  textColor: string;
+  background: string;
+  circleColor: string;
+  characterClassName: string;
+  name: string;
+};
+
+function SkillogyWorkCard({
+  className,
+  title,
+  body,
+  helper,
+  icon,
+  character,
+  textColor,
+  background,
+  circleColor,
+  characterClassName,
+  name,
+}: SkillogyWorkCardProps) {
+  const [active, setActive] = useState(false);
+
+  const toggleOnTouch = () => {
+    if (window.matchMedia("(hover: none)").matches) {
+      setActive((current) => !current);
+    }
+  };
+
+  return (
+    <button
+      aria-label={`${title}: ${helper}`}
+      aria-pressed={active}
+      className={`sk-work-card ${className}`}
+      data-active={active ? "true" : "false"}
+      data-name={name}
+      onClick={toggleOnTouch}
+      style={
+        {
+          "--work-card-bg": background,
+          "--work-card-circle": circleColor,
+          "--work-card-text": textColor,
+        } as CSSProperties
+      }
+      type="button"
+    >
+      <div className="sk-work-card-face sk-work-card-front">
+        <img alt="" className="sk-work-card-icon" src={icon} />
+        <div className="sk-work-card-copy">
+          <p className="sk-work-card-title">{title}</p>
+          <p className="sk-work-card-body">
+            {body.map((line, index) => (
+              <span key={line}>
+                {line}
+                {index < body.length - 1 ? <br /> : null}
+              </span>
+            ))}
+          </p>
+        </div>
+        <span className="sk-work-card-peek" />
+      </div>
+      <div aria-hidden className="sk-work-card-face sk-work-card-back">
+        <p className="sk-work-card-helper">{helper}</p>
+        <span className="sk-work-card-circle" />
+        <img alt="" className={`sk-work-card-character ${characterClassName}`} src={character} />
+      </div>
+    </button>
+  );
+}
+
 function DiscoverSection() {
   return (
-    <div className="absolute contents left-[108px] top-[793px]" data-name="Discover Section">
-      <div className="absolute bg-[#2b7db8] h-[342px] left-[108px] rounded-[12px] top-[793px] w-[294px]" data-name="Discover Background" />
-      <div className="-translate-x-1/2 -translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Noto_Sans_Thai:Regular',sans-serif] font-normal justify-center leading-[0] left-[calc(50%-335px)] text-[20px] text-center text-white top-[1067px] whitespace-nowrap" style={{ fontVariationSettings: '"wdth" 100' }}>
-        <p className="leading-[normal]">
-          ค้นหาตัวเองว่า
-          <br aria-hidden />
-          เหมาะกับอาชีพไหน
-        </p>
-      </div>
-      <div className="-translate-x-1/2 -translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Noto_Sans_Thai:SemiBold','Noto_Sans:SemiBold',sans-serif] font-semibold justify-center leading-[0] left-[calc(50%-335px)] text-[32px] text-center text-white top-[1010px] whitespace-nowrap" style={{ fontVariationSettings: '"wdth" 100' }}>
-        <p className="leading-[normal]">Discover</p>
-      </div>
-      <div className="absolute h-[137px] left-[186px] top-[831px] w-[139px]" data-name="Screenshot 2569-06-25 at 09.16.21 2">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[412.41%] left-[-523.68%] max-w-none top-[-110.95%] w-[958.03%]" src={imgScreenshot25690625At0916212} />
-        </div>
-      </div>
-    </div>
+    <SkillogyWorkCard
+      background="#2b7db8"
+      body={["ค้นหาตัวเองว่า", "เหมาะกับอาชีพไหน"]}
+      character={discoverCardCharacter}
+      characterClassName="sk-work-card-character-cloudy"
+      circleColor="#247db4"
+      className="left-[108px] top-[793px] h-[342px] w-[294px]"
+      helper={"รู้จักตัวเองให้ชัดขึ้น\nกับน้อง Cloudy"}
+      icon={discoverCardIcon}
+      name="Discover Background"
+      textColor="#ffffff"
+      title="Discover"
+    />
   );
 }
 
 function PlanSection() {
   return (
-    <div className="-translate-x-1/2 absolute contents left-1/2 top-[793px]" data-name="Plan Section">
-      <div className="absolute bg-[#ffe040] h-[342px] left-[443px] rounded-[12px] top-[793px] w-[294px]" data-name="Plan Background" />
-      <div className="-translate-x-1/2 -translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Noto_Sans_Thai:Regular','Noto_Sans:Regular',sans-serif] font-normal justify-center leading-[0] left-[calc(50%+0.5px)] text-[#1b3a5c] text-[20px] text-center top-[1067px] whitespace-nowrap" style={{ fontVariationSettings: '"wdth" 100' }}>
-        <p className="leading-[normal] mb-0">วิเคราะห์ skill gap</p>
-        <p className="leading-[normal]">วางแผน learning path</p>
-      </div>
-      <div className="-translate-x-1/2 -translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Noto_Sans_Thai:SemiBold','Noto_Sans:SemiBold',sans-serif] font-semibold justify-center leading-[0] left-[calc(50%+0.5px)] text-[#1b3a5c] text-[32px] text-center top-[1010px] whitespace-nowrap" style={{ fontVariationSettings: '"wdth" 100' }}>
-        <p className="leading-[normal]">Plan</p>
-      </div>
-      <div className="absolute h-[137px] left-[521px] top-[831px] w-[139px]" data-name="Screenshot 2569-06-25 at 09.16.21 2">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[412.41%] left-[-139.44%] max-w-none top-[-110.95%] w-[958.03%]" src={imgScreenshot25690625At916213} />
-        </div>
-      </div>
-    </div>
+    <SkillogyWorkCard
+      background="#ffe040"
+      body={["วิเคราะห์ Skill gap", "วางแผน learning path"]}
+      character={planCardCharacter}
+      characterClassName="sk-work-card-character-starry"
+      circleColor="#dcc72b"
+      className="left-[443px] top-[793px] h-[342px] w-[294px]"
+      helper={"วางแผนเส้นทาง\nต่อไปกับ Starry"}
+      icon={planCardIcon}
+      name="Plan Background"
+      textColor="#1b3a5c"
+      title="Plan"
+    />
   );
 }
 
 function DiscoverSection1() {
   return (
-    <div className="-translate-x-1/2 absolute contents left-[calc(50%+335px)] top-[793px]" data-name="Discover Section">
-      <div className="absolute bg-[#db475f] h-[342px] left-[778px] rounded-[12px] top-[793px] w-[294px]" data-name="Discover Background" />
-      <div className="-translate-x-1/2 -translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Noto_Sans_Thai:Regular','Noto_Sans:Regular',sans-serif] font-normal justify-center leading-[0] left-[calc(50%+335.5px)] text-[20px] text-center text-white top-[1067px] whitespace-nowrap" style={{ fontVariationSettings: '"wdth" 100' }}>
-        <p className="leading-[normal] mb-0">เรียน course + Bootcamp</p>
-        <p className="leading-[normal]">ปิด gap ทีละ skill</p>
-      </div>
-      <div className="-translate-x-1/2 -translate-y-1/2 [word-break:break-word] absolute flex flex-col font-['Noto_Sans_Thai:SemiBold','Noto_Sans:SemiBold',sans-serif] font-semibold justify-center leading-[0] left-[calc(50%+335px)] text-[32px] text-center text-white top-[1010px] whitespace-nowrap" style={{ fontVariationSettings: '"wdth" 100' }}>
-        <p className="leading-[normal]">Upskill</p>
-      </div>
-      <div className="absolute h-[137px] left-[856px] top-[831px] w-[139px]" data-name="Screenshot 2569-06-25 at 09.16.21 2">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <img alt="" className="absolute h-[412.41%] left-[-335.24%] max-w-none top-[-110.95%] w-[958.03%]" src={imgScreenshot25690625At916213} />
-        </div>
-      </div>
-    </div>
+    <SkillogyWorkCard
+      background="#db475f"
+      body={["เรียน course + Bootcamp", "ปิด gap ทีละ skill"]}
+      character={upskillCardCharacter}
+      characterClassName="sk-work-card-character-sunny"
+      circleColor="#b73a50"
+      className="left-[778px] top-[793px] h-[342px] w-[294px]"
+      helper={"เติมสกิลให้พร้อม\nไปต่อกับ Sunny"}
+      icon={upskillCardIcon}
+      name="Upskill Background"
+      textColor="#ffffff"
+      title="Upskill"
+    />
   );
 }
 

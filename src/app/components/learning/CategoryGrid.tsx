@@ -18,11 +18,11 @@ type Props = {
 
 export default function CategoryGrid({ categories }: Props) {
   return (
-    <section className="-mx-5 bg-[#bfe5ff] px-5 py-8 sm:-mx-8 sm:px-8 lg:-mx-14 lg:px-14 lg:py-9">
-      <div className="mb-5 flex items-center gap-2">
+    <section className="-mx-5 bg-[#bfe5ff] px-5 py-8 sm:-mx-8 sm:px-8 lg:-mx-14 lg:px-14 lg:py-12">
+      <div className="mb-6 flex items-center gap-2">
         <h2 className="text-[24px] font-bold text-[#05101f]">หมวดหมู่ยอดนิยม</h2>
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
         {categories.map((category) => {
           const Icon = icons[category.icon];
           return (

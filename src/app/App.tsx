@@ -155,6 +155,151 @@ const HOME_STYLES = `
     animation-delay: 0.8s;
   }
 
+  .sk-work-card {
+    position: absolute;
+    display: block;
+    overflow: hidden;
+    border: 0;
+    border-radius: 16px;
+    padding: 0;
+    background: var(--work-card-bg);
+    color: var(--work-card-text);
+    cursor: pointer;
+    isolation: isolate;
+    font-family: 'Noto Sans Thai', 'Noto Sans', sans-serif;
+  }
+  .sk-work-card-face {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .sk-work-card-front {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding-top: 40px;
+    transition: opacity 360ms cubic-bezier(0.16, 1, 0.3, 1), transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sk-work-card-icon {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+  }
+  .sk-work-card-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+  }
+  .sk-work-card-title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 36px;
+  }
+  .sk-work-card-body {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .sk-work-card-peek {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--work-card-circle);
+    opacity: 0.34;
+    transform: translateX(-50%);
+  }
+  .sk-work-card-back {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 300ms ease, transform 460ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sk-work-card-helper {
+    position: absolute;
+    top: 74px;
+    left: 0;
+    right: 0;
+    z-index: 3;
+    margin: 0;
+    padding: 0 24px;
+    color: var(--work-card-text);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 36px;
+    text-align: center;
+  }
+  .sk-work-card-circle {
+    position: absolute;
+    left: 50%;
+    bottom: -375px;
+    z-index: 1;
+    width: 740px;
+    height: 740px;
+    border-radius: 999px;
+    background: var(--work-card-circle);
+    transform: translateX(-50%) translateY(96px) scale(0.04);
+    transform-origin: 50% 100%;
+    transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sk-work-card-character {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    opacity: 0;
+    transform: translateY(132px) scale(0.82);
+    transform-origin: 50% 100%;
+    transition: opacity 180ms ease 70ms, transform 680ms cubic-bezier(0.2, 1.35, 0.28, 1);
+  }
+  .sk-work-card-character-cloudy {
+    left: -9px;
+    top: 206px;
+    width: 312px;
+    height: 292px;
+  }
+  .sk-work-card-character-starry {
+    left: -106px;
+    top: 98px;
+    width: 455px;
+    height: 455px;
+  }
+  .sk-work-card-character-sunny {
+    left: -98px;
+    top: 120px;
+    width: 491px;
+    height: 491px;
+  }
+  .sk-work-card:hover .sk-work-card-front,
+  .sk-work-card:focus-visible .sk-work-card-front,
+  .sk-work-card[data-active="true"] .sk-work-card-front {
+    opacity: 0;
+    transform: translateY(-18px) scale(0.96);
+  }
+  .sk-work-card:hover .sk-work-card-back,
+  .sk-work-card:focus-visible .sk-work-card-back,
+  .sk-work-card[data-active="true"] .sk-work-card-back {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .sk-work-card:hover .sk-work-card-circle,
+  .sk-work-card:focus-visible .sk-work-card-circle,
+  .sk-work-card[data-active="true"] .sk-work-card-circle {
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  .sk-work-card:hover .sk-work-card-character,
+  .sk-work-card:focus-visible .sk-work-card-character,
+  .sk-work-card[data-active="true"] .sk-work-card-character {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
   /* Hero text letter-by-letter */
   @keyframes hero-char-in {
     from { opacity: 0; transform: translateY(22px); }
@@ -210,9 +355,12 @@ const HOME_STYLES = `
   .sk-up.sk-in, .sk-left.sk-in, .sk-right.sk-in { opacity: 1; transform: none; }
 
   @media (prefers-reduced-motion: reduce) {
-    [data-name="Sunny-A"], .sk-hero-mascot, [data-name="Icon Group Container"], [data-name="Mask Group Container"],
+    [data-name="Sunny-A"], .sk-hero-mascot, .sk-work-card, [data-name="Icon Group Container"], [data-name="Mask Group Container"],
     [data-name="R animate"], [data-name="I animate"], [data-name="A animate"],
     [data-name="S animate"], [data-name="E animate"], [data-name="C animate"] { animation: none; }
+    .sk-work-card-front, .sk-work-card-back, .sk-work-card-circle, .sk-work-card-character {
+      transition: none !important;
+    }
     .sk-up, .sk-left, .sk-right { transition: none; opacity: 1; transform: none; }
     .hero-char { animation: none !important; opacity: 1 !important; transform: none !important; }
   }
@@ -227,6 +375,7 @@ type HomeReveal = {
 
 const HOME_REVEALS: readonly HomeReveal[] = [
   { selector: "[data-name=\"Header Section\"]",               cls: "sk-up",    delay: 0.1  },
+  { selector: ".sk-work-card",                                cls: "sk-up",    stagger: 0.12 },
   { selector: "[data-name=\"Discover Background\"]",          cls: "sk-up",    stagger: 0.12 },
   { selector: "[data-name=\"Plan Background\"]",              cls: "sk-up",    delay: 0.12 },
   { selector: "[data-name=\"Test Course Container\"]",        cls: "sk-left",  delay: 0    },
@@ -541,51 +690,7 @@ export default function App() {
           .join("");
       });
 
-      /* ── How Skillogy Works — 3D flip cards ── */
-      const homepage = document.querySelector("[data-name=\"Homepage\"]");
-      if (!homepage) return;
-
-      // Remove previously injected overlays on hot-reload
       document.querySelectorAll(".sk-flip-overlay").forEach((el) => el.remove());
-
-      FLIP_CARD_DATA.forEach(({ left, top, w, h, text, bg, color }, idx) => {
-        const overlay = document.createElement("div");
-        overlay.className = "sk-flip-overlay";
-        Object.assign(overlay.style, {
-          left: `${left}px`, top: `${top}px`,
-          width: `${w}px`,   height: `${h}px`,
-        });
-
-        const inner = document.createElement("div");
-        inner.className = "sk-flip-inner";
-
-        /* Front face — transparent so original card shows through */
-        const front = document.createElement("div");
-        front.className = "sk-flip-front";
-
-        /* Hint icon on front */
-        const hint = document.createElement("span");
-        hint.className = "sk-flip-hint";
-        hint.textContent = "↺";
-        front.appendChild(hint);
-
-        /* Back face — colored with text */
-        const back = document.createElement("div");
-        back.className = "sk-flip-back";
-        back.style.background = bg;
-        back.innerHTML = `<p style="font-family:'Noto Sans Thai',sans-serif;font-size:26px;font-weight:700;color:${color};text-align:center;line-height:1.5;margin:0;">${text.replace(/\n/g, "<br>")}</p>`;
-
-        inner.appendChild(front);
-        inner.appendChild(back);
-        overlay.appendChild(inner);
-
-        /* Click to toggle flip */
-        overlay.addEventListener("click", () => {
-          overlay.classList.toggle("flipped");
-        });
-
-        homepage.appendChild(overlay);
-      });
     }, 80);
 
     return () => {

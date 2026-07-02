@@ -17,8 +17,8 @@ export default function CourseCard({ course, variant = "course", onBookmark }: P
         isWide
           ? "h-[220px] w-[min(480px,82vw)] sm:h-[240px] sm:w-[480px]"
           : isPoster
-            ? "h-[318px] w-[min(249px,72vw)] sm:h-[330px] sm:w-[249px]"
-            : "h-[288px] w-[min(249px,72vw)] sm:w-[249px]"
+            ? "h-[344px] w-[min(249px,72vw)] sm:w-[249px]"
+            : "h-[304px] w-[min(249px,72vw)] sm:w-[249px]"
       }`}
     >
       <a href={course.targetUrl} className="block h-full cursor-pointer" aria-label={`ดูคอร์ส ${course.title}`}>
@@ -43,8 +43,8 @@ export default function CourseCard({ course, variant = "course", onBookmark }: P
         </div>
 
         {!isWide ? (
-          <div className="relative h-[121px] px-4 pt-6">
-            <div className="absolute -top-5 left-4 flex size-10 items-center justify-center rounded-full border-2 border-white bg-[#eff7ff] text-[11px] font-bold text-[#1e78d4] shadow-sm">
+          <div className="relative px-4 pb-4 pt-6">
+            <div className="absolute -top-5 left-4 flex size-10 items-center justify-center rounded-full border-2 border-white bg-[#eff7ff] text-[11px] font-bold text-[#1565c0] shadow-sm">
               {course.provider.logoText}
             </div>
             <p className="line-clamp-1 text-[12px] font-medium leading-[18px] text-[#767279]">{course.provider.name}</p>
@@ -63,7 +63,14 @@ export default function CourseCard({ course, variant = "course", onBookmark }: P
       </button>
 
       {typeof course.progress === "number" && !isWide ? (
-        <div className="absolute inset-x-0 bottom-0 h-[6px] bg-[#e8f2fb]">
+        <div
+          className="absolute inset-x-0 bottom-0 h-[6px] bg-[#e8f2fb]"
+          role="progressbar"
+          aria-valuenow={course.progress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label={`ความคืบหน้า ${course.progress}%`}
+        >
           <div className="h-full rounded-r-full bg-[#2ac66d]" style={{ width: `${course.progress}%` }} />
         </div>
       ) : null}

@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 import {
   BrainCircuit,
   ChevronDown,
-  Grid2X2,
   Network,
   SearchCheck,
   Target,
@@ -19,6 +18,8 @@ import skillScanCloudySearch from "../../assets/figma/skill-dashboard/skill-scan
 import skillScanStarFace from "../../assets/figma/skill-dashboard/skill-scan-star-face.svg";
 import imgEngineeringOpportunity from "@/assets/opportunities/engineering-101-hero.png";
 import imgHackathonOpportunity from "@/assets/opportunities/hackathon-green.png";
+import SkillCareerMatchView from "../components/skill-dashboard/SkillCareerMatchView";
+import MySkillCollectionView from "../components/skill-dashboard/MySkillCollectionView";
 import imgAdsBackground from "../../imports/CareerExplore/12be04912d27d801c5eed4d993dfd2bc03db445d.png";
 import {
   getCareerDetail,
@@ -123,17 +124,6 @@ const dashboardTabs: { id: DashboardTab; label: string; icon: typeof SearchCheck
   { id: "my-skills", label: "My Skill Collection", icon: BrainCircuit },
 ];
 
-const dashboardPlaceholders: Record<Exclude<DashboardTab, "skill-scan">, { title: string; description: string }> = {
-  "skill-to-career": {
-    title: "Skill-to-Career Match",
-    description: "วิเคราะห์ทักษะที่มี แล้วจับคู่กับเส้นทางอาชีพที่น่าต่อยอดที่สุด",
-  },
-  "my-skills": {
-    title: "My Skill Collection",
-    description: "พื้นที่รวมทักษะ ผลลัพธ์แบบทดสอบ และเป้าหมายที่เลือกไว้",
-  },
-};
-
 const bootcampBanners = [
   {
     id: "engineering-101",
@@ -182,6 +172,8 @@ function DashboardOverview({
 }) {
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
   const activeBanner = bootcampBanners[activeBannerIndex];
+  const isCareerMatch = activeTab === "skill-to-career";
+  const isSkillScan = activeTab === "skill-scan";
 
   const goToBanner = (nextIndex: number) => {
     const normalizedIndex = (nextIndex + bootcampBanners.length) % bootcampBanners.length;
@@ -189,7 +181,7 @@ function DashboardOverview({
   };
 
   return (
-    <section className="bg-[#eff4f9] px-5 pb-8 pt-[112px] sm:px-8 lg:pb-[34px] lg:pt-[132px]">
+    <section className={`${isCareerMatch ? "bg-[#1b3476] pb-4" : "bg-[#eff4f9] pb-8 lg:pb-[34px]"} px-5 pt-[112px] sm:px-8 lg:pt-[132px]`}>
       <style>{`
         @keyframes sk-scan-banner-in {
           0% {
@@ -208,10 +200,12 @@ function DashboardOverview({
         <div
           role="tablist"
           aria-label="Skill dashboard sections"
-          className="flex gap-1 overflow-x-auto border-b border-[var(--sk-color-border)]"
+          className={`flex gap-1 overflow-x-auto border-b ${isCareerMatch ? "border-white/25" : "border-[var(--sk-color-border)]"}`}
         >
           {dashboardTabs.map(({ id, label, icon: Icon }) => {
             const isActive = activeTab === id;
+            const activeText = isCareerMatch ? "font-semibold text-white" : "font-semibold text-[var(--sk-color-ink)]";
+            const inactiveText = isCareerMatch ? "font-normal text-white/80 hover:text-white" : "font-normal text-[var(--sk-color-navy-900)] hover:text-[var(--sk-color-blue-600)]";
             return (
               <button
                 key={id}
@@ -219,18 +213,19 @@ function DashboardOverview({
                 role="tab"
                 aria-selected={isActive}
                 className={`relative flex min-h-[52px] shrink-0 cursor-pointer items-center justify-center gap-2 px-3 text-[15px] transition-colors focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-[var(--sk-color-blue-500)] sm:px-4 sm:text-[16px] ${
-                  isActive ? "font-semibold text-[var(--sk-color-ink)]" : "font-normal text-[var(--sk-color-navy-900)] hover:text-[var(--sk-color-blue-600)]"
+                  isActive ? activeText : inactiveText
                 }`}
                 onClick={() => onTabChange(id)}
               >
-                <Icon className={`size-6 ${isActive ? "text-[var(--sk-color-blue-500)]" : "text-[var(--sk-color-navy-900)]"}`} aria-hidden />
+                <Icon className={`size-6 ${isCareerMatch ? (isActive ? "text-[#ffd108]" : "text-white/80") : (isActive ? "text-[var(--sk-color-blue-500)]" : "text-[var(--sk-color-navy-900)]")}`} aria-hidden />
                 <span className="whitespace-nowrap">{label}</span>
-                {isActive ? <span className="absolute inset-x-0 bottom-0 h-[5px] bg-[var(--sk-color-blue-500)]" aria-hidden /> : null}
+                {isActive ? <span className={`absolute inset-x-0 bottom-0 h-[5px] ${isCareerMatch ? "bg-[#ffd108]" : "bg-[var(--sk-color-blue-500)]"}`} aria-hidden /> : null}
               </button>
             );
           })}
         </div>
 
+        {isSkillScan ? (
         <div className="mt-7 grid min-w-0 gap-5 lg:grid-cols-[718fr_331fr]">
           <div className="min-w-0 rounded-[24px] bg-[var(--sk-color-blue-100)] p-4 sm:p-6 lg:h-[353px] lg:p-10">
             <div className="relative h-[210px] overflow-hidden rounded-[20px] sm:h-[292px] sm:rounded-[24px]">
@@ -288,22 +283,7 @@ function DashboardOverview({
             />
           </button>
         </div>
-      </div>
-    </section>
-  );
-}
-
-function TabPlaceholder({ tab }: { tab: Exclude<DashboardTab, "skill-scan"> }) {
-  const content = dashboardPlaceholders[tab];
-  return (
-    <section className="bg-white px-5 py-24 sm:px-8">
-      <div className="mx-auto flex min-h-[520px] max-w-[1068px] flex-col items-center justify-center rounded-[24px] border border-[var(--sk-color-border)] bg-white text-center shadow-[var(--sk-shadow-sm)]">
-        <Grid2X2 className="size-12 text-[var(--sk-color-blue-500)]" aria-hidden />
-        <h1 className="mt-5 text-[32px] font-bold leading-tight text-[var(--sk-color-navy-900)]">{content.title}</h1>
-        <p className="mt-3 max-w-[540px] text-[18px] leading-8 text-[var(--sk-color-blue-800)]">{content.description}</p>
-        <span className="mt-6 rounded-full bg-[#eff4f9] px-6 py-3 text-[15px] font-semibold text-[var(--sk-color-blue-800)]">
-          เร็วๆ นี้
-        </span>
+        ) : null}
       </div>
     </section>
   );
@@ -375,7 +355,9 @@ export default function SkillScanPage() {
     <main className="w-full overflow-hidden bg-white text-[var(--sk-color-navy-900)]">
       <DashboardOverview activeTab={activeTab} onTabChange={setActiveTab} />
 
-      {activeTab !== "skill-scan" ? <TabPlaceholder tab={activeTab} /> : null}
+      {activeTab === "my-skills" ? <MySkillCollectionView /> : null}
+
+      {activeTab === "skill-to-career" ? <SkillCareerMatchView /> : null}
 
       {activeTab === "skill-scan" ? (
       <>

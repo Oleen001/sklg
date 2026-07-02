@@ -7,7 +7,7 @@ type Props = {
 export default function PlatformLogoRail({ platforms }: Props) {
   return (
     <section>
-      <h2 className="mb-5 text-[24px] font-bold text-[#05101f]">คอร์สจากแพลตฟอร์มอื่น ๆ</h2>
+      <h2 className="mb-6 text-[24px] font-bold text-[#05101f]">คอร์สจากแพลตฟอร์มอื่น ๆ</h2>
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
         {platforms.map((platform) => (
           <a

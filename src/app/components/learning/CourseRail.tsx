@@ -12,7 +12,7 @@ export default function CourseRail({ rail, onBookmark }: Props) {
 
   return (
     <section className="relative">
-      <div className="mb-4 flex min-h-9 items-center gap-2 sm:mb-5">
+      <div className="mb-4 flex min-h-9 items-center gap-2 sm:mb-6">
         <h2 className="text-[22px] font-bold leading-8 text-[#05101f] sm:text-[24px] sm:leading-9">{rail.title}</h2>
         <button
           type="button"
