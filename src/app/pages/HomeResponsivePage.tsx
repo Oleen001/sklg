@@ -239,7 +239,7 @@ function RiasecGraphic() {
 function HeroSection() {
   return (
     <section className="sticky top-0 z-[1] flex min-h-[620px] w-full items-center overflow-hidden bg-[#eff4f9] px-5 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0">
-      <div className="relative mx-auto h-[620px] w-full max-w-[1180px] md:h-[660px] lg:h-[660px]">
+      <div data-sticky-parallax data-parallax-speed="0.23" data-parallax-max="190" className="relative mx-auto h-[620px] w-full max-w-[1180px] will-change-transform md:h-[660px] lg:h-[660px]">
         <div className="relative z-10 mx-auto pt-[108px] text-center md:pt-[120px]">
           <h1 className="text-[38px] font-bold leading-[1.18] tracking-normal text-[#424045] sm:text-[56px]">
             ค้นพบเส้นทางสู่
@@ -269,7 +269,7 @@ function HeroSection() {
 function WorksSection() {
   return (
     <section className="sticky top-0 z-[2] flex min-h-[620px] w-full items-center bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
-      <div className="relative mx-auto w-full max-w-[1180px] lg:h-[567px] lg:pl-[108px] lg:pt-[64px]">
+      <div data-sticky-parallax data-parallax-speed="0.2" data-parallax-max="160" className="relative mx-auto w-full max-w-[1180px] will-change-transform lg:h-[567px] lg:pl-[108px] lg:pt-[64px]">
         <h2 className="text-[32px] font-bold leading-tight text-[#1b3a5c]">How Skilogy works</h2>
         <SpeechBubble className="left-[574px] top-[53px] hidden lg:block">เริ่มจากตรงไหนก็ได้ จะมีฉันคอยไกด์ตลอด</SpeechBubble>
         <HeroMascot svg={cloudy2IdleSvg} label="Cloudy guide" className="left-[901px] top-[63px] hidden h-[140px] w-[183px] lg:block" maxLook={5} />
@@ -286,7 +286,7 @@ function WorksSection() {
 function SelfKnowledgeSection() {
   return (
     <section className="sticky top-0 z-[3] flex min-h-[620px] w-full items-center bg-[#c6ebfe] px-5 py-16 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:rounded-t-[44px] lg:px-0 lg:py-0">
-      <div className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 lg:block lg:h-[470px]">
+      <div data-sticky-parallax data-parallax-speed="0.2" data-parallax-max="160" className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 will-change-transform lg:block lg:h-[470px]">
         <div className="relative z-10 lg:absolute lg:left-[109px] lg:top-[120px]">
           <DecorativeStar className="left-[-79px] top-[-13px] size-[58px] max-sm:left-0 max-sm:top-[-62px] max-sm:size-11" color="#4da8ee" />
           <p className="text-[24px] text-[#1b3a5c]">เริ่มจาก...</p>
@@ -309,7 +309,7 @@ function SelfKnowledgeSection() {
 function CareerSection() {
   return (
     <section className="sticky top-0 z-[4] flex min-h-[620px] w-full items-center bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
-      <div className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 lg:block lg:h-full">
+      <div data-sticky-parallax data-parallax-speed="0.2" data-parallax-max="160" className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 will-change-transform lg:block lg:h-full">
         <div className="relative min-h-[560px] max-lg:min-h-[520px] max-sm:min-h-[500px] lg:absolute lg:inset-0 lg:min-h-0">
           <img src={imgCareer} alt="" className="absolute bottom-0 left-[8%] h-[540px] w-auto max-w-none object-contain lg:bottom-0 lg:left-[42px] lg:top-auto lg:h-[650px] max-lg:left-1/2 max-lg:h-[500px] max-lg:-translate-x-1/2 max-sm:h-[470px]" />
           {careerChips.map((chip) => (
@@ -350,7 +350,7 @@ function BootcampSection() {
 
   return (
     <section className="sticky top-0 z-[5] flex min-h-[620px] w-full items-center bg-[#1b3476] px-5 py-20 text-white sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
-      <div className="relative mx-auto h-full w-full max-w-[1180px]">
+      <div data-sticky-parallax data-parallax-speed="0.18" data-parallax-max="145" className="relative mx-auto h-full w-full max-w-[1180px] will-change-transform">
         <div className="relative min-h-[560px] overflow-hidden max-sm:min-h-[620px] lg:h-full lg:min-h-0">
           <div className="relative z-10 lg:absolute lg:left-[80px] lg:top-[92px]">
             <h2 className="max-w-[760px] text-[42px] font-bold leading-tight max-sm:text-[38px] sm:text-[48px]">เปลี่ยนเป้าหมายให้เป็นความพร้อม</h2>
@@ -411,7 +411,7 @@ function BootcampSection() {
 function CourseSection() {
   return (
     <section className="sticky top-0 z-[6] flex min-h-[620px] w-full items-center bg-white px-5 py-20 sm:px-8 lg:h-[90svh] lg:min-h-[760px] lg:px-0 lg:py-0">
-      <div className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 lg:block lg:h-full">
+      <div data-sticky-parallax data-parallax-speed="0.18" data-parallax-max="145" className="relative mx-auto grid w-full max-w-[1180px] items-center gap-10 will-change-transform lg:block lg:h-full">
         <div className="relative min-h-[540px] max-lg:min-h-[430px] max-sm:min-h-[390px] lg:absolute lg:inset-0 lg:min-h-0">
           <img src={imgCertificate} alt="" className="absolute bottom-0 left-[8%] h-[520px] w-auto max-w-none object-contain lg:bottom-0 lg:left-[80px] lg:top-auto lg:h-[520px] lg:w-auto max-lg:left-1/2 max-lg:h-[420px] max-lg:-translate-x-1/2 max-sm:h-[380px]" />
           <DecorativeStar className="left-[91px] top-[132px] size-10" color="#5aaed8" />

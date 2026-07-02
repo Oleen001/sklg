@@ -621,6 +621,90 @@ export default function App() {
     };
   }, [readyPage, reduceMotion]);
 
+  /* ── Sticky section parallax: previous section drifts upward while the next one covers it ── */
+  useEffect(() => {
+    if (route.kind !== "home" || reduceMotion) return;
+
+    type ParallaxTarget = {
+      el: HTMLElement;
+      section: HTMLElement;
+      startY: number;
+      speed: number;
+      maxOffset: number;
+    };
+
+    let frame = 0;
+    let targets: ParallaxTarget[] = [];
+    const retryTids: ReturnType<typeof setTimeout>[] = [];
+
+    const collect = () => {
+      targets = Array.from(document.querySelectorAll<HTMLElement>("[data-sticky-parallax]"))
+        .map((el) => {
+          const section = el.closest("section");
+          if (!(section instanceof HTMLElement)) return null;
+
+          return {
+            el,
+            section,
+            startY: section.getBoundingClientRect().top + window.scrollY,
+            speed: Number(el.dataset.parallaxSpeed ?? 0.2),
+            maxOffset: Number(el.dataset.parallaxMax ?? 160),
+          };
+        })
+        .filter((target): target is ParallaxTarget => Boolean(target));
+      document.documentElement.dataset.skStickyParallax = targets.length ? "active" : "waiting";
+    };
+
+    const update = () => {
+      frame = 0;
+      const viewportHeight = window.innerHeight || 1;
+
+      targets.forEach(({ el, startY, speed, maxOffset }) => {
+        const progress = Math.min(Math.max((window.scrollY - startY) / viewportHeight, 0), 1.35);
+        const y = -Math.min(progress * viewportHeight * speed, maxOffset);
+
+        el.style.transform = `translate3d(0, ${y.toFixed(2)}px, 0)`;
+        el.dataset.parallaxY = y.toFixed(2);
+      });
+    };
+
+    const requestUpdate = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(update);
+    };
+
+    const handleResize = () => {
+      collect();
+      requestUpdate();
+    };
+
+    const init = (attempt = 0) => {
+      collect();
+      update();
+      if (targets.length === 0 && attempt < 20) {
+        retryTids.push(setTimeout(() => init(attempt + 1), 100));
+      }
+    };
+
+    const initTid = setTimeout(() => init(), 120);
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      clearTimeout(initTid);
+      retryTids.forEach(clearTimeout);
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", handleResize);
+      delete document.documentElement.dataset.skStickyParallax;
+      targets.forEach(({ el }) => {
+        el.style.transform = "";
+        delete el.dataset.parallaxY;
+      });
+    };
+  }, [route.kind, reduceMotion]);
+
   /* ══════════════════════════════════════════════════════════
      HOMEPAGE: scroll-reveals + hero text + card flip
   ══════════════════════════════════════════════════════════ */
